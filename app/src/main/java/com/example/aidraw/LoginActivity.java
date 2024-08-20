@@ -157,8 +157,8 @@ public class LoginActivity extends AppCompatActivity {
                     public void run() {
                         try {
                             String json = "{\n" +
-                                    "\t\"username\": " + number + ",\n" +
-                                    "\t\"password\": " + password + "\n" +
+                                    "\t\"username\": \"" + number + "\",\n" +
+                                    "\t\"password\": \"" + password + "\"\n" +
                                     "}";
                             OkHttpClient client = new OkHttpClient();//创建http客户端
                             Request request = new Request.Builder()

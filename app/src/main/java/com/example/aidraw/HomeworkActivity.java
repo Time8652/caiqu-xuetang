@@ -145,11 +145,11 @@ public class HomeworkActivity extends AppCompatActivity {
                     public void run() {
                         try {
                             String json = "{\n" +
-                                    "\t\"classId\": " + ManageFragment.getClassId() + ",\n" +
-                                    "\t\"title\": " + title.getText().toString() + "\n" +
-                                    "\t\"text\": " + content.getText().toString() + "\n" +
-                                    "\t\"endTime\": " + deadline_day.getText().toString() + "\t" + deadline_time.getText().toString() + "\n" +
-                                    "\t\"status\": " + "0" + "\n" +
+                                    "\t\"classId\": \"" + ManageFragment.getClassId() + "\",\n" +
+                                    "\t\"title\": \"" + title.getText().toString() + "\",\n" +
+                                    "\t\"text\": \"" + content.getText().toString() + "\",\n" +
+                                    "\t\"endTime\": \"" + deadline_day.getText().toString() + "\t" + deadline_time.getText().toString() + "\",\n" +
+                                    "\t\"status\": \"" + "0" + "\"\n" +
                                     "}";
                             OkHttpClient client = new OkHttpClient();//创建http客户端
                             Request request = new Request.Builder()
@@ -197,11 +197,11 @@ public class HomeworkActivity extends AppCompatActivity {
                     public void run() {
                         try {
                             String json = "{\n" +
-                                    "\t\"classId\": " + ManageFragment.getClassId() + ",\n" +
-                                    "\t\"title\": " + title.getText().toString() + "\n" +
-                                    "\t\"text\": " + content.getText().toString() + "\n" +
-                                    "\t\"endTime\": " + deadline_day.getText().toString() + "\t" + deadline_time.getText().toString() + "\n" +
-                                    "\t\"status\": " + "1" + "\n" +
+                                    "\t\"classId\": \"" + ManageFragment.getClassId() + "\",\n" +
+                                    "\t\"title\": \"" + title.getText().toString() + "\",\n" +
+                                    "\t\"text\": \"" + content.getText().toString() + "\",\n" +
+                                    "\t\"endTime\": \"" + deadline_day.getText().toString() + "\t" + deadline_time.getText().toString() + "\",\n" +
+                                    "\t\"status\": \"" + "1" + "\"\n" +
                                     "}";
                             OkHttpClient client = new OkHttpClient();//创建http客户端
                             Request request = new Request.Builder()

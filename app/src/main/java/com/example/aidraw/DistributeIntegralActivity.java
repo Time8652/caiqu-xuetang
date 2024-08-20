@@ -455,9 +455,9 @@ public class DistributeIntegralActivity extends AppCompatActivity {
                         public void run() {
                             try {
                                 String json = "{\n" +
-                                        "\t\"studentId\": " + Long.parseLong(editText.getText().toString()) + ",\n" +
-                                        "\t\"score\": " + add + "\n" +
-                                        "\t\"message\": " + add_reason + ",\n" +
+                                        "\t\"studentId\": \"" + Long.parseLong(editText.getText().toString()) + "\",\n" +
+                                        "\t\"score\": \"" + add + "\",\n" +
+                                        "\t\"message\": \"" + add_reason + "\"\n" +
                                         "}";
                                 OkHttpClient client = new OkHttpClient();//创建http客户端
                                 Request request = new Request.Builder()
@@ -500,9 +500,9 @@ public class DistributeIntegralActivity extends AppCompatActivity {
                         public void run() {
                             try {
                                 String json = "{\n" +
-                                        "\t\"studentId\": " + Long.parseLong(editText.getText().toString()) + ",\n" +
-                                        "\t\"score\": " + subtract + "\n" +
-                                        "\t\"message\": " + subtract_reason + ",\n" +
+                                        "\t\"studentId\": \"" + Long.parseLong(editText.getText().toString()) + "\",\n" +
+                                        "\t\"score\": \"" + subtract + "\",\n" +
+                                        "\t\"message\": \"" + subtract_reason + "\"\n" +
                                         "}";
                                 OkHttpClient client = new OkHttpClient();//创建http客户端
                                 Request request = new Request.Builder()

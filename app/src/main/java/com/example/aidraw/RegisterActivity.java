@@ -51,10 +51,10 @@ public class RegisterActivity extends AppCompatActivity {
                             public void run() {
                                 try {
                                     String json = "{\n" +
-                                            "\t\"username\": " + number + ",\n" +
-                                            "\t\"old_password\": " + old_password + "\n" +
-                                            "\t\"new_password\": " + password1 + ",\n" +
-                                            "\t\"re_password\": " + password2 + ",\n" +
+                                            "\t\"username\": \"" + number + "\",\n" +
+                                            "\t\"old_password\": \"" + old_password + "\",\n" +
+                                            "\t\"new_password\": \"" + password1 + "\",\n" +
+                                            "\t\"re_password\": \"" + password2 + "\"\n" +
                                             "}";
                                     OkHttpClient client = new OkHttpClient();//创建http客户端
                                     Request request = new Request.Builder()
@@ -82,9 +82,9 @@ public class RegisterActivity extends AppCompatActivity {
                             public void run() {
                                 try {
                                     String json = "{\n" +
-                                            "\t\"username\": " + number + ",\n" +
-                                            "\t\"old_password\": " + old_password + "\n" +
-                                            "\t\"new_password\": " + password1 + ",\n" +
+                                            "\t\"username\": \"" + number + "\",\n" +
+                                            "\t\"old_password\": \"" + old_password + "\",\n" +
+                                            "\t\"new_password\": \"" + password1 + "\"\n" +
                                             "}";
                                     OkHttpClient client = new OkHttpClient();//创建http客户端
                                     Request request = new Request.Builder()
