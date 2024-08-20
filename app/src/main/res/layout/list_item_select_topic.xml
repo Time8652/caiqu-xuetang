@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/imageView"
+        android:layout_width="33dp"
+        android:layout_height="33dp"
+        app:cardCornerRadius="360dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#FFCCCCCC"/>
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#FF333333"
+        android:textSize="12sp"
+        android:text="罗小昔"
+        android:layout_marginLeft="10dp"
+        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="@+id/imageView"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#FF666666"
+        android:textSize="8sp"
+        android:text="2024-8-18"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="1dp"
+        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView"/>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#FF333333"
+        android:textSize="12sp"
+        android:text="#传统文化之美：我心中的中国风# 在我心中，中国风不仅仅是一种视觉上的审美享受，它是流淌在华夏儿女血脉中的文化基因，是历经千年而不衰的精神家园。每当提及中国风，我的思绪便不由自主地飘向那些古老而又鲜活的画面：从青花瓷上淡雅脱俗的蓝白交织，到水墨画中留白处的无限遐想；从京剧脸谱上斑斓多姿的色彩，到书法笔触间行云流水的意境……每一处细节，都蕴含着深厚的文化底蕴和独特的艺术魅力。"
+        android:layout_marginTop="7dp"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintStart_toStartOf="@+id/imageView"/>
+
+    <ImageView
+        android:id="@+id/imageView_1"
+        android:layout_width="102dp"
+        android:layout_height="102dp"
+        android:background="#FFCCCCCC"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toStartOf="@+id/imageView_2"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <ImageView
+        android:id="@+id/imageView_2"
+        android:layout_width="102dp"
+        android:layout_height="102dp"
+        android:background="#FFCCCCCC"
+        app:layout_constraintEnd_toStartOf="@+id/imageView_3"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/imageView_1"
+        app:layout_constraintTop_toTopOf="@+id/imageView_1"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView_1" />
+
+    <ImageView
+        android:id="@+id/imageView_3"
+        android:layout_width="102dp"
+        android:layout_height="102dp"
+        android:background="#FFCCCCCC"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@id/imageView_2"
+        app:layout_constraintTop_toTopOf="@+id/imageView_1"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView_1" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        app:layout_constraintTop_toBottomOf="@+id/imageView_1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintEnd_toStartOf="@+id/linearLayout_2"
+        android:orientation="horizontal">
+        
+        <ImageView
+            android:layout_width="12dp"
+            android:layout_height="10dp"
+            android:layout_gravity="center"
+            android:scaleType="fitXY"
+            android:src="@drawable/topic_forward"/>
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:textColor="#FF666666"
+            android:textSize="10sp"
+            android:text="转发"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/linearLayout_1"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintEnd_toStartOf="@+id/linearLayout_3"
+        app:layout_constraintTop_toTopOf="@id/linearLayout_1"
+        app:layout_constraintBottom_toBottomOf="@+id/linearLayout_1"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="12dp"
+            android:layout_height="10dp"
+            android:layout_gravity="center"
+            android:scaleType="fitXY"
+            android:src="@drawable/topic_comment"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:textColor="#FF666666"
+            android:textSize="10sp"
+            android:text="评论"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/linearLayout_2"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/linearLayout_1"
+        app:layout_constraintBottom_toBottomOf="@+id/linearLayout_1"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="12dp"
+            android:layout_height="10dp"
+            android:layout_gravity="center"
+            android:scaleType="fitXY"
+            android:src="@drawable/topic_thumb_grey"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:textColor="#FF666666"
+            android:textSize="10sp"
+            android:text="150"/>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

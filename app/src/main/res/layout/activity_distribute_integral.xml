@@ -1,0 +1,520 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F7F7F7"
+    tools:context=".CommunityFragment">
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
+        android:background="@drawable/homework_and_points_top"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:gravity="center"
+        android:letterSpacing="0.8"
+        android:text="POINTS"
+        android:textColor="#FFFFFFFF"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <EditText
+                android:id="@+id/editText"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/point_1"
+                android:paddingLeft="44dp"
+                android:text="请输入姓名"
+                android:textColor="#FFC7C7C7"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/inter_search"
+                android:scaleType="fitXY"
+                app:layout_constraintBottom_toBottomOf="@+id/editText"
+                app:layout_constraintStart_toStartOf="@+id/editText"
+                app:layout_constraintTop_toTopOf="@+id/editText" />
+
+            <ImageView
+                android:id="@+id/gone"
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:layout_marginRight="13dp"
+                android:background="#FFC7C7C7"
+                android:src="@drawable/baseline_clear_white"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/editText"
+                app:layout_constraintEnd_toEndOf="@+id/editText"
+                app:layout_constraintTop_toTopOf="@+id/editText" />
+
+            <TextView
+                android:id="@+id/textView_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="积分累加"
+                android:textColor="#FF333333"
+                android:textSize="14sp"
+                android:layout_marginTop="25dp"
+                app:layout_constraintStart_toStartOf="@+id/add_1"
+                app:layout_constraintTop_toBottomOf="@+id/editText" />
+
+            <TextView
+                android:id="@+id/add_1"
+                android:layout_width="47dp"
+                android:layout_height="28dp"
+                android:background="@drawable/point_1"
+                android:gravity="center"
+                android:text="+1"
+                android:textColor="#FF7E64FD"
+                android:textSize="12sp"
+                android:layout_marginTop="17dp"
+                app:layout_constraintEnd_toStartOf="@+id/add_2"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView_add" />
+
+            <TextView
+                android:id="@+id/add_2"
+                android:layout_width="47dp"
+                android:layout_height="28dp"
+                android:background="@drawable/point_1"
+                android:gravity="center"
+                android:text="+2"
+                android:textColor="#FF7E64FD"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@+id/add_1"
+                app:layout_constraintEnd_toStartOf="@+id/add_3"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/add_1"
+                app:layout_constraintTop_toTopOf="@+id/add_1" />
+
+            <TextView
+                android:id="@+id/add_3"
+                android:layout_width="47dp"
+                android:layout_height="28dp"
+                android:background="@drawable/point_1"
+                android:gravity="center"
+                android:text="+3"
+                android:textColor="#FF7E64FD"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@+id/add_1"
+                app:layout_constraintEnd_toStartOf="@+id/add_4"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/add_2"
+                app:layout_constraintTop_toTopOf="@+id/add_1" />
+
+            <TextView
+                android:id="@+id/add_4"
+                android:layout_width="47dp"
+                android:layout_height="28dp"
+                android:background="@drawable/point_1"
+                android:gravity="center"
+                android:text="+4"
+                android:textColor="#FF7E64FD"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@+id/add_1"
+                app:layout_constraintEnd_toStartOf="@+id/add_5"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/add_3"
+                app:layout_constraintTop_toTopOf="@+id/add_1" />
+
+            <TextView
+                android:id="@+id/add_5"
+                android:layout_width="47dp"
+                android:layout_height="28dp"
+                android:background="@drawable/point_1"
+                android:gravity="center"
+                android:text="+5"
+                android:textColor="#FF7E64FD"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@+id/add_1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/add_4"
+                app:layout_constraintTop_toTopOf="@+id/add_1" />
+
+            <TextView
+                android:id="@+id/add_other_point"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="其他积分数额请手动输入"
+                android:textColor="#FF333333"
+                android:textSize="12sp"
+                android:layout_marginTop="30dp"
+                app:layout_constraintStart_toStartOf="@+id/add_1"
+                app:layout_constraintTop_toBottomOf="@+id/add_1" />
+
+            <EditText
+                android:id="@+id/editText_other_point"
+                android:layout_width="113dp"
+                android:layout_height="28dp"
+                android:background="@drawable/edittext_8"
+                android:paddingLeft="9dp"
+                android:text="请输入整数数额"
+                android:textColor="#FFC7C7C7"
+                android:textSize="11sp"
+                android:layout_marginLeft="12dp"
+                app:layout_constraintBottom_toBottomOf="@+id/add_other_point"
+                app:layout_constraintStart_toEndOf="@+id/add_other_point"
+                app:layout_constraintTop_toTopOf="@+id/add_other_point" />
+
+            <TextView
+                android:id="@+id/add_reason"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="加分原因"
+                android:textColor="#FF333333"
+                android:textSize="12sp"
+                android:layout_marginTop="35dp"
+                app:layout_constraintStart_toStartOf="@+id/add_1"
+                app:layout_constraintTop_toBottomOf="@+id/add_other_point" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@+id/add_reason"
+                app:layout_constraintBottom_toBottomOf="@+id/add_reason"
+                app:layout_constraintStart_toEndOf="@+id/add_reason"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <TextView
+                    android:id="@+id/add_reason_1"
+                    android:layout_width="77dp"
+                    android:layout_height="28dp"
+                    android:background="@drawable/point_1"
+                    android:gravity="center"
+                    android:text="课堂表现"
+                    android:textColor="#FF7E64FD"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/add_reason_2"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/add_reason_2"
+                    android:layout_width="77dp"
+                    android:layout_height="28dp"
+                    android:background="@drawable/point_1"
+                    android:gravity="center"
+                    android:text="作业优异"
+                    android:textColor="#FF7E64FD"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/add_reason_3"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/add_reason_1"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/add_reason_3"
+                    android:layout_width="77dp"
+                    android:layout_height="28dp"
+                    android:background="@drawable/point_1"
+                    android:gravity="center"
+                    android:text="完成挑战"
+                    android:textColor="#FF7E64FD"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/add_reason_2"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/add_other_reason"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="其他加分原因请手动输入"
+                android:textColor="#FF333333"
+                android:textSize="12sp"
+                android:layout_marginTop="35dp"
+                app:layout_constraintStart_toStartOf="@+id/add_1"
+                app:layout_constraintTop_toBottomOf="@+id/add_reason" />
+
+            <EditText
+                android:id="@+id/editText_add_other_reason"
+                android:layout_width="184dp"
+                android:layout_height="28dp"
+                android:background="@drawable/edittext_8"
+                android:paddingLeft="9dp"
+                android:text="请输入加分原因"
+                android:textColor="#FFC7C7C7"
+                android:textSize="11sp"
+                android:layout_marginLeft="12dp"
+                app:layout_constraintBottom_toBottomOf="@+id/add_other_reason"
+                app:layout_constraintStart_toEndOf="@+id/add_other_reason"
+                app:layout_constraintTop_toTopOf="@+id/add_other_reason" />
+
+            <View
+                android:id="@+id/view2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#FFE8E3FF"
+                android:layout_marginTop="22dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                app:layout_constraintTop_toBottomOf="@+id/add_other_reason"/>
+
+            <TextView
+                android:id="@+id/textView_subtract"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="积分扣除"
+                android:textColor="#FF333333"
+                android:textSize="14sp"
+                android:layout_marginTop="15dp"
+                app:layout_constraintStart_toStartOf="@+id/subtract_1"
+                app:layout_constraintTop_toBottomOf="@+id/view2" />
+
+            <TextView
+                android:id="@+id/subtract_1"
+                android:layout_width="47dp"
+                android:layout_height="28dp"
+                android:background="@drawable/point_1"
+                android:gravity="center"
+                android:text="-1"
+                android:textColor="#FF7E64FD"
+                android:textSize="12sp"
+                android:layout_marginTop="17dp"
+                app:layout_constraintEnd_toStartOf="@+id/subtract_2"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView_subtract" />
+
+            <TextView
+                android:id="@+id/subtract_2"
+                android:layout_width="47dp"
+                android:layout_height="28dp"
+                android:background="@drawable/point_1"
+                android:gravity="center"
+                android:text="-2"
+                android:textColor="#FF7E64FD"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@+id/subtract_1"
+                app:layout_constraintEnd_toStartOf="@+id/subtract_3"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/subtract_1"
+                app:layout_constraintTop_toTopOf="@+id/subtract_1" />
+
+            <TextView
+                android:id="@+id/subtract_3"
+                android:layout_width="47dp"
+                android:layout_height="28dp"
+                android:background="@drawable/point_1"
+                android:gravity="center"
+                android:text="-3"
+                android:textColor="#FF7E64FD"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@+id/subtract_1"
+                app:layout_constraintEnd_toStartOf="@+id/subtract_4"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/subtract_2"
+                app:layout_constraintTop_toTopOf="@+id/subtract_1" />
+
+            <TextView
+                android:id="@+id/subtract_4"
+                android:layout_width="47dp"
+                android:layout_height="28dp"
+                android:background="@drawable/point_1"
+                android:gravity="center"
+                android:text="-4"
+                android:textColor="#FF7E64FD"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@+id/subtract_1"
+                app:layout_constraintEnd_toStartOf="@+id/subtract_5"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/subtract_3"
+                app:layout_constraintTop_toTopOf="@+id/subtract_1" />
+
+            <TextView
+                android:id="@+id/subtract_5"
+                android:layout_width="47dp"
+                android:layout_height="28dp"
+                android:background="@drawable/point_1"
+                android:gravity="center"
+                android:text="-5"
+                android:textColor="#FF7E64FD"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@+id/subtract_1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/subtract_4"
+                app:layout_constraintTop_toTopOf="@+id/subtract_1" />
+
+            <TextView
+                android:id="@+id/subtract_other_point"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="其他积分数额请手动输入"
+                android:textColor="#FF333333"
+                android:textSize="12sp"
+                android:layout_marginTop="30dp"
+                app:layout_constraintStart_toStartOf="@+id/subtract_1"
+                app:layout_constraintTop_toBottomOf="@+id/subtract_1" />
+
+            <EditText
+                android:id="@+id/editText_subtract_other_point"
+                android:layout_width="113dp"
+                android:layout_height="28dp"
+                android:background="@drawable/edittext_8"
+                android:paddingLeft="9dp"
+                android:text="请输入整数数额"
+                android:textColor="#FFC7C7C7"
+                android:textSize="11sp"
+                android:layout_marginLeft="12dp"
+                app:layout_constraintBottom_toBottomOf="@+id/subtract_other_point"
+                app:layout_constraintStart_toEndOf="@+id/subtract_other_point"
+                app:layout_constraintTop_toTopOf="@+id/subtract_other_point" />
+
+            <TextView
+                android:id="@+id/subtract_reason"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="加分原因"
+                android:textColor="#FF333333"
+                android:textSize="12sp"
+                android:layout_marginTop="35dp"
+                app:layout_constraintStart_toStartOf="@+id/subtract_1"
+                app:layout_constraintTop_toBottomOf="@+id/subtract_other_point" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@+id/subtract_reason"
+                app:layout_constraintBottom_toBottomOf="@+id/subtract_reason"
+                app:layout_constraintStart_toEndOf="@+id/subtract_reason"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <TextView
+                    android:id="@+id/subtract_reason_1"
+                    android:layout_width="77dp"
+                    android:layout_height="28dp"
+                    android:background="@drawable/point_1"
+                    android:gravity="center"
+                    android:text="课堂表现"
+                    android:textColor="#FF7E64FD"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/subtract_reason_2"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/subtract_reason_2"
+                    android:layout_width="77dp"
+                    android:layout_height="28dp"
+                    android:background="@drawable/point_1"
+                    android:gravity="center"
+                    android:text="作业未交"
+                    android:textColor="#FF7E64FD"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/subtract_reason_3"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/subtract_reason_1"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/subtract_reason_3"
+                    android:layout_width="77dp"
+                    android:layout_height="28dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/subtract_reason_2"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/subtract_other_reason"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="其他加分原因请手动输入"
+                android:textColor="#FF333333"
+                android:textSize="12sp"
+                android:layout_marginTop="35dp"
+                app:layout_constraintStart_toStartOf="@+id/subtract_1"
+                app:layout_constraintTop_toBottomOf="@+id/subtract_reason" />
+
+            <EditText
+                android:id="@+id/editText_subtract_other_reason"
+                android:layout_width="184dp"
+                android:layout_height="28dp"
+                android:background="@drawable/edittext_8"
+                android:paddingLeft="9dp"
+                android:text="请输入扣分原因"
+                android:textColor="#FFC7C7C7"
+                android:textSize="11sp"
+                android:layout_marginLeft="12dp"
+                app:layout_constraintBottom_toBottomOf="@+id/subtract_other_reason"
+                app:layout_constraintStart_toEndOf="@+id/subtract_other_reason"
+                app:layout_constraintTop_toTopOf="@+id/subtract_other_reason" />
+            
+            <TextView
+                android:id="@+id/check"
+                android:layout_width="145dp"
+                android:layout_height="28dp"
+                android:textColor="#FFFFFFFF"
+                android:textSize="12sp"
+                android:text="确认提交"
+                android:gravity="center"
+                android:background="@drawable/point_2"
+                android:layout_marginTop="30dp"
+                app:layout_constraintTop_toBottomOf="@+id/subtract_other_reason"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="#FFFFFFFF"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                app:layout_constraintEnd_toEndOf="@+id/editText"
+                app:layout_constraintStart_toStartOf="@+id/editText"
+                app:layout_constraintTop_toBottomOf="@+id/editText">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    tools:listitem="@layout/list_item_search" />
+            </androidx.cardview.widget.CardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

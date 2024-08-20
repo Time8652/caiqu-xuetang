@@ -1,0 +1,450 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    tools:context=".CommunityFragment">
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:background="@drawable/community_top"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginTop="25dp"
+        android:gravity="center"
+        android:letterSpacing="0.8"
+        android:text="学习资源区"
+        android:textColor="#FFFFFFFF"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/textView34"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:gravity="center"
+                    android:text="经典作品"
+                    android:textColor="#FF333333"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/upload_classic_work"
+                    android:layout_width="65dp"
+                    android:layout_height="22dp"
+                    android:background="@drawable/point_2"
+                    android:text="上传资源"
+                    android:textColor="#FFFFFFFF"
+                    android:textSize="10sp"
+                    android:gravity="center"
+                    android:layout_marginRight="10dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/classic_work_more" />
+
+                <ImageView
+                    android:id="@+id/classic_work_more"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="30dp"
+                    android:background="@drawable/arrow_forward_black"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                android:padding="10dp"
+                tools:listitem="@layout/list_item_work"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/recyclerView">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_marginLeft="20dp"
+                    android:text="3D模型"
+                    android:textColor="#FF333333"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/upload_model_3D"
+                    android:layout_width="65dp"
+                    android:layout_height="22dp"
+                    android:background="@drawable/point_2"
+                    android:text="上传资源"
+                    android:textColor="#FFFFFFFF"
+                    android:textSize="10sp"
+                    android:gravity="center"
+                    android:layout_marginRight="10dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/model_3D_more" />
+
+                <ImageView
+                    android:id="@+id/model_3D_more"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="30dp"
+                    android:background="@drawable/arrow_forward_black"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/imageView_3D_model"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="20dp"
+                app:cardCornerRadius="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout4">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/model"
+                    android:scaleType="fitXY"/>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView_3D_model">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:gravity="center"
+                    android:text="游戏解锁"
+                    android:textColor="#FF333333"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/upload_game"
+                    android:layout_width="65dp"
+                    android:layout_height="22dp"
+                    android:background="@drawable/point_2"
+                    android:text="上传资源"
+                    android:textColor="#FFFFFFFF"
+                    android:textSize="10sp"
+                    android:gravity="center"
+                    android:layout_marginRight="10dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/game_more" />
+
+                <ImageView
+                    android:id="@+id/game_more"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="30dp"
+                    android:background="@drawable/arrow_forward_black"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/constraintLayout_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                app:cardCornerRadius="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout3">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#FFFFFFFF">
+
+                    <View
+                        android:id="@+id/view2"
+                        android:layout_width="8dp"
+                        android:layout_height="0dp"
+                        android:background="#FF7E64FD"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/game_title_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:gravity="center_vertical"
+                        android:textColor="#FF333333"
+                        android:textSize="12sp"
+                        android:text="高清图片素材"
+                        app:layout_constraintStart_toEndOf="@+id/view2"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/game_1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:gravity="center_vertical"
+                        android:text="猜猜作品的名字或作者，猜对5题以上即可解锁"
+                        android:textColor="#FF666666"
+                        android:textSize="10sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/game_title_1"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/game_title_1"
+                        app:layout_constraintTop_toTopOf="@+id/game_title_1" />
+
+                    <TextView
+                        android:id="@+id/progress_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:gravity="center_vertical"
+                        android:textColor="#FF7E64FD"
+                        android:textSize="10sp"
+                        android:text="平均解锁进度：50%"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/view2"
+                        app:layout_constraintTop_toBottomOf="@+id/game_title_1" />
+
+                    <ProgressBar
+                        android:id="@+id/progress_horizontal_1"
+                        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                        android:layout_width="200dp"
+                        android:layout_height="0dp"
+                        android:layout_marginRight="25dp"
+                        app:layout_constraintTop_toTopOf="@+id/progress_1"
+                        app:layout_constraintBottom_toBottomOf="@+id/progress_1"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/progress_1" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/constraintLayout_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                app:cardCornerRadius="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout_1">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#FFFFFFFF">
+
+                    <View
+                        android:id="@+id/view3"
+                        android:layout_width="8dp"
+                        android:layout_height="0dp"
+                        android:background="#FFFED563"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/game_title_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:gravity="center_vertical"
+                        android:textColor="#FF333333"
+                        android:textSize="12sp"
+                        android:text="绘画教程视频"
+                        app:layout_constraintStart_toEndOf="@+id/view3"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/game_2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:gravity="center_vertical"
+                        android:text="美术小知识答题，答的越多能解锁的就越多哦"
+                        android:textColor="#FF666666"
+                        android:textSize="10sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/game_title_2"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/game_title_2"
+                        app:layout_constraintTop_toTopOf="@+id/game_title_2" />
+
+                    <TextView
+                        android:id="@+id/progress_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:gravity="center_vertical"
+                        android:textColor="#FFFF8D1A"
+                        android:textSize="10sp"
+                        android:text="平均解锁进度：67%"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/view3"
+                        app:layout_constraintTop_toBottomOf="@+id/game_title_2" />
+
+                    <ProgressBar
+                        android:id="@+id/progress_horizontal_2"
+                        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                        android:layout_width="200dp"
+                        android:layout_height="0dp"
+                        android:layout_marginRight="25dp"
+                        app:layout_constraintTop_toTopOf="@+id/progress_2"
+                        app:layout_constraintBottom_toBottomOf="@+id/progress_2"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/progress_2" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/constraintLayout_3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                app:cardCornerRadius="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout_2">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#FFFFFFFF">
+
+                    <View
+                        android:id="@+id/view4"
+                        android:layout_width="8dp"
+                        android:layout_height="0dp"
+                        android:background="#FF7E64FD"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/game_title_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:gravity="center_vertical"
+                        android:textColor="#FF333333"
+                        android:textSize="12sp"
+                        android:text="创意搭配模板"
+                        app:layout_constraintStart_toEndOf="@+id/view4"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/game_3"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:gravity="center_vertical"
+                        android:text="答案配对连连看，画画无从下手就来找模板吧"
+                        android:textColor="#FF666666"
+                        android:textSize="10sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/game_title_3"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/game_title_3"
+                        app:layout_constraintTop_toTopOf="@+id/game_title_3" />
+
+                    <TextView
+                        android:id="@+id/progress_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:gravity="center_vertical"
+                        android:textColor="#FF7E64FD"
+                        android:textSize="10sp"
+                        android:text="平均解锁进度：33%"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/view4"
+                        app:layout_constraintTop_toBottomOf="@+id/game_title_3" />
+
+                    <ProgressBar
+                        android:id="@+id/progress_horizontal_3"
+                        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                        android:layout_width="200dp"
+                        android:layout_height="0dp"
+                        android:layout_marginRight="25dp"
+                        app:layout_constraintTop_toTopOf="@+id/progress_3"
+                        app:layout_constraintBottom_toBottomOf="@+id/progress_3"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/progress_3" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout_3"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,753 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F7F7F7"
+    tools:context=".InteractionFragment">
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:background="@drawable/inter_top"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:textColor="#FFCCCCCC"
+        android:textSize="14sp"
+        android:gravity="center_vertical"
+        android:paddingLeft="44dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/white_8"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:scaleType="fitXY"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:src="@drawable/inter_search"
+        app:layout_constraintBottom_toBottomOf="@+id/editText"
+        app:layout_constraintStart_toStartOf="@+id/editText"
+        app:layout_constraintTop_toTopOf="@+id/editText" />
+
+    <ImageView
+        android:id="@+id/gone"
+        android:layout_width="14dp"
+        android:layout_height="14dp"
+        android:background="#FFC7C7C7"
+        android:src="@drawable/baseline_clear_white"
+        android:visibility="gone"
+        android:layout_marginRight="13dp"
+        app:layout_constraintEnd_toEndOf="@+id/editText"
+        app:layout_constraintBottom_toBottomOf="@+id/editText"
+        app:layout_constraintTop_toTopOf="@+id/editText" />
+
+    <ImageView
+        android:layout_width="34dp"
+        android:layout_height="34dp"
+        android:layout_marginEnd="26dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/inter_scan"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/editText"
+        app:layout_constraintBottom_toBottomOf="@+id/editText"/>
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <HorizontalScrollView
+                android:id="@+id/horizontalScrollView"
+                android:layout_marginTop="24dp"
+                android:layout_width="0dp"
+                android:layout_height="80dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/linearLayout_candidate"
+                        android:layout_width="54dp"
+                        android:layout_height="80dp"
+                        android:layout_marginLeft="25dp"
+                        android:layout_marginRight="20dp">
+
+                        <View
+                            android:id="@+id/view7"
+                            android:layout_width="54dp"
+                            android:layout_height="54dp"
+                            android:layout_gravity="center"
+                            android:background="@drawable/interaction_button"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                        
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/inter_button_1"
+                            app:layout_constraintTop_toTopOf="@+id/view7"
+                            app:layout_constraintBottom_toBottomOf="@+id/view7"
+                            app:layout_constraintStart_toStartOf="@+id/view7"
+                            app:layout_constraintEnd_toEndOf="@+id/view7"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="21dp"
+                            android:layout_gravity="center"
+                            android:text="选人"
+                            android:textColor="#FF333333"
+                            android:textSize="14sp"
+                            android:layout_marginBottom="3dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/linearLayout_vote"
+                        android:layout_width="54dp"
+                        android:layout_height="80dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp">
+
+                        <View
+                            android:id="@+id/view8"
+                            android:layout_width="54dp"
+                            android:layout_height="54dp"
+                            android:layout_gravity="center"
+                            android:background="@drawable/interaction_button"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/inter_button_2"
+                            app:layout_constraintTop_toTopOf="@+id/view8"
+                            app:layout_constraintBottom_toBottomOf="@+id/view8"
+                            app:layout_constraintStart_toStartOf="@+id/view8"
+                            app:layout_constraintEnd_toEndOf="@+id/view8"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="21dp"
+                            android:layout_gravity="center"
+                            android:text="投票"
+                            android:textColor="#FF333333"
+                            android:textSize="14sp"
+                            android:layout_marginBottom="3dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/linearLayout_divide"
+                        android:layout_width="54dp"
+                        android:layout_height="80dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp">
+
+                        <View
+                            android:id="@+id/view9"
+                            android:layout_width="54dp"
+                            android:layout_height="54dp"
+                            android:layout_gravity="center"
+                            android:background="@drawable/interaction_button"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/inter_button_3"
+                            app:layout_constraintTop_toTopOf="@+id/view9"
+                            app:layout_constraintBottom_toBottomOf="@+id/view9"
+                            app:layout_constraintStart_toStartOf="@+id/view9"
+                            app:layout_constraintEnd_toEndOf="@+id/view9"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="21dp"
+                            android:layout_gravity="center"
+                            android:text="分组"
+                            android:textColor="#FF333333"
+                            android:textSize="14sp"
+                            android:layout_marginBottom="3dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/linearLayout_photograph"
+                        android:layout_width="54dp"
+                        android:layout_height="80dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp">
+
+                        <View
+                            android:id="@+id/view10"
+                            android:layout_width="54dp"
+                            android:layout_height="54dp"
+                            android:layout_gravity="center"
+                            android:background="@drawable/interaction_button"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/inter_button_4"
+                            app:layout_constraintTop_toTopOf="@+id/view10"
+                            app:layout_constraintBottom_toBottomOf="@+id/view10"
+                            app:layout_constraintStart_toStartOf="@+id/view10"
+                            app:layout_constraintEnd_toEndOf="@+id/view10"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="21dp"
+                            android:layout_gravity="center"
+                            android:text="拍照"
+                            android:textColor="#FF333333"
+                            android:textSize="14sp"
+                            android:layout_marginBottom="3dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/linearLayout_white_board"
+                        android:layout_width="54dp"
+                        android:layout_height="80dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp">
+
+                        <View
+                            android:id="@+id/view11"
+                            android:layout_width="54dp"
+                            android:layout_height="54dp"
+                            android:layout_gravity="center"
+                            android:background="@drawable/interaction_button"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/inter_button_5"
+                            app:layout_constraintTop_toTopOf="@+id/view11"
+                            app:layout_constraintBottom_toBottomOf="@+id/view11"
+                            app:layout_constraintStart_toStartOf="@+id/view11"
+                            app:layout_constraintEnd_toEndOf="@+id/view11"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="21dp"
+                            android:layout_gravity="center"
+                            android:text="白板"
+                            android:textColor="#FF333333"
+                            android:textSize="14sp"
+                            android:layout_marginBottom="3dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/linearLayout_timer"
+                        android:layout_width="54dp"
+                        android:layout_height="80dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="25dp">
+
+                        <View
+                            android:id="@+id/view12"
+                            android:layout_width="54dp"
+                            android:layout_height="54dp"
+                            android:layout_gravity="center"
+                            android:background="@drawable/interaction_button"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/inter_button_6"
+                            app:layout_constraintTop_toTopOf="@+id/view12"
+                            app:layout_constraintBottom_toBottomOf="@+id/view12"
+                            app:layout_constraintStart_toStartOf="@+id/view12"
+                            app:layout_constraintEnd_toEndOf="@+id/view12"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="21dp"
+                            android:layout_gravity="center"
+                            android:text="计时器"
+                            android:textColor="#FF333333"
+                            android:textSize="14sp"
+                            android:layout_marginBottom="3dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </LinearLayout>
+            </HorizontalScrollView>
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="29dp"
+                android:text="猜你想要"
+                android:textColor="#FF333333"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@+id/linearLayout_3D_model"
+                app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/linearLayout_3D_model"
+                android:layout_width="156dp"
+                android:layout_height="135dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="10dp"
+                app:cardCornerRadius="8dp"
+                app:layout_constraintEnd_toStartOf="@+id/linearLayout_work"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/interaction_function_1"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/model" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="10dp"
+                        android:text="3D模型展示"
+                        android:textColor="#FF333333"
+                        android:textSize="12sp" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/linearLayout_work"
+                android:layout_width="156dp"
+                android:layout_height="135dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="16dp"
+                app:cardCornerRadius="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/linearLayout_3D_model"
+                app:layout_constraintTop_toBottomOf="@+id/textView">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/interaction_function_2"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/works" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="10dp"
+                        android:text="学生作品展示"
+                        android:textColor="#FFFFFFFF"
+                        android:textSize="12sp" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/linearLayout_virtual"
+                android:layout_width="156dp"
+                android:layout_height="135dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="18dp"
+                app:cardCornerRadius="8dp"
+                app:layout_constraintEnd_toStartOf="@+id/linearLayout_intelligent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout_3D_model">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/interaction_function_2"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/vr" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="10dp"
+                        android:text="虚拟美术馆"
+                        android:textColor="#FFFFFFFF"
+                        android:textSize="12sp" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/linearLayout_intelligent"
+                android:layout_width="156dp"
+                android:layout_height="135dp"
+                android:layout_marginTop="18dp"
+                android:layout_marginEnd="16dp"
+                app:cardCornerRadius="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/linearLayout_virtual"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout_work">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/interaction_function_1"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ai" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="10dp"
+                        android:text="智能画作分析"
+                        android:textColor="#FF333333"
+                        android:textSize="12sp" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="互动游戏"
+                android:textColor="#FF333333"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@+id/linearLayout_virtual"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout_virtual" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/white_8"
+                app:layout_constraintBottom_toTopOf="@+id/constraintLayout_slogan"
+                app:layout_constraintEnd_toEndOf="@+id/linearLayout_intelligent"
+                app:layout_constraintStart_toStartOf="@+id/linearLayout_virtual"
+                app:layout_constraintTop_toBottomOf="@+id/textView2"
+                android:orientation="vertical">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayout_1V1_PK"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/textView3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="44dp"
+                        android:layout_marginLeft="30dp"
+                        android:gravity="center"
+                        android:text="1V1 PK"
+                        android:textColor="#FF333333"
+                        android:textSize="14sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:layout_marginRight="25dp"
+                        android:background="@drawable/arrow_forward_gray"
+                        app:layout_constraintBottom_toBottomOf="@+id/textView3"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/textView3" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:background="#FFC7C7C7"/>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayout_creative"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/textView4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="44dp"
+                        android:layout_marginLeft="30dp"
+                        android:gravity="center"
+                        android:text="创意小挑战"
+                        android:textColor="#FF333333"
+                        android:textSize="14sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:layout_marginRight="25dp"
+                        android:background="@drawable/arrow_forward_gray"
+                        app:layout_constraintBottom_toBottomOf="@+id/textView4"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/textView4" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:background="#FFC7C7C7"/>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayout_fun_Q_A"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/textView5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="44dp"
+                        android:layout_marginLeft="30dp"
+                        android:gravity="center"
+                        android:text="趣味问答"
+                        android:textColor="#FF333333"
+                        android:textSize="14sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:layout_marginRight="25dp"
+                        android:background="@drawable/arrow_forward_gray"
+                        app:layout_constraintBottom_toBottomOf="@+id/textView5"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/textView5" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:background="#FFC7C7C7"/>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayout_jielong"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/textView6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="44dp"
+                        android:layout_marginLeft="30dp"
+                        android:gravity="center"
+                        android:text="接龙绘画"
+                        android:textColor="#FF333333"
+                        android:textSize="14sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:layout_marginRight="25dp"
+                        android:background="@drawable/arrow_forward_gray"
+                        app:layout_constraintBottom_toBottomOf="@+id/textView6"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/textView6" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:background="#FFC7C7C7"/>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayout_coloring"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/textView7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="44dp"
+                        android:layout_marginLeft="30dp"
+                        android:gravity="center"
+                        android:text="涂色游戏"
+                        android:textColor="#FF333333"
+                        android:textSize="14sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:layout_marginRight="25dp"
+                        android:background="@drawable/arrow_forward_gray"
+                        app:layout_constraintBottom_toBottomOf="@+id/textView7"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/textView7" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:background="#FFC7C7C7"/>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayout_riddle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/textView8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="44dp"
+                        android:layout_marginLeft="30dp"
+                        android:gravity="center"
+                        android:text="作品猜谜"
+                        android:textColor="#FF333333"
+                        android:textSize="14sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:layout_marginRight="25dp"
+                        android:background="@drawable/arrow_forward_gray"
+                        app:layout_constraintBottom_toBottomOf="@+id/textView8"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/textView8" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout_slogan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <View
+                    android:id="@+id/view2"
+                    android:layout_width="30dp"
+                    android:layout_height="1dp"
+                    android:background="#FF999999"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#FF999999"
+                    android:textSize="13sp"
+                    android:text="彩墨点点  趣味连连"
+                    android:layout_margin="10dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/view2"
+                    app:layout_constraintEnd_toStartOf="@+id/view3"/>
+
+                <View
+                    android:id="@+id/view3"
+                    android:layout_width="30dp"
+                    android:layout_height="1dp"
+                    android:background="#FF999999"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
