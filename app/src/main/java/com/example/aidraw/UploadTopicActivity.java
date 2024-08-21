@@ -1,6 +1,7 @@
 package com.example.aidraw;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
@@ -80,6 +81,15 @@ public class UploadTopicActivity extends AppCompatActivity {
                             TopicNew topicNew = new TopicNew(head_url[i], name[i], time[i], text[i], work_url[i]);
                             topicNewArrayList.add(topicNew);
                         }
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                TopicAdapter topicAdapter = new TopicAdapter(UploadTopicActivity.this, topicNewArrayList);
+                                recyclerView.setLayoutManager(new LinearLayoutManager(UploadTopicActivity.this));
+                                recyclerView.setAdapter(topicAdapter);
+                                topicAdapter.notifyDataSetChanged();
+                            }
+                        });
                     } catch (Exception e) {
                         e.printStackTrace();
                         runOnUiThread(new Runnable() {
@@ -92,8 +102,6 @@ public class UploadTopicActivity extends AppCompatActivity {
                 }
             }).start();
         }
-        TopicAdapter topicAdapter = new TopicAdapter(this, topicNewArrayList);
-        recyclerView.setAdapter(topicAdapter);
-        topicAdapter.notifyDataSetChanged();
+
     }
 }
