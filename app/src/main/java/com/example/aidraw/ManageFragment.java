@@ -228,14 +228,12 @@ public class ManageFragment extends Fragment {
                                 .build();//创造http请求
                         Response response = client.newCall(request).execute();//执行发送的指令
                     String responseData = response.body().string();//获取后端返回过来的json格式的结果
-                        Log.d( "run:222 ",responseData);
                     JSONObject jsonObject = new JSONObject(responseData);
                     JSONObject dataObject = jsonObject.getJSONObject("data");
                     term.setText("当前学期：" + "2024-2025年第一学期");
                     class_name.setText("班级名称：" + classname[0]);
                     student_number.setText("学生人数：" + dataObject.getString("num"));
                     class_time.setText("上课时间：" + dataObject.getString("classTime"));
-                    class_more.setImageResource(R.drawable.expand_more_white);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -280,7 +278,6 @@ public class ManageFragment extends Fragment {
                             gender[i] = jsonObject2.getString("gender");
                             id[i] = String.valueOf(jsonObject2.getInt("num"));
                         }
-                        Log.d( "student1 ",name[0]);
                         for (int i = 0; i < jsonArray.length(); i++) {
                             StudentNew studentNew = new StudentNew(url[i], name[i], gender[i], id[i]);
                             studentNewArrayList.add(studentNew);
