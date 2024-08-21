@@ -87,7 +87,7 @@
         <EditText
             android:id="@+id/editText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="70dp"
             android:textColor="#FF999999"
             android:textSize="12sp"
             android:text="说出你的疑问，我可以帮你解答哦"
