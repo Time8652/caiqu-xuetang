@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,22 +30,24 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
 @SuppressLint("ValidFragment")
 public class CommunityFragment extends Fragment {
 
     private String key;
-    private ImageView resources_more, resources_1, resources_2, resources_3, resources_more_and_more, online_challenge_more,
-            topic_discussion_more, imageView_1, imageView_2, display_work_more;
+    private ImageView resources_more, resources_1, resources_2, resources_3, resources_more_and_more,
+            online_challenge_more, topic_discussion_more, imageView_1, imageView_2, display_work_more;
     private CardView constraintLayout_1, constraintLayout_2, constraintLayout_3;
     private ConstraintLayout constraintLayout_topic_1, constraintLayout_topic_2, constraintLayout_topic_3;
     private TextView online_challenge_title_1, online_challenge_title_2, online_challenge_title_3, online_challenge_1,
             online_challenge_2, online_challenge_3, topic_1, topic_2, topic_3, participation_1, participation_2,
             participation_3, send;
-    private EditText topic;
+    private EditText topic, ed_topic_title;
     private RecyclerView recyclerView;
     private ArrayList<WorkNew> workNewArrayList;
     private URL[] work_url;
@@ -53,6 +56,7 @@ public class CommunityFragment extends Fragment {
     private static boolean challengeFlag = false, topicFlag = false;
     private static int challengeId;
     private static String challengeTitle, challengeText, topicTitle;
+    private URL topic_url;
 
     CommunityFragment(String key) {
         this.key = key;
@@ -102,6 +106,7 @@ public class CommunityFragment extends Fragment {
         participation_3 = view.findViewById(R.id.participation_3);
         send = view.findViewById(R.id.send);
         topic = view.findViewById(R.id.topic);
+        ed_topic_title = view.findViewById(R.id.topic_title);
         recyclerView = view.findViewById(R.id.recyclerView);
         StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(staggeredGridLayoutManager);
@@ -430,15 +435,72 @@ public class CommunityFragment extends Fragment {
             }
         });
         imageView_2.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View v) {
                 //添加话题
+                ed_topic_title.setText("#");
             }
         });
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //发布评论
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            String json;
+                            if (LoginActivity.getIdentity().equals("teacher")) {
+                                json = "{\n" +
+                                        "\t\"text\": \"" + topic.getText().toString() + "\",\n" +
+                                        "\t\"classId\": \"" + ManageFragment.getClassId() + "\",\n" +
+                                        "\t\"title\": \"" + ed_topic_title.getText().toString() + "\",\n" +
+                                        "\t\"type\": \"" + "0" + "\"\n" +
+                                        "}";
+                            } else {
+                                json = "{\n" +
+                                        "\t\"text\": \"" + topic.getText().toString() + "\",\n" +
+                                        "\t\"classId\": \"" + ManageFragment.getClassId() + "\",\n" +
+                                        "\t\"title\": \"" + ed_topic_title.getText().toString() + "\",\n" +
+                                        "\t\"type\": \"" + "1" + "\"\n" +
+                                        "}";
+                            }
+                            OkHttpClient client = new OkHttpClient();//创建http客户端
+                            Request request = new Request.Builder()
+                                    .url("http://" + LoginActivity.getUrl() + ":8080/common/community-discuss")
+                                    .post(RequestBody.create(MediaType.parse("application/json"), json))
+                                    .build();//创造http请求
+                            Response response = client.newCall(request).execute();//执行发送的指令
+                            String responseData = response.body().string();//获取后端返回过来的json格式的结果
+                            JSONObject jsonObject = new JSONObject(responseData);
+                            int code = jsonObject.getInt("code");
+                            if (code == 0) {
+                                getActivity().runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(getActivity(), "发表成功", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            } else {
+                                getActivity().runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(getActivity(), "发表失败", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(getActivity(), "网络连接失败", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+                    }
+                }).start();
             }
         });
         display_work_more.setOnClickListener(new View.OnClickListener() {

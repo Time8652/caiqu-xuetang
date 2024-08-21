@@ -455,7 +455,7 @@ public class DistributeIntegralActivity extends AppCompatActivity {
                         public void run() {
                             try {
                                 String json = "{\n" +
-                                        "\t\"studentId\": \"" + Long.parseLong(editText.getText().toString()) + "\",\n" +
+                                        "\t\"studentId\": \"" + editText.getText().toString() + "\",\n" +
                                         "\t\"score\": \"" + add + "\",\n" +
                                         "\t\"message\": \"" + add_reason + "\"\n" +
                                         "}";

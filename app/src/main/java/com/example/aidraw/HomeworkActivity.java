@@ -5,9 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -63,6 +65,8 @@ public class HomeworkActivity extends AppCompatActivity {
 
     @SuppressLint("SetTextI18n")
     private void initData() {
+        SharedPreferences sharedPreferences = getSharedPreferences("Record",MODE_PRIVATE);
+        flag = sharedPreferences.getBoolean("Homework", false);
         if (flag) {
             new Thread(new Runnable() {
                 @Override
@@ -196,7 +200,10 @@ public class HomeworkActivity extends AppCompatActivity {
                                     @Override
                                     public void run() {
                                         Toast.makeText(HomeworkActivity.this, "保存成功", Toast.LENGTH_SHORT).show();
-                                        flag = true;
+                                        SharedPreferences sharedPreferences = getSharedPreferences("Record",MODE_PRIVATE);
+                                        @SuppressLint("CommitPrefEdits") SharedPreferences.Editor edit = sharedPreferences.edit();
+                                        edit.putBoolean("Homework", true);
+                                        edit.apply();
                                     }
                                 });
                             } else {
@@ -248,7 +255,10 @@ public class HomeworkActivity extends AppCompatActivity {
                                     @Override
                                     public void run() {
                                         Toast.makeText(HomeworkActivity.this, "发布成功", Toast.LENGTH_SHORT).show();
-                                        flag = false;
+                                        SharedPreferences sharedPreferences = getSharedPreferences("Record",MODE_PRIVATE);
+                                        @SuppressLint("CommitPrefEdits") SharedPreferences.Editor edit = sharedPreferences.edit();
+                                        edit.putBoolean("Homework", false);
+                                        edit.apply();
                                     }
                                 });
                             } else {

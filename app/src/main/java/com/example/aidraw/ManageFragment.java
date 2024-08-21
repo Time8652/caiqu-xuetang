@@ -49,8 +49,7 @@ public class ManageFragment extends Fragment {
     private RecyclerView recyclerView;
     private ArrayList<StudentNew> studentNewArrayList;
     private URL[] url;
-    private String[] classname = new String[0], name, gender, id;
-    private String[] class_id;
+    private String[] classname, class_id, name, gender, id;
     private boolean classIfOpen = false;
 
     ManageFragment(String key) {
@@ -117,6 +116,7 @@ public class ManageFragment extends Fragment {
 
                     }
                     classId = class_id[0];
+                    grade_class.setText(classname[0]);
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -281,7 +281,7 @@ public class ManageFragment extends Fragment {
                             url[i] = new URL(jsonObject2.get("headerUrl").toString());
                             name[i] = jsonObject2.getString("name");
                             gender[i] = jsonObject2.getString("gender");
-                            id[i] = jsonObject2.getString("id");
+                            id[i] = String.valueOf(jsonObject2.getInt("num"));
                         }
                         Log.d( "student1 ",name[0]);
                         for (int i = 0; i < jsonArray.length(); i++) {
