@@ -113,7 +113,6 @@ public class ManageFragment extends Fragment {
                         JSONObject jsonObject2 = jsonArray.getJSONObject(i);
                         classname[i] = jsonObject2.getString("grade") + "年级" + jsonObject2.getString("classNum") + "班";
                         class_id[i] = jsonObject2.getString("id");
-
                     }
                     classId = class_id[0];
                     grade_class.setText(classname[0]);
@@ -172,12 +171,12 @@ public class ManageFragment extends Fragment {
             @SuppressLint("SetTextI18n")
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                classId = class_id[position];
+                grade_class.setText(classname[position]);
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
                         try {
-                            classId = class_id[position];
-                            grade_class.setText(classname[position]);
                             initClass(classId);
                             initStudent(classId);
                         } catch (Exception e) {
