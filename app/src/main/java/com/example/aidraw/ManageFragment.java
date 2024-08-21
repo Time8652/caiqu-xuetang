@@ -8,6 +8,7 @@ import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -106,14 +107,26 @@ public class ManageFragment extends Fragment {
                     JSONObject jsonObject = new JSONObject(responseData);
                     JSONObject dataObject = jsonObject.getJSONObject("data");
                     JSONArray jsonArray = dataObject.getJSONArray("list");
+
                     classname = new String[jsonArray.length()];
                     class_id = new Long[jsonArray.length()];
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject2 = jsonArray.getJSONObject(i);
                         classname[i] = jsonObject2.getString("grade") + "年级" + jsonObject2.getString("classNum") + "班";
-                        class_id[i] = jsonObject2.getLong("classId");
+                        class_id[i] = jsonObject2.getLong("id");
                     }
                     classId = class_id[0];
+
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, classname);
+                            listView.setAdapter(arrayAdapter);
+                        }
+                    });
+                    //放在这里是为了异步让classId有值
+                    initClass(classId);
+                    initStudent(classId);
                 } catch (Exception e) {
                     e.printStackTrace();
                     getActivity().runOnUiThread(new Runnable() {
@@ -123,12 +136,13 @@ public class ManageFragment extends Fragment {
                         }
                     });
                 }
+
             }
         }).start();
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, classname);
-        listView.setAdapter(arrayAdapter);
-        initClass(classId);
-        initStudent(classId);
+//        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, classname);
+//        listView.setAdapter(arrayAdapter);
+//        initClass(classId);
+//        initStudent(classId);
     }
 
     private void initOnClickListener() {
@@ -211,12 +225,16 @@ public class ManageFragment extends Fragment {
             public void run() {
                 try {
                     OkHttpClient client = new OkHttpClient();//创建http客户端
-                    Request request = new Request.Builder()
-                            .url("http://" + LoginActivity.getUrl() + ":8080/teacher/class?classId=" + classId)
-                            .header("Authorization", key)
-                            .get()
-                            .build();//创造http请求
-                    Response response = client.newCall(request).execute();//执行发送的指令
+                    if(classId!=null) {
+                        Request request = new Request.Builder()
+                                .url("http://" + LoginActivity.getUrl() + ":8080/teacher/class?classId=" + classId)
+                                .header("Authorization", key)
+                                .get()
+                                .build();//创造http请求
+
+
+                        Response response = client.newCall(request).execute();//执行发送的指令
+
                     String responseData = response.body().string();//获取后端返回过来的json格式的结果
                     JSONObject jsonObject = new JSONObject(responseData);
                     JSONObject dataObject = jsonObject.getJSONObject("data");
@@ -225,6 +243,7 @@ public class ManageFragment extends Fragment {
                     student_number.setText("学生人数：" + dataObject.getString("num"));
                     class_time.setText("上课时间：" + dataObject.getString("classTime"));
                     class_more.setImageResource(R.drawable.expand_more_white);
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                     getActivity().runOnUiThread(new Runnable() {
@@ -245,31 +264,33 @@ public class ManageFragment extends Fragment {
             @Override
             public void run() {
                 try {
-                    OkHttpClient client = new OkHttpClient();//创建http客户端
-                    Request request = new Request.Builder()
-                            .url("http://" + LoginActivity.getUrl() + ":8080/teacher/student-list?classId=" + classId)
-                            .header("Authorization", key)
-                            .get()
-                            .build();//创造http请求
-                    Response response = client.newCall(request).execute();//执行发送的指令
-                    String responseData = response.body().string();//获取后端返回过来的json格式的结果
-                    JSONObject jsonObject = new JSONObject(responseData);
-                    JSONObject dataObject = jsonObject.getJSONObject("data");
-                    JSONArray jsonArray = dataObject.getJSONArray("list");
-                    url = new URL[jsonArray.length()];
-                    name = new String[jsonArray.length()];
-                    gender = new String[jsonArray.length()];
-                    id = new String[jsonArray.length()];
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject jsonObject2 = jsonArray.getJSONObject(i);
-                        url[i] = (URL) jsonObject2.get("headerUrl");
-                        name[i] = (String) jsonObject2.get("name");
-                        gender[i] = (String) jsonObject2.get("gender");
-                        id[i] = (String) jsonObject2.get("id");
-                    }
-                    for (int i = 0; i < jsonArray.length(); i++){
-                        StudentNew studentNew = new StudentNew(url[i], name[i], gender[i], id[i]);
-                        studentNewArrayList.add(studentNew);
+                    if(classId!=null) {
+                        OkHttpClient client = new OkHttpClient();//创建http客户端
+                        Request request = new Request.Builder()
+                                .url("http://" + LoginActivity.getUrl() + ":8080/teacher/student-list?classId=" + classId)
+                                .header("Authorization", key)
+                                .get()
+                                .build();//创造http请求
+                        Response response = client.newCall(request).execute();//执行发送的指令
+                        String responseData = response.body().string();//获取后端返回过来的json格式的结果
+                        JSONObject jsonObject = new JSONObject(responseData);
+                        JSONObject dataObject = jsonObject.getJSONObject("data");
+                        JSONArray jsonArray = dataObject.getJSONArray("list");
+                        url = new URL[jsonArray.length()];
+                        name = new String[jsonArray.length()];
+                        gender = new String[jsonArray.length()];
+                        id = new String[jsonArray.length()];
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonObject2 = jsonArray.getJSONObject(i);
+                            url[i] = (URL) jsonObject2.get("headerUrl");
+                            name[i] = (String) jsonObject2.get("name");
+                            gender[i] = (String) jsonObject2.get("gender");
+                            id[i] = (String) jsonObject2.get("id");
+                        }
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            StudentNew studentNew = new StudentNew(url[i], name[i], gender[i], id[i]);
+                            studentNewArrayList.add(studentNew);
+                        }
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
