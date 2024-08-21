@@ -188,7 +188,7 @@ public class LoginActivity extends AppCompatActivity {
                     startActivity(new Intent(this, MainActivityStudent.class));
                 }
                 finish();
-            } else {
+            } else if (code == 1) {
                 android.app.AlertDialog dialog;
                 android.app.AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this)
                         .setTitle("账号或密码错误")                 //设置对话框的标题
