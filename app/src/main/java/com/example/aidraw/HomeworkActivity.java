@@ -3,13 +3,17 @@ package com.example.aidraw;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.aidraw.News.StudentNew;
@@ -119,16 +123,43 @@ public class HomeworkActivity extends AppCompatActivity {
 
             }
         });
+        DatePickerDialog.OnDateSetListener datePickerDialog1 = new DatePickerDialog.OnDateSetListener() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                deadline_day.setText(String.valueOf(year) + "-" + String.valueOf(month + 1) + "-" + String.valueOf(dayOfMonth));
+            }
+        };
         imageView_day.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                DatePickerDialog datePickerDialog = new DatePickerDialog(HomeworkActivity.this, datePickerDialog1, 2024, 0, 1);
+                datePickerDialog.show();
             }
         });
+        TimePickerDialog.OnTimeSetListener timeSetListener1 = new TimePickerDialog.OnTimeSetListener() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                String hours, minutes;
+                if (hourOfDay < 10) {
+                    hours = "0" + String.valueOf(hourOfDay);
+                } else {
+                    hours = String.valueOf(hourOfDay);
+                }
+                if (minute < 10) {
+                    minutes = "0" + String.valueOf(minute);
+                } else {
+                    minutes = String.valueOf(minute);
+                }
+                deadline_time.setText(hours + ":" + minutes + ":00");
+            }
+        };
         imageView_time.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                TimePickerDialog timePickerDialog = new TimePickerDialog(HomeworkActivity.this, timeSetListener1, 1, 1, true);
+                timePickerDialog.show();
             }
         });
         cancel.setOnClickListener(new View.OnClickListener() {
