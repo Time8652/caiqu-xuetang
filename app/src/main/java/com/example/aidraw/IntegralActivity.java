@@ -49,7 +49,7 @@ public class IntegralActivity extends AppCompatActivity {
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    private void initPoint(Long classId) {
+    private void initPoint(String classId) {
         integralNewArrayList = new ArrayList<>();
         new Thread(new Runnable() {
             @Override

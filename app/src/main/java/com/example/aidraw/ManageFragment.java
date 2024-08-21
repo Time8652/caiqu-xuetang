@@ -2,6 +2,7 @@ package com.example.aidraw;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
@@ -40,7 +41,7 @@ import okhttp3.Response;
 public class ManageFragment extends Fragment {
 
     private String key;
-    private static Long classId;
+    private static String classId;
     private TextView grade_class, notice, term, class_name, student_number, class_time;
     private ImageView class_more;
     private ListView listView;
@@ -49,13 +50,13 @@ public class ManageFragment extends Fragment {
     private ArrayList<StudentNew> studentNewArrayList;
     private URL[] url;
     private String[] classname = new String[0], name, gender, id;
-    private Long[] class_id;
+    private String[] class_id;
     private boolean classIfOpen = false;
 
     ManageFragment(String key) {
         this.key = key;
     }
-    public static Long getClassId() {
+    public static String getClassId() {
         return classId;
     }
 
@@ -108,11 +109,12 @@ public class ManageFragment extends Fragment {
                     JSONObject dataObject = jsonObject.getJSONObject("data");
                     JSONArray jsonArray = dataObject.getJSONArray("list");
                     classname = new String[jsonArray.length()];
-                    class_id = new Long[jsonArray.length()];
+                    class_id = new String[jsonArray.length()];
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject2 = jsonArray.getJSONObject(i);
                         classname[i] = jsonObject2.getString("grade") + "年级" + jsonObject2.getString("classNum") + "班";
-                        class_id[i] = jsonObject2.getLong("id");
+                        class_id[i] = jsonObject2.getString("id");
+
                     }
                     classId = class_id[0];
                     getActivity().runOnUiThread(new Runnable() {
@@ -212,13 +214,14 @@ public class ManageFragment extends Fragment {
         });
     }
 
-    private void initClass(Long classId) {
+    private void initClass(String classId) {
         new Thread(new Runnable() {
             @SuppressLint("SetTextI18n")
             @Override
             public void run() {
                 try {
                     OkHttpClient client = new OkHttpClient();//创建http客户端
+                    Log.d( "run11: ",classId.toString());
                     if(classId!=null) {
                         Request request = new Request.Builder()
                                 .url("http://" + LoginActivity.getUrl() + ":8080/teacher/class?classId=" + classId)
@@ -227,6 +230,7 @@ public class ManageFragment extends Fragment {
                                 .build();//创造http请求
                         Response response = client.newCall(request).execute();//执行发送的指令
                     String responseData = response.body().string();//获取后端返回过来的json格式的结果
+                        Log.d( "run:222 ",responseData);
                     JSONObject jsonObject = new JSONObject(responseData);
                     JSONObject dataObject = jsonObject.getJSONObject("data");
                     term.setText("当前学期：" + "2024-2025年第一学期");
@@ -249,7 +253,7 @@ public class ManageFragment extends Fragment {
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    private void initStudent(Long classId) {
+    private void initStudent(String classId) {
         studentNewArrayList = new ArrayList<>();
         new Thread(new Runnable() {
             @Override
@@ -267,17 +271,19 @@ public class ManageFragment extends Fragment {
                         JSONObject jsonObject = new JSONObject(responseData);
                         JSONObject dataObject = jsonObject.getJSONObject("data");
                         JSONArray jsonArray = dataObject.getJSONArray("list");
+                        Log.d("jsonarray ",jsonArray.toString());
                         url = new URL[jsonArray.length()];
                         name = new String[jsonArray.length()];
                         gender = new String[jsonArray.length()];
                         id = new String[jsonArray.length()];
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject jsonObject2 = jsonArray.getJSONObject(i);
-                            url[i] = (URL) jsonObject2.get("headerUrl");
+                            url[i] = new URL(jsonObject2.get("headerUrl").toString());
                             name[i] = jsonObject2.getString("name");
                             gender[i] = jsonObject2.getString("gender");
                             id[i] = jsonObject2.getString("id");
                         }
+                        Log.d( "student1 ",name[0]);
                         for (int i = 0; i < jsonArray.length(); i++) {
                             StudentNew studentNew = new StudentNew(url[i], name[i], gender[i], id[i]);
                             studentNewArrayList.add(studentNew);
@@ -286,6 +292,7 @@ public class ManageFragment extends Fragment {
                             @Override
                             public void run() {
                                 StudentAdapter studentAdapter = new StudentAdapter(getContext(), studentNewArrayList);
+                                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                                 recyclerView.setAdapter(studentAdapter);
                                 studentAdapter.notifyDataSetChanged();
                             }
