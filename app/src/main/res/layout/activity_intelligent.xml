@@ -46,7 +46,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="600dp"
                 android:scaleType="fitXY"
-                android:src="@drawable/works"/>
+                android:src="@drawable/works"
+                app:layout_constraintTop_toTopOf="parent"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
