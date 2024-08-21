@@ -221,8 +221,7 @@ public class ManageFragment extends Fragment {
             public void run() {
                 try {
                     OkHttpClient client = new OkHttpClient();//创建http客户端
-                    Log.d( "run11: ",classId.toString());
-                    if(classId!=null) {
+                    if(classId != null) {
                         Request request = new Request.Builder()
                                 .url("http://" + LoginActivity.getUrl() + ":8080/teacher/class?classId=" + classId)
                                 .header("Authorization", key)
@@ -259,7 +258,7 @@ public class ManageFragment extends Fragment {
             @Override
             public void run() {
                 try {
-                    if(classId!=null) {
+                    if(classId != null) {
                         OkHttpClient client = new OkHttpClient();//创建http客户端
                         Request request = new Request.Builder()
                                 .url("http://" + LoginActivity.getUrl() + ":8080/teacher/student-list?classId=" + classId)
@@ -271,7 +270,6 @@ public class ManageFragment extends Fragment {
                         JSONObject jsonObject = new JSONObject(responseData);
                         JSONObject dataObject = jsonObject.getJSONObject("data");
                         JSONArray jsonArray = dataObject.getJSONArray("list");
-                        Log.d("jsonarray ",jsonArray.toString());
                         url = new URL[jsonArray.length()];
                         name = new String[jsonArray.length()];
                         gender = new String[jsonArray.length()];
