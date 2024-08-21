@@ -563,7 +563,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="400dp"
+                android:layout_height="match_parent"
                 android:padding="10dp"
                 tools:listitem="@layout/list_item_work"
                 app:layout_constraintBottom_toTopOf="@+id/constraintLayout_slogan"

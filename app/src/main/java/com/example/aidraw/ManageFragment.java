@@ -107,7 +107,6 @@ public class ManageFragment extends Fragment {
                     JSONObject jsonObject = new JSONObject(responseData);
                     JSONObject dataObject = jsonObject.getJSONObject("data");
                     JSONArray jsonArray = dataObject.getJSONArray("list");
-
                     classname = new String[jsonArray.length()];
                     class_id = new Long[jsonArray.length()];
                     for (int i = 0; i < jsonArray.length(); i++) {
@@ -116,7 +115,6 @@ public class ManageFragment extends Fragment {
                         class_id[i] = jsonObject2.getLong("id");
                     }
                     classId = class_id[0];
-
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -139,10 +137,6 @@ public class ManageFragment extends Fragment {
 
             }
         }).start();
-//        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, classname);
-//        listView.setAdapter(arrayAdapter);
-//        initClass(classId);
-//        initStudent(classId);
     }
 
     private void initOnClickListener() {
@@ -231,10 +225,7 @@ public class ManageFragment extends Fragment {
                                 .header("Authorization", key)
                                 .get()
                                 .build();//创造http请求
-
-
                         Response response = client.newCall(request).execute();//执行发送的指令
-
                     String responseData = response.body().string();//获取后端返回过来的json格式的结果
                     JSONObject jsonObject = new JSONObject(responseData);
                     JSONObject dataObject = jsonObject.getJSONObject("data");
@@ -283,14 +274,22 @@ public class ManageFragment extends Fragment {
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject jsonObject2 = jsonArray.getJSONObject(i);
                             url[i] = (URL) jsonObject2.get("headerUrl");
-                            name[i] = (String) jsonObject2.get("name");
-                            gender[i] = (String) jsonObject2.get("gender");
-                            id[i] = (String) jsonObject2.get("id");
+                            name[i] = jsonObject2.getString("name");
+                            gender[i] = jsonObject2.getString("gender");
+                            id[i] = jsonObject2.getString("id");
                         }
                         for (int i = 0; i < jsonArray.length(); i++) {
                             StudentNew studentNew = new StudentNew(url[i], name[i], gender[i], id[i]);
                             studentNewArrayList.add(studentNew);
                         }
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                StudentAdapter studentAdapter = new StudentAdapter(getContext(), studentNewArrayList);
+                                recyclerView.setAdapter(studentAdapter);
+                                studentAdapter.notifyDataSetChanged();
+                            }
+                        });
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -303,8 +302,5 @@ public class ManageFragment extends Fragment {
                 }
             }
         }).start();
-        StudentAdapter studentAdapter = new StudentAdapter(getContext(), studentNewArrayList);
-        recyclerView.setAdapter(studentAdapter);
-        studentAdapter.notifyDataSetChanged();
     }
 }

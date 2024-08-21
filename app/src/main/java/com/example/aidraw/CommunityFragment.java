@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.annotation.SuppressLint;
 import android.app.Fragment;
@@ -18,8 +19,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.aidraw.MyAdapter.WorkAdapter;
+import com.example.aidraw.News.WorkNew;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Calendar;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -38,8 +46,10 @@ public class CommunityFragment extends Fragment {
             participation_3, send;
     private EditText topic;
     private RecyclerView recyclerView;
+    private ArrayList<WorkNew> workNewArrayList;
+    private URL[] work_url;
     private int[] challenge_id, topic_participation;
-    private String[] challenge_title, challenge_text, topic_title;
+    private String[] challenge_title, challenge_text, topic_title, work_title, work_like, work_time, work_final_time;
     private static boolean challengeFlag = false, topicFlag = false;
     private static int challengeId;
     private static String challengeTitle, challengeText, topicTitle;
@@ -93,6 +103,8 @@ public class CommunityFragment extends Fragment {
         send = view.findViewById(R.id.send);
         topic = view.findViewById(R.id.topic);
         recyclerView = view.findViewById(R.id.recyclerView);
+        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(staggeredGridLayoutManager);
         //处理点击事件
         initOnClickListener();
     }
@@ -218,7 +230,7 @@ public class CommunityFragment extends Fragment {
                 try {
                     OkHttpClient client = new OkHttpClient();//创建http客户端
                     Request request = new Request.Builder()
-                            .url("http://" + LoginActivity.getUrl() + ":8080/common/challenge")
+                            .url("http://" + LoginActivity.getUrl() + ":8080/common/community-works")
                             .header("Authorization", key)
                             .get()
                             .build();//创造http请求
@@ -227,13 +239,46 @@ public class CommunityFragment extends Fragment {
                     JSONObject jsonObject = new JSONObject(responseData);
                     JSONObject dataObject = jsonObject.getJSONObject("data");
                     JSONArray jsonArray = dataObject.getJSONArray("list");
-                    challenge_title = new String[3];
-                    challenge_text = new String[3];
-                    for (int i = 0; i < 3; i++) {
+                    work_url = new URL[jsonArray.length()];
+                    work_title = new String[jsonArray.length()];
+                    work_like = new String[jsonArray.length()];
+                    work_time = new String[jsonArray.length()];
+                    work_final_time = new String[jsonArray.length()];
+                    Calendar calendar = Calendar.getInstance();
+                    for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject2 = jsonArray.getJSONObject(i);
-                        challenge_title[i] = jsonObject2.getString("title");
-                        challenge_text[i] = jsonObject2.getString("text");
+                        work_url[i] = (URL) jsonObject2.get("worksUrl");
+                        work_title[i] = jsonObject2.getString("title");
+                        work_like[i] = jsonObject2.getString("starsNum");
+                        work_time[i] = jsonObject2.getString("createTime");
+                        if (calendar.get((Calendar.YEAR)) - Integer.parseInt(work_time[i].substring(0, 4)) > 0) {
+                            work_final_time[i] = String.valueOf(calendar.get(Calendar.YEAR) - Integer.parseInt(work_time[i].substring(0, 4))) + "年前";
+                        } else if (calendar.get((Calendar.MONTH)) + 1 - Integer.parseInt(work_time[i].substring(5, 7)) > 0) {
+                            work_final_time[i] = String.valueOf(calendar.get(Calendar.YEAR) - Integer.parseInt(work_time[i].substring(5, 7))) + "月前";
+                        } else if (calendar.get((Calendar.DAY_OF_MONTH)) - Integer.parseInt(work_time[i].substring(8, 10)) > 0) {
+                            work_final_time[i] = String.valueOf(calendar.get(Calendar.YEAR) - Integer.parseInt(work_time[i].substring(8, 10))) + "日前";
+                        } else if (calendar.get((Calendar.HOUR_OF_DAY)) - Integer.parseInt(work_time[i].substring(11, 13)) > 0) {
+                            work_final_time[i] = String.valueOf(calendar.get(Calendar.YEAR) - Integer.parseInt(work_time[i].substring(11, 13))) + "小时前";
+                        } else if (calendar.get((Calendar.MINUTE)) - Integer.parseInt(work_time[i].substring(14, 16)) > 0) {
+                            work_final_time[i] = String.valueOf(calendar.get(Calendar.YEAR) - Integer.parseInt(work_time[i].substring(14, 16))) + "分钟前";
+                        } else {
+                            work_final_time[i] = "刚刚";
+                        }
                     }
+                    workNewArrayList = new ArrayList<>();
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        WorkNew workNew = new WorkNew(work_url[i], work_title[i], work_like[i], work_time[i]);
+                        workNewArrayList.add(workNew);
+                    }
+                    getActivity().runOnUiThread(new Runnable() {
+                        @SuppressLint("NotifyDataSetChanged")
+                        @Override
+                        public void run() {
+                            WorkAdapter workAdapter = new WorkAdapter(getContext(), workNewArrayList);
+                            recyclerView.setAdapter(workAdapter);
+                            workAdapter.notifyDataSetChanged();
+                        }
+                    });
                 } catch (Exception e) {
                     e.printStackTrace();
                     getActivity().runOnUiThread(new Runnable() {
@@ -245,23 +290,6 @@ public class CommunityFragment extends Fragment {
                 }
             }
         }).start();
-        recyclerView.setAdapter(new RecyclerView.Adapter() {
-            @NonNull
-            @Override
-            public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                return null;
-            }
-
-            @Override
-            public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-
-            }
-
-            @Override
-            public int getItemCount() {
-                return 0;
-            }
-        });
     }
 
     public static boolean getChallengeFlag() {

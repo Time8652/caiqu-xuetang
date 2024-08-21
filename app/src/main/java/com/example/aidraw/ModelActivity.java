@@ -3,6 +3,7 @@ package com.example.aidraw;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.os.Bundle;
 import android.view.View;
@@ -20,6 +21,8 @@ public class ModelActivity extends AppCompatActivity {
         key = LoginActivity.getKey();
         url = LoginActivity.getUrl();
         recyclerView = findViewById(R.id.recyclerView);
+        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(staggeredGridLayoutManager);
         recyclerView.setAdapter(new RecyclerView.Adapter() {
             @NonNull
             @Override

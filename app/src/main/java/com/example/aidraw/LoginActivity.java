@@ -1,6 +1,5 @@
 package com.example.aidraw;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
