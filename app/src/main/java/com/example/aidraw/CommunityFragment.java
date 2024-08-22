@@ -140,12 +140,17 @@ public class CommunityFragment extends Fragment {
                         challenge_title[i] = jsonObject2.getString("title");
                         challenge_text[i] = jsonObject2.getString("text");
                     }
-                    online_challenge_title_1.setText(challenge_title[0]);
-                    online_challenge_title_2.setText(challenge_title[1]);
-                    online_challenge_title_3.setText(challenge_title[2]);
-                    online_challenge_1.setText(challenge_text[0]);
-                    online_challenge_2.setText(challenge_text[1]);
-                    online_challenge_3.setText(challenge_text[2]);
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            online_challenge_title_1.setText(challenge_title[0]);
+                            online_challenge_title_2.setText(challenge_title[1]);
+                            online_challenge_title_3.setText(challenge_title[2]);
+                            online_challenge_1.setText(challenge_text[0]);
+                            online_challenge_2.setText(challenge_text[1]);
+                            online_challenge_3.setText(challenge_text[2]);
+                        }
+                    });
                 } catch (Exception e) {
                     e.printStackTrace();
                     getActivity().runOnUiThread(new Runnable() {
@@ -175,9 +180,55 @@ public class CommunityFragment extends Fragment {
                     for (int i = 0; i < 3; i++) {
                         topic_title[i] = jsonArray.getString(i);
                     }
-                    topic_1.setText(topic_title[0]);
-                    topic_2.setText(topic_title[1]);
-                    topic_3.setText(topic_title[2]);
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            topic_1.setText(topic_title[0]);
+                            topic_2.setText(topic_title[1]);
+                            topic_3.setText(topic_title[2]);
+                            // ui 更新完启动后一个线程，确保后续请求执行时，topic_title已经初始化
+                            for (int i = 0; i < 3; i++) {
+                                int finalI = i;
+                                new Thread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        try {
+                                            OkHttpClient client = new OkHttpClient();//创建http客户端
+                                            Request request = new Request.Builder()
+                                                    .url("http://" + LoginActivity.getUrl() + ":8080/common/good-discuss-number?title=" + topic_title[finalI])
+                                                    .header("Authorization", key)
+                                                    .get()
+                                                    .build();//创造http请求
+                                            Response response = client.newCall(request).execute();//执行发送的指令
+                                            String responseData = response.body().string();//获取后端返回过来的json格式的结果
+                                            JSONObject jsonObject = new JSONObject(responseData);
+                                            topic_participation = new int[1];
+                                            topic_participation[0] = jsonObject.getInt("data");
+                                            switch (finalI) {
+                                                case 0:
+                                                    participation_1.setText("精选回答" + topic_participation[0] + "个");
+                                                    break;
+                                                case 1:
+                                                    participation_2.setText("精选回答" + topic_participation[0] + "个");
+                                                    break;
+                                                case 2:
+                                                    participation_3.setText("精选回答" + topic_participation[0] + "个");
+                                                    break;
+                                            }
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                            getActivity().runOnUiThread(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    Toast.makeText(getActivity(), "网络连接失败", Toast.LENGTH_SHORT).show();
+                                                }
+                                            });
+                                        }
+                                    }
+                                }).start();
+                            }
+                        }
+                    });
                 } catch (Exception e) {
                     e.printStackTrace();
                     getActivity().runOnUiThread(new Runnable() {
@@ -189,46 +240,6 @@ public class CommunityFragment extends Fragment {
                 }
             }
         }).start();
-        for (int i = 0; i < 3; i++) {
-            int finalI = i;
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        OkHttpClient client = new OkHttpClient();//创建http客户端
-                        Request request = new Request.Builder()
-                                .url("http://" + LoginActivity.getUrl() + ":8080/common/good-discuss-number?title=" + topic_title[finalI])
-                                .header("Authorization", key)
-                                .get()
-                                .build();//创造http请求
-                        Response response = client.newCall(request).execute();//执行发送的指令
-                        String responseData = response.body().string();//获取后端返回过来的json格式的结果
-                        JSONObject jsonObject = new JSONObject(responseData);
-                        topic_participation = new int[1];
-                        topic_participation[0] = jsonObject.getInt("data");
-                        switch (finalI) {
-                            case 0:
-                                participation_1.setText("精选回答" + topic_participation[0] + "个");
-                                break;
-                            case 1:
-                                participation_2.setText("精选回答" + topic_participation[0] + "个");
-                                break;
-                            case 2:
-                                participation_3.setText("精选回答" + topic_participation[0] + "个");
-                                break;
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(getActivity(), "网络连接失败", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }
-                }
-            }).start();
-        }
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -252,7 +263,7 @@ public class CommunityFragment extends Fragment {
                     Calendar calendar = Calendar.getInstance();
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject2 = jsonArray.getJSONObject(i);
-                        work_url[i] = (URL) jsonObject2.get("worksUrl");
+                        work_url[i] = new URL(jsonObject2.get("worksUrl").toString());
                         work_title[i] = jsonObject2.getString("title");
                         work_like[i] = jsonObject2.getString("starsNum");
                         work_time[i] = jsonObject2.getString("createTime");

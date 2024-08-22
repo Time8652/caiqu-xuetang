@@ -1,9 +1,16 @@
 package com.example.aidraw;
 
+
+import static com.google.android.material.internal.ContextUtils.getActivity;
+
+import static java.security.AccessController.getContext;
+
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -71,6 +78,16 @@ public class UploadChallengeActivity extends AppCompatActivity {
                             ChallengeNew challengeNew = new ChallengeNew(head_url[i], name[i], time[i], work_url[i]);
                             challengeNewArrayList.add(challengeNew);
                         }
+                       runOnUiThread(new Runnable() {
+                           @Override
+                           public void run() {
+                               ChallengeAdapter challengeAdapter = new ChallengeAdapter(UploadChallengeActivity.this, challengeNewArrayList);
+                               recyclerView.setLayoutManager(new LinearLayoutManager(UploadChallengeActivity.this));
+                               recyclerView.setAdapter(challengeAdapter);
+                               challengeAdapter.notifyDataSetChanged();
+                           }
+                       });
+
                     } catch (Exception e) {
                         e.printStackTrace();
                         runOnUiThread(new Runnable() {
@@ -83,8 +100,6 @@ public class UploadChallengeActivity extends AppCompatActivity {
                 }
             }).start();
         }
-        ChallengeAdapter challengeAdapter = new ChallengeAdapter(this, challengeNewArrayList);
-        recyclerView.setAdapter(challengeAdapter);
-        challengeAdapter.notifyDataSetChanged();
+
     }
 }

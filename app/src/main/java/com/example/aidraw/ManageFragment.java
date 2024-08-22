@@ -115,12 +115,12 @@ public class ManageFragment extends Fragment {
                         class_id[i] = jsonObject2.getString("id");
                     }
                     classId = class_id[0];
-                    grade_class.setText(classname[0]);
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, classname);
                             listView.setAdapter(arrayAdapter);
+                            grade_class.setText(classname[0]);
                         }
                     });
                     //放在这里是为了异步让classId有值
@@ -228,6 +228,7 @@ public class ManageFragment extends Fragment {
                                 .build();//创造http请求
                         Response response = client.newCall(request).execute();//执行发送的指令
                     String responseData = response.body().string();//获取后端返回过来的json格式的结果
+                        Log.d("run: 11",responseData);
                     JSONObject jsonObject = new JSONObject(responseData);
                     JSONObject dataObject = jsonObject.getJSONObject("data");
                     term.setText("当前学期：" + "2024-2025年第一学期");
