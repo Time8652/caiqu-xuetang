@@ -48,7 +48,7 @@ public class HomeworkActivity extends AppCompatActivity {
     private EditText title, content;
     private ImageView imageView, imageView_day, imageView_time;
     private TextView deadline_day, deadline_time, cancel, save, send, homework_image;
-    private File file;
+    private File file = null;
     private Uri uri = null;
     private boolean flag = false;
 

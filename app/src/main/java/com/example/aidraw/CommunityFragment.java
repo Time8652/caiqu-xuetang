@@ -53,11 +53,10 @@ public class CommunityFragment extends Fragment {
     private URL[] work_url;
     private int[] challenge_id, topic_participation, topic_Participation;
     private String[] challenge_title, challenge_text, topic_title, work_title, work_like, work_time, work_final_time;
-    private static boolean challengeFlag = false, topicFlag = false;
+    private static boolean challengeFlag = false;
     private static int challengeId;
     private static String challengeTitle, challengeText, topicTitle;
     private static int topicParticipation;
-    private URL topic_url;
 
     CommunityFragment(String key) {
         this.key = key;
@@ -415,7 +414,6 @@ public class CommunityFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //跳转至话题详细页
-                topicFlag = false;
 //                startActivity(new Intent(getActivity(), UploadTopicActivity.class));
             }
         });
@@ -423,7 +421,6 @@ public class CommunityFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //跳转至置顶话题一
-                topicFlag = true;
                 topicTitle = topic_title[0];
                 topicParticipation = topic_Participation[0];
                 startActivity(new Intent(getActivity(), UploadTopicActivity.class));
@@ -433,7 +430,6 @@ public class CommunityFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //跳转至话题二
-                topicFlag = true;
                 topicTitle = topic_title[1];
                 topicParticipation = topic_Participation[1];
                 startActivity(new Intent(getActivity(), UploadTopicActivity.class));
@@ -443,7 +439,6 @@ public class CommunityFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //跳转至话题三
-                topicFlag = true;
                 topicTitle = topic_title[2];
                 topicParticipation = topic_Participation[2];
                 startActivity(new Intent(getActivity(), UploadTopicActivity.class));
