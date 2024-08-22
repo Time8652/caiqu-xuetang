@@ -91,6 +91,7 @@ public class ManageFragment extends Fragment {
     @SuppressLint({"SetTextI18n", "NotifyDataSetChanged"})
     private void initData() {
         class_more.setImageResource(R.drawable.expand_more_white);
+        notice.setText("暂无通知");
         listView.setVisibility(View.GONE);
         new Thread(new Runnable() {
             @Override

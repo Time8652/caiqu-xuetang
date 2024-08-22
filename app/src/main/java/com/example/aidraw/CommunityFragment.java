@@ -51,11 +51,12 @@ public class CommunityFragment extends Fragment {
     private RecyclerView recyclerView;
     private ArrayList<WorkNew> workNewArrayList;
     private URL[] work_url;
-    private int[] challenge_id, topic_participation;
+    private int[] challenge_id, topic_participation, topic_Participation;
     private String[] challenge_title, challenge_text, topic_title, work_title, work_like, work_time, work_final_time;
     private static boolean challengeFlag = false, topicFlag = false;
     private static int challengeId;
     private static String challengeTitle, challengeText, topicTitle;
+    private static int topicParticipation;
     private URL topic_url;
 
     CommunityFragment(String key) {
@@ -186,6 +187,7 @@ public class CommunityFragment extends Fragment {
                             topic_1.setText(topic_title[0]);
                             topic_2.setText(topic_title[1]);
                             topic_3.setText(topic_title[2]);
+                            topic_Participation = new int[3];
                             // ui 更新完启动后一个线程，确保后续请求执行时，topic_title已经初始化
                             for (int i = 0; i < 3; i++) {
                                 int finalI = i;
@@ -206,12 +208,15 @@ public class CommunityFragment extends Fragment {
                                             topic_participation[0] = jsonObject.getInt("data");
                                             switch (finalI) {
                                                 case 0:
+                                                    topic_Participation[0] = topic_participation[0];
                                                     participation_1.setText("精选回答" + topic_participation[0] + "个");
                                                     break;
                                                 case 1:
+                                                    topic_Participation[1] = topic_participation[0];
                                                     participation_2.setText("精选回答" + topic_participation[0] + "个");
                                                     break;
                                                 case 2:
+                                                    topic_Participation[2] = topic_participation[0];
                                                     participation_3.setText("精选回答" + topic_participation[0] + "个");
                                                     break;
                                             }
@@ -291,6 +296,8 @@ public class CommunityFragment extends Fragment {
                         @Override
                         public void run() {
                             WorkAdapter workAdapter = new WorkAdapter(getContext(), workNewArrayList);
+                            StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+                            recyclerView.setLayoutManager(staggeredGridLayoutManager);
                             recyclerView.setAdapter(workAdapter);
                             workAdapter.notifyDataSetChanged();
                         }
@@ -320,11 +327,11 @@ public class CommunityFragment extends Fragment {
     public static String getChallengeText() {
         return challengeText;
     }
-    public static boolean getTopicFlag() {
-        return topicFlag;
-    }
     public static String getTopicTitle() {
         return topicTitle;
+    }
+    public static int getTopicParticipation() {
+        return topicParticipation;
     }
 
     private void initOnClickListener() {
@@ -418,6 +425,7 @@ public class CommunityFragment extends Fragment {
                 //跳转至置顶话题一
                 topicFlag = true;
                 topicTitle = topic_title[0];
+                topicParticipation = topic_Participation[0];
                 startActivity(new Intent(getActivity(), UploadTopicActivity.class));
             }
         });
@@ -427,6 +435,7 @@ public class CommunityFragment extends Fragment {
                 //跳转至话题二
                 topicFlag = true;
                 topicTitle = topic_title[1];
+                topicParticipation = topic_Participation[1];
                 startActivity(new Intent(getActivity(), UploadTopicActivity.class));
             }
         });
@@ -436,6 +445,7 @@ public class CommunityFragment extends Fragment {
                 //跳转至话题三
                 topicFlag = true;
                 topicTitle = topic_title[2];
+                topicParticipation = topic_Participation[2];
                 startActivity(new Intent(getActivity(), UploadTopicActivity.class));
             }
         });
