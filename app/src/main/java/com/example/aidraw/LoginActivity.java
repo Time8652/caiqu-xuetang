@@ -38,7 +38,6 @@ public class LoginActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        startActivity(new Intent(this, IntelligentActivity.class));
         initView();
         initData();
         SharedPreferences sharedPreferences = getSharedPreferences("Record",MODE_PRIVATE);

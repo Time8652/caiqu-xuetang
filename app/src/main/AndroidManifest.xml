@@ -15,7 +15,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AIDraw"
         tools:targetApi="31"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true"
+        android:requestLegacyExternalStorage="true">
         <activity
             android:name=".UploadTopicActivity"
             android:exported="false" />

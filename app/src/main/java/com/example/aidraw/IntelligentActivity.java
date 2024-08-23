@@ -5,21 +5,35 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
+import android.content.ContentUris;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.DocumentsContract;
+import android.provider.MediaStore;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.aidraw.MyAdapter.IntelligentAdapter;
+import com.example.aidraw.News.IntelligentNew;
+
 import org.json.JSONObject;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -30,9 +44,11 @@ import okhttp3.Response;
 
 public class IntelligentActivity extends AppCompatActivity {
 
-    private String key;
+    private String key, path;
 
     private final int WRITE_EXTERNAL_STORAGE_REQUEST_CODE = 1, REQUEST_CODE_PHOTO = 0;
+    private ArrayList<IntelligentNew> intelligentNewArrayList;
+    private RecyclerView recyclerView;
     private ImageView imageView_intelligent;
     private EditText editText;
     private TextView send, intelligent_image;
@@ -48,6 +64,11 @@ public class IntelligentActivity extends AppCompatActivity {
         intelligent_image = findViewById(R.id.intelligent_image);
         editText = findViewById(R.id.editText);
         send = findViewById(R.id.send);
+        recyclerView = findViewById(R.id.recyclerView);
+        intelligentNewArrayList = new ArrayList<>();
+        IntelligentAdapter intelligentAdapter = new IntelligentAdapter(IntelligentActivity.this, intelligentNewArrayList);
+        recyclerView.setLayoutManager(new LinearLayoutManager(IntelligentActivity.this));
+        recyclerView.setAdapter(intelligentAdapter);
         imageView_intelligent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,17 +86,21 @@ public class IntelligentActivity extends AppCompatActivity {
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String text = editText.getText().toString();
+                IntelligentNew intelligentNew = new IntelligentNew(false, text, path);
+                intelligentNewArrayList.add(intelligentNew);
+                intelligentAdapter.notifyItemInserted(intelligentNewArrayList.size() - 1);
+                recyclerView.scrollToPosition(intelligentNewArrayList.size() - 1); // Scroll to the new item
+//                editText.setText("");
+                uri = null;
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
                         try {
-                            String json = "{\n" +
-                                    "\t\"text\": \"" + editText.getText().toString() + "\"\n" +
-                                    "}";
                             OkHttpClient client = new OkHttpClient();//创建http客户端
                             MultipartBody.Builder requestBody = new MultipartBody.Builder().setType(MultipartBody.FORM);//通过表单上传文件
                             RequestBody fileBody = RequestBody.create(MediaType.parse("image/*"), file);//上传的文件以及类型
-                            requestBody.addFormDataPart("file", file.getName(), fileBody).addFormDataPart("homeworkPostDTO", json);
+                            requestBody.addFormDataPart("file", file.getName(), fileBody).addFormDataPart("prompt", text);
                             Request request = new Request.Builder()
                                     .url("http://" + LoginActivity.getUrl() + ":8080/ai/muti")
                                     .post(requestBody.build())
@@ -83,7 +108,16 @@ public class IntelligentActivity extends AppCompatActivity {
                             Response response = client.newCall(request).execute();//执行发送的指令
                             String responseData = response.body().string();//获取后端返回过来的json格式的结果
                             JSONObject jsonObject = new JSONObject(responseData);
-                            editText.setText("");
+                            String string = jsonObject.getString("data");
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    IntelligentNew intelligentNew = new IntelligentNew(true, string, null);
+                                    intelligentNewArrayList.add(intelligentNew);
+                                    intelligentAdapter.notifyItemInserted(intelligentNewArrayList.size() - 1);
+                                    recyclerView.scrollToPosition(intelligentNewArrayList.size() - 1); // Scroll to the new item
+                                }
+                            });
                         } catch (Exception e) {
                             e.printStackTrace();
                             runOnUiThread(new Runnable() {
@@ -116,13 +150,43 @@ public class IntelligentActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_PHOTO && resultCode == RESULT_OK) {
             uri = data.getData();
-            if (uri != null) {
-                String path = uri.getPath();
-                if (path != null) {
-                    file = new File(path);
-                    intelligent_image.setText(path);
+            if (Build.VERSION.SDK_INT < 19) {
+                path = getImagePath(uri, null);
+            } else {
+                if (DocumentsContract.isDocumentUri(this, uri)) {
+                    String documentId = DocumentsContract.getDocumentId(uri);
+                    if (TextUtils.equals(uri.getAuthority(), "com.android.providers.media.documents")) {
+                        String id = documentId.split(":")[1];
+                        String selection = MediaStore.Images.Media._ID + "=" + id;
+                        path = getImagePath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, selection);
+                    } else if (TextUtils.equals(uri.getAuthority(), "com.android.providers.downloads.documents")) {
+                        Uri contentUri = ContentUris.withAppendedId(Uri.parse("content://downloads/public_downloads"), Long.valueOf(documentId));
+                        path = getImagePath(contentUri, null);
+                    }
+                } else if ("content".equalsIgnoreCase(uri.getScheme())) {
+                    path = getImagePath(uri, null);
+                } else if ("file".equalsIgnoreCase(uri.getScheme())) {
+                    path = uri.getPath();
                 }
             }
+            if (path != null) {
+                file = new File(path);
+                intelligent_image.setText(path);
+            }
         }
+    }
+
+    @SuppressLint("Range")
+    private String getImagePath(Uri uri, String selection) {
+        String image_path = null;
+        Cursor cursor = getContentResolver().query(uri, null, selection, null, null);
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                image_path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
+            }
+            cursor.close();
+            return image_path;
+        }
+        return null;
     }
 }

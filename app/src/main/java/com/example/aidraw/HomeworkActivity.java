@@ -10,11 +10,17 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.ContentUris;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.DocumentsContract;
+import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -50,6 +56,7 @@ public class HomeworkActivity extends AppCompatActivity {
     private TextView deadline_day, deadline_time, cancel, save, send, homework_image;
     private File file = null;
     private Uri uri = null;
+    private String path = null;
     private boolean flag = false;
 
     @Override
@@ -342,14 +349,44 @@ public class HomeworkActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_PHOTO && resultCode == RESULT_OK) {
             uri = data.getData();
-            if (uri != null) {
-                String path = uri.getPath();
-                if (path != null) {
-                    file = new File(path);
-                    homework_image.setText(path);
+            if (Build.VERSION.SDK_INT < 19) {
+                path = getImagePath(uri, null);
+            } else {
+                if (DocumentsContract.isDocumentUri(this, uri)) {
+                    String documentId = DocumentsContract.getDocumentId(uri);
+                    if (TextUtils.equals(uri.getAuthority(), "com.android.providers.media.documents")) {
+                        String id = documentId.split(":")[1];
+                        String selection = MediaStore.Images.Media._ID + "=" + id;
+                        path = getImagePath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, selection);
+                    } else if (TextUtils.equals(uri.getAuthority(), "com.android.providers.downloads.documents")) {
+                        Uri contentUri = ContentUris.withAppendedId(Uri.parse("content://downloads/public_downloads"), Long.valueOf(documentId));
+                        path = getImagePath(contentUri, null);
+                    }
+                } else if ("content".equalsIgnoreCase(uri.getScheme())) {
+                    path = getImagePath(uri, null);
+                } else if ("file".equalsIgnoreCase(uri.getScheme())) {
+                    path = uri.getPath();
                 }
             }
+            if (path != null) {
+                file = new File(path);
+                homework_image.setText(path);
+            }
         }
+    }
+
+    @SuppressLint("Range")
+    private String getImagePath(Uri uri, String selection) {
+        String image_path = null;
+        Cursor cursor = getContentResolver().query(uri, null, selection, null, null);
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                image_path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
+            }
+            cursor.close();
+            return image_path;
+        }
+        return null;
     }
 
     public static File downloadImage(String imageUrl) throws IOException {
