@@ -4,22 +4,30 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 @SuppressLint("ValidFragment")
 public class InteractionFragment extends Fragment {
 
     private String key, search;
+    private final int CAMERA_REQUEST_CODE = 1, REQUEST_CODE_TAKE = 0;
+    private static String selection = null;
     private EditText editText;
     private ImageView gone;
     private CardView model_3D, work, virtual, intelligent;
@@ -71,36 +79,53 @@ public class InteractionFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //选人
+                selection = "选人";
+                startActivity(new Intent(getActivity(), WebActivity.class));
             }
         });
         vote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //投票
+                selection = "投票";
+                startActivity(new Intent(getActivity(), WebActivity.class));
             }
         });
         divide.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //分组
+                selection = "分组";
+                startActivity(new Intent(getActivity(), WebActivity.class));
             }
         });
         photograph.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //拍摄
+                if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+                    Intent intent = new Intent();
+                    intent.setAction("android.media.action.IMAGE_CAPTURE");
+                    startActivityForResult(intent, REQUEST_CODE_TAKE);
+                } else {
+                    ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA}, CAMERA_REQUEST_CODE);
+                }
             }
         });
         white_board.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //白板
+                selection = "白板";
+                startActivity(new Intent(getActivity(), WebActivity.class));
             }
         });
         timer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //计时器
+                selection = "计时器";
+                startActivity(new Intent(getActivity(), WebActivity.class));
             }
         });
         model_3D.setOnClickListener(new View.OnClickListener() {
@@ -135,36 +160,48 @@ public class InteractionFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //1V1 PK
+                selection = "1V1 PK";
+                startActivity(new Intent(getActivity(), WebActivity.class));
             }
         });
         creative.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //创意小挑战
+                selection = "创意小挑战";
+                startActivity(new Intent(getActivity(), WebActivity.class));
             }
         });
         fun_Q_A.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //趣味问答
+                selection = "趣味问答";
+                startActivity(new Intent(getActivity(), WebActivity.class));
             }
         });
         jielong.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //接龙绘画
+                selection = "接龙绘画";
+                startActivity(new Intent(getActivity(), WebActivity.class));
             }
         });
         coloring.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //涂色游戏
+                selection = "涂色游戏";
+                startActivity(new Intent(getActivity(), WebActivity.class));
             }
         });
         riddle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //作品猜谜
+                selection = "作品猜谜";
+                startActivity(new Intent(getActivity(), WebActivity.class));
             }
         });
     }
@@ -181,6 +218,20 @@ public class InteractionFragment extends Fragment {
                     editText.setText(null);
                 }
             });
+        }
+    }
+
+    public static String getSelection() {
+        return selection;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == CAMERA_REQUEST_CODE) {
+            if (grantResults.length > 0 && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(getContext(), "权限获取失败！无法使用本功能！", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 }

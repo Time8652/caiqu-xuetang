@@ -522,6 +522,22 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
+                        android:id="@+id/topic_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:textColor="#FFC7C7C7"
+                        android:textSize="11dp"
+                        android:text="暂无照片"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        app:layout_constraintStart_toEndOf="@+id/imageView_2"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/send"/>
+
+                    <TextView
                         android:id="@+id/send"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

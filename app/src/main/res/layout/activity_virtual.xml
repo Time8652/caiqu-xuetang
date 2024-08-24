@@ -36,86 +36,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/imageView_1"
+            <WebView
+                android:id="@+id/netWeb"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
-                app:cardCornerRadius="8dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/vr" />
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/imageView_2"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                app:cardCornerRadius="8dp"
-                android:layout_margin="20dp"
-                app:layout_constraintTop_toBottomOf="@+id/imageView_1"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/vr" />
-            </androidx.cardview.widget.CardView>
-
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/imageView_3"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                app:cardCornerRadius="8dp"
-                android:layout_margin="20dp"
-                app:layout_constraintTop_toBottomOf="@+id/imageView_2"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/vr" />
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/imageView_4"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                app:cardCornerRadius="8dp"
-                android:layout_margin="20dp"
-                app:layout_constraintTop_toBottomOf="@+id/imageView_3"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/vr" />
-            </androidx.cardview.widget.CardView>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                app:layout_constraintTop_toBottomOf="@+id/imageView_4"
-                app:layout_constraintBottom_toBottomOf="parent"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                android:layout_height="match_parent"/>
+        </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

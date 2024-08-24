@@ -148,8 +148,7 @@ public class HomeworkActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //检查外部存储空间的权限
-                if (ContextCompat.checkSelfPermission(HomeworkActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
+                if (ContextCompat.checkSelfPermission(HomeworkActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                     ActivityCompat.requestPermissions(HomeworkActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, WRITE_EXTERNAL_STORAGE_REQUEST_CODE);
                 } else {
                     Intent intent = new Intent("android.intent.action.GET_CONTENT");

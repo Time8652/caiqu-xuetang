@@ -9,16 +9,51 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-public class VirtualActivity extends AppCompatActivity {
+public class WebActivity extends AppCompatActivity {
 
     private WebView webView;
-    private String url = "";
+    private String url = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_virtual);
+        setContentView(R.layout.activity_web);
         webView = findViewById(R.id.netWeb);
+        switch (InteractionFragment.getSelection()) {
+            case "选人":
+                url = "";
+                break;
+            case "投票":
+                url = "";
+                break;
+            case "分组":
+                url = "";
+                break;
+            case "白板":
+                url = "";
+                break;
+            case "计时器":
+                url = "";
+                break;
+            case "1V1 PK":
+                url = "";
+                break;
+            case "创意小挑战":
+                url = "";
+                break;
+            case "趣味问答":
+                url = "";
+                break;
+            case "接龙绘画":
+                url = "";
+                break;
+            case "涂色游戏":
+                url = "";
+                break;
+            case "作品猜谜":
+                url = "";
+                break;
+        }
         //设置webView的信息配置
         WebSettings settings = webView.getSettings();
         settings.setJavaScriptEnabled(true);

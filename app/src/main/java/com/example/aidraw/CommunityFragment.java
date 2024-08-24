@@ -4,14 +4,24 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Fragment;
+import android.content.ContentUris;
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.DocumentsContract;
+import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,11 +36,13 @@ import com.example.aidraw.News.WorkNew;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
 
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -40,13 +52,14 @@ import okhttp3.Response;
 public class CommunityFragment extends Fragment {
 
     private String key;
+    private final int WRITE_EXTERNAL_STORAGE_REQUEST_CODE = 1, REQUEST_CODE_PHOTO = 0;
     private ImageView resources_more, resources_1, resources_2, resources_3, resources_more_and_more,
             online_challenge_more, topic_discussion_more, imageView_1, imageView_2, display_work_more;
     private CardView constraintLayout_1, constraintLayout_2, constraintLayout_3;
     private ConstraintLayout constraintLayout_topic_1, constraintLayout_topic_2, constraintLayout_topic_3;
     private TextView online_challenge_title_1, online_challenge_title_2, online_challenge_title_3, online_challenge_1,
             online_challenge_2, online_challenge_3, topic_1, topic_2, topic_3, participation_1, participation_2,
-            participation_3, send;
+            participation_3, send, topic_image;
     private EditText topic, ed_topic_title;
     private RecyclerView recyclerView;
     private ArrayList<WorkNew> workNewArrayList;
@@ -57,6 +70,9 @@ public class CommunityFragment extends Fragment {
     private static int challengeId;
     private static String challengeTitle, challengeText, topicTitle;
     private static int topicParticipation;
+    private File file = null;
+    private Uri uri = null;
+    private String path = null;
 
     CommunityFragment(String key) {
         this.key = key;
@@ -107,6 +123,7 @@ public class CommunityFragment extends Fragment {
         send = view.findViewById(R.id.send);
         topic = view.findViewById(R.id.topic);
         ed_topic_title = view.findViewById(R.id.topic_title);
+        topic_image = view.findViewById(R.id.topic_image);
         recyclerView = view.findViewById(R.id.recyclerView);
         StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(staggeredGridLayoutManager);
@@ -448,6 +465,14 @@ public class CommunityFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //上传图片到文本框
+                //检查外部存储空间的权限
+                if (ContextCompat.checkSelfPermission(getContext(), android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, WRITE_EXTERNAL_STORAGE_REQUEST_CODE);
+                } else {
+                    Intent intent = new Intent("android.intent.action.GET_CONTENT");
+                    intent.setType("image/*");
+                    startActivityForResult(intent, REQUEST_CODE_PHOTO);
+                }
             }
         });
         imageView_2.setOnClickListener(new View.OnClickListener() {
@@ -483,9 +508,12 @@ public class CommunityFragment extends Fragment {
                                         "}";
                             }
                             OkHttpClient client = new OkHttpClient();//创建http客户端
+                            MultipartBody.Builder requestBody = new MultipartBody.Builder().setType(MultipartBody.FORM);//通过表单上传文件
+                            RequestBody fileBody = RequestBody.create(MediaType.parse("image/*"), file);//上传的文件以及类型
+                            requestBody.addFormDataPart("file", file.getName(), fileBody).addFormDataPart("discussPostDTO", json);
                             Request request = new Request.Builder()
                                     .url("http://" + LoginActivity.getUrl() + ":8080/common/community-discuss")
-                                    .post(RequestBody.create(MediaType.parse("application/json"), json))
+                                    .post(requestBody.build())
                                     .build();//创造http请求
                             Response response = client.newCall(request).execute();//执行发送的指令
                             String responseData = response.body().string();//获取后端返回过来的json格式的结果
@@ -531,5 +559,62 @@ public class CommunityFragment extends Fragment {
                 //跳转至作品详细页
             }
         });
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == WRITE_EXTERNAL_STORAGE_REQUEST_CODE) {
+            for (int i = 0; i < permissions.length; i++) {
+                if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(getContext(), "权限获取失败！无法使用本功能！", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_PHOTO && resultCode == getActivity().RESULT_OK) {
+            uri = data.getData();
+            if (Build.VERSION.SDK_INT < 19) {
+                path = getImagePath(uri, null);
+            } else {
+                if (DocumentsContract.isDocumentUri(getContext(), uri)) {
+                    String documentId = DocumentsContract.getDocumentId(uri);
+                    if (TextUtils.equals(uri.getAuthority(), "com.android.providers.media.documents")) {
+                        String id = documentId.split(":")[1];
+                        String selection = MediaStore.Images.Media._ID + "=" + id;
+                        path = getImagePath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, selection);
+                    } else if (TextUtils.equals(uri.getAuthority(), "com.android.providers.downloads.documents")) {
+                        Uri contentUri = ContentUris.withAppendedId(Uri.parse("content://downloads/public_downloads"), Long.valueOf(documentId));
+                        path = getImagePath(contentUri, null);
+                    }
+                } else if ("content".equalsIgnoreCase(uri.getScheme())) {
+                    path = getImagePath(uri, null);
+                } else if ("file".equalsIgnoreCase(uri.getScheme())) {
+                    path = uri.getPath();
+                }
+            }
+            if (path != null) {
+                file = new File(path);
+                topic_image.setText(path);
+            }
+        }
+    }
+
+    @SuppressLint("Range")
+    private String getImagePath(Uri uri, String selection) {
+        String image_path = null;
+        Cursor cursor = getActivity().getContentResolver().query(uri, null, selection, null, null);
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                image_path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
+            }
+            cursor.close();
+            return image_path;
+        }
+        return null;
     }
 }

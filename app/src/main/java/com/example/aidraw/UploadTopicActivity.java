@@ -36,6 +36,7 @@ public class UploadTopicActivity extends AppCompatActivity {
     private ArrayList<TopicNew> topicNewArrayList;
     private URL[] head_url, work_url;
     private String[] name, time, text;
+    private int[] star;
     private boolean isGood = true, isFirst = true;
 
     @SuppressLint("NotifyDataSetChanged")
@@ -112,13 +113,15 @@ public class UploadTopicActivity extends AppCompatActivity {
                     time = new String[jsonArray.length()];
                     text = new String[jsonArray.length()];
                     work_url = new URL[jsonArray.length()];
+                    star = new int[jsonArray.length()];
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject2 = jsonArray.getJSONObject(i);
-                        head_url[i] = (URL) jsonObject2.get("headerUrl");
-                        name[i] = (String) jsonObject2.get("name");
-                        time[i] = (String) jsonObject2.get("createTime");
-                        text[i] = (String) jsonObject2.get("text");
-                        work_url[i] = (URL) jsonObject2.get("workUrl");
+                        head_url[i] = new URL(jsonObject2.get("headerUrl").toString());
+                        name[i] = jsonObject2.getString("author");
+                        time[i] = jsonObject2.getString("createTime");
+                        text[i] = jsonObject2.getString("title") + " " + jsonObject2.getString("text");
+                        work_url[i] = new URL(jsonObject2.get("imageUrl").toString());
+                        star[i] = jsonObject2.getInt("starsNum");
                     }
                     if (isFirst) {
                         Glide.with(UploadTopicActivity.this).load(work_url[0]).into(topic_head);
@@ -126,7 +129,7 @@ public class UploadTopicActivity extends AppCompatActivity {
                         isFirst = !isFirst;
                     }
                     for (int i = 0; i < jsonArray.length(); i++){
-                        TopicNew topicNew = new TopicNew(head_url[i], name[i], time[i], text[i], work_url[i]);
+                        TopicNew topicNew = new TopicNew(head_url[i], name[i], time[i], text[i], work_url[i], star[i]);
                         topicNewArrayList.add(topicNew);
                     }
                     runOnUiThread(new Runnable() {

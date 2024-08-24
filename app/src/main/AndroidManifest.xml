@@ -11,12 +11,15 @@
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AIDraw"
-        tools:targetApi="31"
         android:usesCleartextTraffic="true"
-        android:requestLegacyExternalStorage="true">
+        tools:targetApi="31">
+        <activity
+            android:name=".WebActivity"
+            android:exported="false" />
         <activity
             android:name=".UploadTopicActivity"
             android:exported="false" />
@@ -79,14 +82,13 @@
             android:exported="false" />
         <activity
             android:name=".ChooseActivity"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>

@@ -1,50 +1,44 @@
 package com.example.aidraw;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.os.Bundle;
-import android.view.View;
-import android.view.ViewGroup;
+import android.webkit.WebChromeClient;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 public class ModelActivity extends AppCompatActivity {
 
-    private String key, url;
-    private RecyclerView recyclerView;
+    private WebView webView;
+    private String url = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_model);
-        key = LoginActivity.getKey();
-        url = LoginActivity.getUrl();
-        recyclerView = findViewById(R.id.recyclerView);
-        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(staggeredGridLayoutManager);
-        recyclerView.setAdapter(new RecyclerView.Adapter() {
-            @NonNull
+        webView = findViewById(R.id.netWeb);
+        //设置webView的信息配置
+        WebSettings settings = webView.getSettings();
+        settings.setJavaScriptEnabled(true);
+        settings.setAllowContentAccess(true);
+        settings.setAllowFileAccessFromFileURLs(true);
+        //加载网页信息
+        webView.loadUrl(url);
+        webView.setWebViewClient(new WebViewClient() {
             @Override
-            public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                return null;
+            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                view.loadUrl(url);
+                return false;
             }
 
             @Override
-            public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-
-            }
-
-            @Override
-            public int getItemCount() {
-                return 0;
-            }
-        });
-        recyclerView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                //监听webView已经将网页加载完成了
             }
         });
+        webView.setWebChromeClient(new WebChromeClient());
     }
 }
