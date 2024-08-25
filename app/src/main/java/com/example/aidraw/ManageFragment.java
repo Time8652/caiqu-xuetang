@@ -48,7 +48,7 @@ public class ManageFragment extends Fragment {
     private LinearLayout homework, integral;
     private RecyclerView recyclerView;
     private ArrayList<StudentNew> studentNewArrayList;
-    private URL[] url;
+    private String[] url;
     private String[] classname, class_id, name, gender, id;
     private boolean classIfOpen = false;
 
@@ -233,7 +233,7 @@ public class ManageFragment extends Fragment {
                     JSONObject jsonObject = new JSONObject(responseData);
                     JSONObject dataObject = jsonObject.getJSONObject("data");
                     term.setText("当前学期：" + "2024-2025年第一学期");
-                    class_name.setText("班级名称：" + classname[0]);
+                    class_name.setText("班级名称：" + dataObject.getString("grade") + "年级" + dataObject.getInt("classNum") + "班");
                     student_number.setText("学生人数：" + dataObject.getString("num"));
                     class_time.setText("上课时间：" + dataObject.getString("classTime"));
                     }
@@ -269,13 +269,14 @@ public class ManageFragment extends Fragment {
                         JSONObject jsonObject = new JSONObject(responseData);
                         JSONObject dataObject = jsonObject.getJSONObject("data");
                         JSONArray jsonArray = dataObject.getJSONArray("list");
-                        url = new URL[jsonArray.length()];
+                        Log.d("TAG", "run: " + jsonArray);
+                        url = new String[jsonArray.length()];
                         name = new String[jsonArray.length()];
                         gender = new String[jsonArray.length()];
                         id = new String[jsonArray.length()];
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject jsonObject2 = jsonArray.getJSONObject(i);
-                            url[i] = new URL(jsonObject2.get("headerUrl").toString());
+                            url[i] = jsonObject2.getString("headerUrl");
                             name[i] = jsonObject2.getString("name");
                             gender[i] = jsonObject2.getString("gender");
                             id[i] = String.valueOf(jsonObject2.getInt("num"));

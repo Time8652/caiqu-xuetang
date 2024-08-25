@@ -22,6 +22,7 @@ import android.os.Bundle;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,10 +65,10 @@ public class CommunityFragment extends Fragment {
     private RecyclerView recyclerView;
     private ArrayList<WorkNew> workNewArrayList;
     private URL[] work_url;
-    private int[] challenge_id, topic_participation, topic_Participation;
-    private String[] challenge_title, challenge_text, topic_title, work_title, work_like, work_time, work_final_time;
+    private int[] topic_participation, topic_Participation;
+    private String[] challenge_id, challenge_title, challenge_text, topic_title, work_title, work_like, work_time, work_final_time;
     private static boolean challengeFlag = false;
-    private static int challengeId;
+    private static String challengeId;
     private static String challengeTitle, challengeText, topicTitle;
     private static int topicParticipation;
     private File file = null;
@@ -148,12 +149,12 @@ public class CommunityFragment extends Fragment {
                     JSONObject jsonObject = new JSONObject(responseData);
                     JSONObject dataObject = jsonObject.getJSONObject("data");
                     JSONArray jsonArray = dataObject.getJSONArray("list");
-                    challenge_id = new int[3];
+                    challenge_id = new String[3];
                     challenge_title = new String[3];
                     challenge_text = new String[3];
                     for (int i = 0; i < 3; i++) {
                         JSONObject jsonObject2 = jsonArray.getJSONObject(i);
-                        challenge_id[i] = jsonObject2.getInt("id");
+                        challenge_id[i] = jsonObject2.getString("id");
                         challenge_title[i] = jsonObject2.getString("title");
                         challenge_text[i] = jsonObject2.getString("text");
                     }
@@ -334,7 +335,7 @@ public class CommunityFragment extends Fragment {
     public static boolean getChallengeFlag() {
         return challengeFlag;
     }
-    public static int getChallengeId() {
+    public static String getChallengeId() {
         return challengeId;
     }
     public static String getChallengeTitle() {

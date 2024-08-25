@@ -26,7 +26,7 @@ import okhttp3.Response;
 public class LoginActivity extends AppCompatActivity {
 
     private static final int REQUEST_CODE = 1;
-    private static final String url = "192.168.1.14";
+    private static final String url = "192.168.43.195";
     private static String key = null;
     private static String identity, now_number;
     private int code;

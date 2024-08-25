@@ -9,6 +9,7 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +33,7 @@ import okhttp3.Response;
 public class PersonalFragment extends Fragment {
 
     private String key, name_text;
-    private URL url;
+    private String url;
     private ImageView head, imageView_1, imageView_2, imageView_6, imageView_7, imageView_8, imageView_9;
     private TextView identity, name, concise, saying, celebrity, textView_6, textView_7, textView_8, textView_9;
     private ConstraintLayout constraintLayout_1, constraintLayout_2, constraintLayout_3, constraintLayout_4,
@@ -108,8 +109,9 @@ public class PersonalFragment extends Fragment {
                         Response response = client.newCall(request).execute();//执行发送的指令
                         String responseData = response.body().string();//获取后端返回过来的json格式的结果
                         JSONObject jsonObject = new JSONObject(responseData);
-                        url = (URL) jsonObject.get("headerUrl");
-                        name_text = jsonObject.getString("name");
+                        JSONObject dataObject = jsonObject.getJSONObject("data");
+                        url = dataObject.getString("headerUrl");
+                        name_text = dataObject.getString("name");
                     } catch (Exception e) {
                         e.printStackTrace();
                         getActivity().runOnUiThread(new Runnable() {
@@ -144,8 +146,9 @@ public class PersonalFragment extends Fragment {
                         Response response = client.newCall(request).execute();//执行发送的指令
                         String responseData = response.body().string();//获取后端返回过来的json格式的结果
                         JSONObject jsonObject = new JSONObject(responseData);
-                        url = (URL) jsonObject.get("headerUrl");
-                        name_text = jsonObject.getString("name");
+                        JSONObject dataObject = jsonObject.getJSONObject("data");
+                        url = dataObject.getString("headerUrl");
+                        name_text = dataObject.getString("name");
                     } catch (Exception e) {
                         e.printStackTrace();
                         getActivity().runOnUiThread(new Runnable() {

@@ -461,8 +461,9 @@ public class DistributeIntegralActivity extends AppCompatActivity {
                                         "}";
                                 OkHttpClient client = new OkHttpClient();//创建http客户端
                                 Request request = new Request.Builder()
-                                        .url("http://" + LoginActivity.getUrl() + ":8989/teacher/student-scores")
+                                        .url("http://" + LoginActivity.getUrl() + ":8080/teacher/student-scores")
                                         .put(RequestBody.create(MediaType.parse("application/json"), json))
+                                        .header("Authorization", key)
                                         .build();//创造http请求
                                 Response response = client.newCall(request).execute();//执行发送的指令
                                 String responseData = response.body().string();//获取后端返回过来的json格式的结果
@@ -506,7 +507,7 @@ public class DistributeIntegralActivity extends AppCompatActivity {
                                         "}";
                                 OkHttpClient client = new OkHttpClient();//创建http客户端
                                 Request request = new Request.Builder()
-                                        .url("http://" + LoginActivity.getUrl() + ":8989/teacher/student-scores-dec")
+                                        .url("http://" + LoginActivity.getUrl() + ":8080/teacher/student-scores-dec")
                                         .put(RequestBody.create(MediaType.parse("application/json"), json))
                                         .build();//创造http请求
                                 Response response = client.newCall(request).execute();//执行发送的指令

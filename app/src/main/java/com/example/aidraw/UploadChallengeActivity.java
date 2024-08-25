@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,7 +34,7 @@ public class UploadChallengeActivity extends AppCompatActivity {
     private TextView challenge_title, challenge_context;
     private RecyclerView recyclerView;
     private ArrayList<ChallengeNew> challengeNewArrayList;
-    private URL[] head_url, work_url;
+    private String[] head_url, work_url;
     private String[] name, time;
 
     @SuppressLint("NotifyDataSetChanged")
@@ -54,7 +55,7 @@ public class UploadChallengeActivity extends AppCompatActivity {
                     try {
                         OkHttpClient client = new OkHttpClient();//创建http客户端
                         Request request = new Request.Builder()
-                                .url("http://" + LoginActivity.getUrl() + ":8080/common/challengeId=" + CommunityFragment.getChallengeId())
+                                .url("http://" + LoginActivity.getUrl() + ":8080/common/challenge-works?challengeId=" + CommunityFragment.getChallengeId())
                                 .header("Authorization", LoginActivity.getKey())
                                 .get()
                                 .build();//创造http请求
@@ -63,16 +64,16 @@ public class UploadChallengeActivity extends AppCompatActivity {
                         JSONObject jsonObject = new JSONObject(responseData);
                         JSONObject dataObject = jsonObject.getJSONObject("data");
                         JSONArray jsonArray = dataObject.getJSONArray("list");
-                        head_url = new URL[jsonArray.length()];
+                        head_url = new String[jsonArray.length()];
                         name = new String[jsonArray.length()];
                         time = new String[jsonArray.length()];
-                        work_url = new URL[jsonArray.length()];
+                        work_url = new String[jsonArray.length()];
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject jsonObject2 = jsonArray.getJSONObject(i);
-                            head_url[i] = (URL) jsonObject2.get("headerUrl");
-                            name[i] = (String) jsonObject2.get("name");
-                            time[i] = (String) jsonObject2.get("createTime");
-                            work_url[i] = (URL) jsonObject2.get("workUrl");
+                            head_url[i] = jsonObject2.getString("headUrl");
+                            name[i] = jsonObject2.getString("name");
+                            time[i] = jsonObject2.getString("createTime");
+                            work_url[i] = jsonObject2.getString("workUrl");
                         }
                         for (int i = 0; i < jsonArray.length(); i++){
                             ChallengeNew challengeNew = new ChallengeNew(head_url[i], name[i], time[i], work_url[i]);
