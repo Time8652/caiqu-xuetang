@@ -6,8 +6,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.annotation.SuppressLint;
 import android.app.Fragment;
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,12 +19,8 @@ import com.bumptech.glide.Glide;
 
 import org.json.JSONObject;
 
-import java.net.URL;
-
-import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.RequestBody;
 import okhttp3.Response;
 
 @SuppressLint("ValidFragment")
@@ -123,6 +117,8 @@ public class PersonalFragment extends Fragment {
                     }
                 }
             }).start();
+            Glide.with(PersonalFragment.this).load(url).into(head);
+            name.setText(name_text);
         } else {
             identity.setText("学生");
 //            imageView_6.setImageResource(R.drawable.);
@@ -161,8 +157,7 @@ public class PersonalFragment extends Fragment {
                 }
             }).start();
         }
-        Glide.with(PersonalFragment.this).load(url).into(head);
-        name.setText(name_text);
+        Log.d("TAG", "run: " + name_text);
         concise.setText("简介：一名普普通通的小学美术老师~");
         saying.setText("美术是揭示真理的谎言。");
         celebrity.setText("——毕加索");

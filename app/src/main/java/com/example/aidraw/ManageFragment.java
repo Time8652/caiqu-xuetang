@@ -229,7 +229,6 @@ public class ManageFragment extends Fragment {
                                 .build();//创造http请求
                         Response response = client.newCall(request).execute();//执行发送的指令
                     String responseData = response.body().string();//获取后端返回过来的json格式的结果
-                        Log.d("run: 11",responseData);
                     JSONObject jsonObject = new JSONObject(responseData);
                     JSONObject dataObject = jsonObject.getJSONObject("data");
                     term.setText("当前学期：" + "2024-2025年第一学期");
@@ -269,7 +268,6 @@ public class ManageFragment extends Fragment {
                         JSONObject jsonObject = new JSONObject(responseData);
                         JSONObject dataObject = jsonObject.getJSONObject("data");
                         JSONArray jsonArray = dataObject.getJSONArray("list");
-                        Log.d("TAG", "run: " + jsonArray);
                         url = new String[jsonArray.length()];
                         name = new String[jsonArray.length()];
                         gender = new String[jsonArray.length()];

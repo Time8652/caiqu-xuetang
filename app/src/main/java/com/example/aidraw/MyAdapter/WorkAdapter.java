@@ -40,6 +40,12 @@ public class WorkAdapter extends RecyclerView.Adapter<WorkAdapter.MyViewHolder> 
         holder.work_title.setText(workNew.work_title);
         holder.work_like.setText(workNew.work_like);
         holder.work_time.setText(workNew.work_time);
+        holder.imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                holder.work_like.setText(String.valueOf(Integer.parseInt(workNew.work_like) + 1));
+            }
+        });
     }
 
     @Override
@@ -49,7 +55,7 @@ public class WorkAdapter extends RecyclerView.Adapter<WorkAdapter.MyViewHolder> 
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        ImageView imageView_work;
+        ImageView imageView_work, imageView;
         TextView work_title, work_like, work_time;
 
         public MyViewHolder(@NonNull View itemView) {
@@ -58,6 +64,7 @@ public class WorkAdapter extends RecyclerView.Adapter<WorkAdapter.MyViewHolder> 
             work_title = itemView.findViewById(R.id.work_title);
             work_like = itemView.findViewById(R.id.work_like);
             work_time = itemView.findViewById(R.id.work_time);
+            imageView = itemView.findViewById(R.id.imageView);
         }
     }
 }

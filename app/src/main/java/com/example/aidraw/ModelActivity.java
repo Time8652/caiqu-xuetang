@@ -12,7 +12,7 @@ import android.webkit.WebViewClient;
 public class ModelActivity extends AppCompatActivity {
 
     private WebView webView;
-    private String url = "";
+    private String url = "192.168.43.195:8081/#/precontent?title=3D模型展示";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

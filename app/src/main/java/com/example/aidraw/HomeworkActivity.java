@@ -21,6 +21,7 @@ import android.os.Bundle;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -224,73 +225,17 @@ public class HomeworkActivity extends AppCompatActivity {
                                     "\t\"classId\": \"" + ManageFragment.getClassId() + "\",\n" +
                                     "\t\"title\": \"" + title.getText().toString() + "\",\n" +
                                     "\t\"text\": \"" + content.getText().toString() + "\",\n" +
-                                    "\t\"endTime\": \"" + deadline_day.getText().toString() + "\t" + deadline_time.getText().toString() + "\",\n" +
+                                    "\t\"endTime\": \"" + deadline_day.getText().toString() + "T" + deadline_time.getText().toString() + "\",\n" +
                                     "\t\"status\": \"" + "0" + "\"\n" +
                                     "}";
-                            OkHttpClient client = new OkHttpClient();//创建http客户端
-                            MultipartBody.Builder requestBody = new MultipartBody.Builder().setType(MultipartBody.FORM);//通过表单上传文件
-                            RequestBody fileBody = RequestBody.create(MediaType.parse("image/*"), file);//上传的文件以及类型
-                            requestBody.addFormDataPart("file", file.getName(), fileBody).addFormDataPart("homeworkPostDTO", json);
-                            Request request = new Request.Builder()
-                                    .url("http://" + LoginActivity.getUrl() + ":8080/teacher/homework")
-                                    .post(requestBody.build())
-                                    .header("Authorization", key)
-                                    .build();//创造http请求
-                            Response response = client.newCall(request).execute();//执行发送的指令
-                            String responseData = response.body().string();//获取后端返回过来的json格式的结果
-                            JSONObject jsonObject = new JSONObject(responseData);
-                            int code = jsonObject.getInt("code");
-                            if (code == 0) {
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        Toast.makeText(HomeworkActivity.this, "保存成功", Toast.LENGTH_SHORT).show();
-                                        SharedPreferences sharedPreferences = getSharedPreferences("Record",MODE_PRIVATE);
-                                        @SuppressLint("CommitPrefEdits") SharedPreferences.Editor edit = sharedPreferences.edit();
-                                        edit.putBoolean("Homework", true);
-                                        edit.apply();
-                                    }
-                                });
-                            } else {
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        Toast.makeText(HomeworkActivity.this, "保存失败", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    Toast.makeText(HomeworkActivity.this, "网络连接失败", Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                        }
-                    }
-                }).start();
-            }
-        });
-        send.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            String json = "{\n" +
-                                    "\t\"classId\": \"" + ManageFragment.getClassId() + "\",\n" +
-                                    "\t\"title\": \"" + title.getText().toString() + "\",\n" +
-                                    "\t\"text\": \"" + content.getText().toString() + "\",\n" +
-                                    "\t\"endTime\": \"" + deadline_day.getText().toString() + "\t" + deadline_time.getText().toString() + "\",\n" +
-                                    "\t\"status\": \"" + "1" + "\"\n" +
-                                    "}";
+                            RequestBody jsonBody = RequestBody.create(MediaType.parse("application/json"), json);
                             OkHttpClient client = new OkHttpClient();//创建http客户端
                             MultipartBody.Builder requestBody = new MultipartBody.Builder().setType(MultipartBody.FORM);//通过表单上传文件
                             if (file != null) {
-                                RequestBody fileBody = RequestBody.create(MediaType.parse("image/*"), file);//上传的文件以及类型
-                                requestBody.addFormDataPart("file", file.getName(), fileBody).addFormDataPart("homeworkPostDTO", json);
+                                Log.d("TAG", "run: "+file);
+                                RequestBody fileBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);//上传的文件以及类型
+                                requestBody.addFormDataPart("file", file.getName(), fileBody)
+                                        .addFormDataPart("homeworkPostDTO", "homeworkPostDTO.json", jsonBody);
                                 Request request = new Request.Builder()
                                         .url("http://" + LoginActivity.getUrl() + ":8080/teacher/homework")
                                         .post(requestBody.build())
@@ -320,11 +265,104 @@ public class HomeworkActivity extends AppCompatActivity {
                                     });
                                 }
                             } else {
+                                requestBody.addFormDataPart("homeworkPostDTO", "homeworkPostDTO.json", jsonBody);
                                 Request request = new Request.Builder()
                                         .url("http://" + LoginActivity.getUrl() + ":8080/teacher/homework")
-                                        .post(RequestBody.create(MediaType.parse("application/json"), json))
+                                        .post(requestBody.build())
                                         .header("Authorization", key)
-                                        .header("Content-Type", "multipart/form-data")
+                                        .build();//创造http请求
+                                Response response = client.newCall(request).execute();//执行发送的指令
+                                String responseData = response.body().string();//获取后端返回过来的json格式的结果
+                                JSONObject jsonObject = new JSONObject(responseData);
+                                int code = jsonObject.getInt("code");
+                                if (code == 0) {
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Toast.makeText(HomeworkActivity.this, "发布成功", Toast.LENGTH_SHORT).show();
+                                            SharedPreferences sharedPreferences = getSharedPreferences("Record",MODE_PRIVATE);
+                                            @SuppressLint("CommitPrefEdits") SharedPreferences.Editor edit = sharedPreferences.edit();
+                                            edit.putBoolean("Homework", false);
+                                            edit.apply();
+                                        }
+                                    });
+                                } else {
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Toast.makeText(HomeworkActivity.this, "发布失败", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                }
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(HomeworkActivity.this, "网络连接失败", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+                    }
+                }).start();
+            }
+        });
+        send.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            String json = "{\n" +
+                                    "\t\"classId\": \"" + ManageFragment.getClassId() + "\",\n" +
+                                    "\t\"title\": \"" + title.getText().toString() + "\",\n" +
+                                    "\t\"text\": \"" + content.getText().toString() + "\",\n" +
+                                    "\t\"endTime\": \"" + deadline_day.getText().toString() + "T" + deadline_time.getText().toString() + "\",\n" +
+                                    "\t\"status\": \"" + "1" + "\"\n" +
+                                    "}";
+                            RequestBody jsonBody = RequestBody.create(MediaType.parse("application/json"), json);
+                            OkHttpClient client = new OkHttpClient();//创建http客户端
+                            MultipartBody.Builder requestBody = new MultipartBody.Builder().setType(MultipartBody.FORM);//通过表单上传文件
+                            if (file != null) {
+                                RequestBody fileBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);//上传的文件以及类型
+                                requestBody.addFormDataPart("file", file.getName(), fileBody)
+                                        .addFormDataPart("homeworkPostDTO", "homeworkPostDTO.json", jsonBody);
+                                Request request = new Request.Builder()
+                                        .url("http://" + LoginActivity.getUrl() + ":8080/teacher/homework")
+                                        .post(requestBody.build())
+                                        .header("Authorization", key)
+                                        .build();//创造http请求
+                                Response response = client.newCall(request).execute();//执行发送的指令
+                                String responseData = response.body().string();//获取后端返回过来的json格式的结果
+                                JSONObject jsonObject = new JSONObject(responseData);
+                                int code = jsonObject.getInt("code");
+                                if (code == 0) {
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Toast.makeText(HomeworkActivity.this, "发布成功", Toast.LENGTH_SHORT).show();
+                                            SharedPreferences sharedPreferences = getSharedPreferences("Record",MODE_PRIVATE);
+                                            @SuppressLint("CommitPrefEdits") SharedPreferences.Editor edit = sharedPreferences.edit();
+                                            edit.putBoolean("Homework", false);
+                                            edit.apply();
+                                        }
+                                    });
+                                } else {
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Toast.makeText(HomeworkActivity.this, "发布失败", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                }
+                            } else {
+                                requestBody.addFormDataPart("homeworkPostDTO", "homeworkPostDTO.json", jsonBody);
+                                Request request = new Request.Builder()
+                                        .url("http://" + LoginActivity.getUrl() + ":8080/teacher/homework")
+                                        .post(requestBody.build())
+                                        .header("Authorization", key)
                                         .build();//创造http请求
                                 Response response = client.newCall(request).execute();//执行发送的指令
                                 String responseData = response.body().string();//获取后端返回过来的json格式的结果
@@ -402,6 +440,7 @@ public class HomeworkActivity extends AppCompatActivity {
                 }
             }
             if (path != null) {
+
                 file = new File(path);
                 homework_image.setText(path);
             }

@@ -12,6 +12,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.ContentUris;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
@@ -91,7 +92,7 @@ public class IntelligentActivity extends AppCompatActivity {
                 intelligentNewArrayList.add(intelligentNew);
                 intelligentAdapter.notifyItemInserted(intelligentNewArrayList.size() - 1);
                 recyclerView.scrollToPosition(intelligentNewArrayList.size() - 1); // Scroll to the new item
-//                editText.setText("");
+                editText.setText("");
                 uri = null;
                 new Thread(new Runnable() {
                     @Override
@@ -99,25 +100,50 @@ public class IntelligentActivity extends AppCompatActivity {
                         try {
                             OkHttpClient client = new OkHttpClient();//创建http客户端
                             MultipartBody.Builder requestBody = new MultipartBody.Builder().setType(MultipartBody.FORM);//通过表单上传文件
-                            RequestBody fileBody = RequestBody.create(MediaType.parse("image/*"), file);//上传的文件以及类型
-                            requestBody.addFormDataPart("file", file.getName(), fileBody).addFormDataPart("prompt", text);
-                            Request request = new Request.Builder()
-                                    .url("http://" + LoginActivity.getUrl() + ":8080/ai/muti")
-                                    .post(requestBody.build())
-                                    .build();//创造http请求
-                            Response response = client.newCall(request).execute();//执行发送的指令
-                            String responseData = response.body().string();//获取后端返回过来的json格式的结果
-                            JSONObject jsonObject = new JSONObject(responseData);
-                            String string = jsonObject.getString("data");
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    IntelligentNew intelligentNew = new IntelligentNew(true, string, null);
-                                    intelligentNewArrayList.add(intelligentNew);
-                                    intelligentAdapter.notifyItemInserted(intelligentNewArrayList.size() - 1);
-                                    recyclerView.scrollToPosition(intelligentNewArrayList.size() - 1); // Scroll to the new item
-                                }
-                            });
+                            if (file != null) {
+                                RequestBody fileBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);//上传的文件以及类型
+                                requestBody.addFormDataPart("file", file.getName(), fileBody)
+                                        .addFormDataPart("prompt", text);
+                                Request request = new Request.Builder()
+                                        .url("http://" + LoginActivity.getUrl() + ":8080/ai/muti")
+                                        .post(requestBody.build())
+                                        .header("Authorization", key)
+                                        .build();//创造http请求
+                                Response response = client.newCall(request).execute();//执行发送的指令
+                                String responseData = response.body().string();//获取后端返回过来的json格式的结果
+                                JSONObject jsonObject = new JSONObject(responseData);
+                                String string = jsonObject.getString("data");
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        IntelligentNew intelligentNew = new IntelligentNew(true, string, null);
+                                        intelligentNewArrayList.add(intelligentNew);
+                                        intelligentAdapter.notifyItemInserted(intelligentNewArrayList.size() - 1);
+                                        recyclerView.scrollToPosition(intelligentNewArrayList.size() - 1); // Scroll to the new item
+                                    }
+                                });
+                            }
+//                            else {
+//                                requestBody.addFormDataPart("prompt", text);
+//                                Request request = new Request.Builder()
+//                                        .url("http://" + LoginActivity.getUrl() + ":8080/teacher/homework")
+//                                        .post(requestBody.build())
+//                                        .header("Authorization", key)
+//                                        .build();//创造http请求
+//                                Response response = client.newCall(request).execute();//执行发送的指令
+//                                String responseData = response.body().string();//获取后端返回过来的json格式的结果
+//                                JSONObject jsonObject = new JSONObject(responseData);
+//                                String string = jsonObject.getString("data");
+//                                runOnUiThread(new Runnable() {
+//                                    @Override
+//                                    public void run() {
+//                                        IntelligentNew intelligentNew = new IntelligentNew(true, string, null);
+//                                        intelligentNewArrayList.add(intelligentNew);
+//                                        intelligentAdapter.notifyItemInserted(intelligentNewArrayList.size() - 1);
+//                                        recyclerView.scrollToPosition(intelligentNewArrayList.size() - 1); // Scroll to the new item
+//                                    }
+//                                });
+//                            }
                         } catch (Exception e) {
                             e.printStackTrace();
                             runOnUiThread(new Runnable() {

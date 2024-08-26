@@ -16,6 +16,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
+            android:id="@+id/imageView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#FFC4C4C4"/>
@@ -35,6 +36,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
+        android:id="@+id/gender"
         android:layout_width="10dp"
         android:layout_height="10dp"
         android:background="#FFC4C4C4"

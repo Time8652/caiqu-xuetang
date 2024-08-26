@@ -1,19 +1,27 @@
 package com.example.aidraw;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.aidraw.MyAdapter.SearchAdapter;
+import com.example.aidraw.News.SearchNew;
+
+import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -23,13 +31,16 @@ import okhttp3.Response;
 
 public class DistributeIntegralActivity extends AppCompatActivity {
 
-    private String key, add_reason = null, subtract_reason = null;
+    private String key, add_reason = null, subtract_reason = null, studentId;
     private int add = 0, subtract = 0;
     private EditText editText, editText_other_point, editText_add_other_reason, editText_subtract_other_point, editText_subtract_other_reason;
     private TextView check, add_1, add_2, add_3, add_4, add_5, add_reason_1, add_reason_2, add_reason_3,
             subtract_1, subtract_2, subtract_3, subtract_4, subtract_5, subtract_reason_1, subtract_reason_2;
     private ImageView gone;
+    private ArrayList<SearchNew> searchNewArrayList;
     private RecyclerView recyclerView;
+    private String[] url;
+    private String[] name, gender, number, student_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,8 +102,72 @@ public class DistributeIntegralActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 if (!editText.getText().toString().equals("")) {
+                    gone.setVisibility(View.VISIBLE);
+                    recyclerView.setVisibility(View.VISIBLE);
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                OkHttpClient client = new OkHttpClient();//创建http客户端
+                                Request request = new Request.Builder()
+                                        .url("http://" + LoginActivity.getUrl() + ":8080/teacher/student-score")
+                                        .header("Authorization", key)
+                                        .get()
+                                        .build();//创造http请求
+                                Response response = client.newCall(request).execute();//执行发送的指令
+                                String responseData = response.body().string();//获取后端返回过来的json格式的结果
+                                JSONObject jsonObject = new JSONObject(responseData);
+                                JSONObject dataObject = jsonObject.getJSONObject("data");
+                                JSONArray jsonArray = dataObject.getJSONArray("list");
+                                url = new String[jsonArray.length()];
+                                name = new String[jsonArray.length()];
+                                gender = new String[jsonArray.length()];
+                                number = new String[jsonArray.length()];
+                                student_id = new String[jsonArray.length()];
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    JSONObject jsonObject2 = jsonArray.getJSONObject(i);
+                                    url[i] = jsonObject2.getString("headerUrl");
+                                    name[i] = jsonObject2.getString("name");
+                                    gender[i] = jsonObject2.getString("gender");
+                                    number[i] = jsonObject2.getString("number");
+                                    student_id[i] = jsonObject2.getString("id");
+                                    Log.d("TAG", "run: "+ name[i]);
+                                }
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    SearchNew searchNew = new SearchNew(url[i], name[i], gender[i], number[i]);
+                                    searchNewArrayList.add(searchNew);
+                                }
+                                runOnUiThread(new Runnable() {
+                                    @SuppressLint("NotifyDataSetChanged")
+                                    public void run() {
+                                        SearchAdapter searchAdapter = new SearchAdapter(DistributeIntegralActivity.this, searchNewArrayList);
+                                        recyclerView.setLayoutManager(new LinearLayoutManager(DistributeIntegralActivity.this));
+                                        recyclerView.setAdapter(searchAdapter);
+                                        searchAdapter.notifyDataSetChanged();
+                                    }
+                                });
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(DistributeIntegralActivity.this, "网络连接失败", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
 
+                        }
+                    }).start();
                 }
+            }
+        });
+        recyclerView.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onClick(View v) {
+                recyclerView.setVisibility(View.GONE);
+                studentId = student_id[1];
+                editText.setText(name[1] + " " + number[1]);
             }
         });
         gone.setOnClickListener(new View.OnClickListener() {
@@ -116,6 +191,17 @@ public class DistributeIntegralActivity extends AppCompatActivity {
                 add_3.setBackground(getResources().getDrawable(R.drawable.point_1));
                 add_4.setBackground(getResources().getDrawable(R.drawable.point_1));
                 add_5.setBackground(getResources().getDrawable(R.drawable.point_1));
+                subtract = 0;
+                subtract_1.setTextColor(0xFF7E64FD);
+                subtract_2.setTextColor(0xFF7E64FD);
+                subtract_3.setTextColor(0xFF7E64FD);
+                subtract_4.setTextColor(0xFF7E64FD);
+                subtract_5.setTextColor(0xFF7E64FD);
+                subtract_1.setBackground(getResources().getDrawable(R.drawable.point_1));
+                subtract_2.setBackground(getResources().getDrawable(R.drawable.point_1));
+                subtract_3.setBackground(getResources().getDrawable(R.drawable.point_1));
+                subtract_4.setBackground(getResources().getDrawable(R.drawable.point_1));
+                subtract_5.setBackground(getResources().getDrawable(R.drawable.point_1));
             }
         });
         add_2.setOnClickListener(new View.OnClickListener() {
@@ -132,6 +218,17 @@ public class DistributeIntegralActivity extends AppCompatActivity {
                 add_3.setBackground(getResources().getDrawable(R.drawable.point_1));
                 add_4.setBackground(getResources().getDrawable(R.drawable.point_1));
                 add_5.setBackground(getResources().getDrawable(R.drawable.point_1));
+                subtract = 0;
+                subtract_1.setTextColor(0xFF7E64FD);
+                subtract_2.setTextColor(0xFF7E64FD);
+                subtract_3.setTextColor(0xFF7E64FD);
+                subtract_4.setTextColor(0xFF7E64FD);
+                subtract_5.setTextColor(0xFF7E64FD);
+                subtract_1.setBackground(getResources().getDrawable(R.drawable.point_1));
+                subtract_2.setBackground(getResources().getDrawable(R.drawable.point_1));
+                subtract_3.setBackground(getResources().getDrawable(R.drawable.point_1));
+                subtract_4.setBackground(getResources().getDrawable(R.drawable.point_1));
+                subtract_5.setBackground(getResources().getDrawable(R.drawable.point_1));
             }
         });
         add_3.setOnClickListener(new View.OnClickListener() {
@@ -148,6 +245,17 @@ public class DistributeIntegralActivity extends AppCompatActivity {
                 add_3.setBackground(getResources().getDrawable(R.drawable.point_2));
                 add_4.setBackground(getResources().getDrawable(R.drawable.point_1));
                 add_5.setBackground(getResources().getDrawable(R.drawable.point_1));
+                subtract = 0;
+                subtract_1.setTextColor(0xFF7E64FD);
+                subtract_2.setTextColor(0xFF7E64FD);
+                subtract_3.setTextColor(0xFF7E64FD);
+                subtract_4.setTextColor(0xFF7E64FD);
+                subtract_5.setTextColor(0xFF7E64FD);
+                subtract_1.setBackground(getResources().getDrawable(R.drawable.point_1));
+                subtract_2.setBackground(getResources().getDrawable(R.drawable.point_1));
+                subtract_3.setBackground(getResources().getDrawable(R.drawable.point_1));
+                subtract_4.setBackground(getResources().getDrawable(R.drawable.point_1));
+                subtract_5.setBackground(getResources().getDrawable(R.drawable.point_1));
             }
         });
         add_4.setOnClickListener(new View.OnClickListener() {
@@ -164,6 +272,17 @@ public class DistributeIntegralActivity extends AppCompatActivity {
                 add_3.setBackground(getResources().getDrawable(R.drawable.point_1));
                 add_4.setBackground(getResources().getDrawable(R.drawable.point_2));
                 add_5.setBackground(getResources().getDrawable(R.drawable.point_1));
+                subtract = 0;
+                subtract_1.setTextColor(0xFF7E64FD);
+                subtract_2.setTextColor(0xFF7E64FD);
+                subtract_3.setTextColor(0xFF7E64FD);
+                subtract_4.setTextColor(0xFF7E64FD);
+                subtract_5.setTextColor(0xFF7E64FD);
+                subtract_1.setBackground(getResources().getDrawable(R.drawable.point_1));
+                subtract_2.setBackground(getResources().getDrawable(R.drawable.point_1));
+                subtract_3.setBackground(getResources().getDrawable(R.drawable.point_1));
+                subtract_4.setBackground(getResources().getDrawable(R.drawable.point_1));
+                subtract_5.setBackground(getResources().getDrawable(R.drawable.point_1));
             }
         });
         add_5.setOnClickListener(new View.OnClickListener() {
@@ -180,6 +299,17 @@ public class DistributeIntegralActivity extends AppCompatActivity {
                 add_3.setBackground(getResources().getDrawable(R.drawable.point_1));
                 add_4.setBackground(getResources().getDrawable(R.drawable.point_1));
                 add_5.setBackground(getResources().getDrawable(R.drawable.point_2));
+                subtract = 0;
+                subtract_1.setTextColor(0xFF7E64FD);
+                subtract_2.setTextColor(0xFF7E64FD);
+                subtract_3.setTextColor(0xFF7E64FD);
+                subtract_4.setTextColor(0xFF7E64FD);
+                subtract_5.setTextColor(0xFF7E64FD);
+                subtract_1.setBackground(getResources().getDrawable(R.drawable.point_1));
+                subtract_2.setBackground(getResources().getDrawable(R.drawable.point_1));
+                subtract_3.setBackground(getResources().getDrawable(R.drawable.point_1));
+                subtract_4.setBackground(getResources().getDrawable(R.drawable.point_1));
+                subtract_5.setBackground(getResources().getDrawable(R.drawable.point_1));
             }
         });
         editText_other_point.setOnClickListener(new View.OnClickListener() {
@@ -197,6 +327,17 @@ public class DistributeIntegralActivity extends AppCompatActivity {
                 add_3.setBackground(getResources().getDrawable(R.drawable.point_1));
                 add_4.setBackground(getResources().getDrawable(R.drawable.point_1));
                 add_5.setBackground(getResources().getDrawable(R.drawable.point_1));
+                subtract = 0;
+                subtract_1.setTextColor(0xFF7E64FD);
+                subtract_2.setTextColor(0xFF7E64FD);
+                subtract_3.setTextColor(0xFF7E64FD);
+                subtract_4.setTextColor(0xFF7E64FD);
+                subtract_5.setTextColor(0xFF7E64FD);
+                subtract_1.setBackground(getResources().getDrawable(R.drawable.point_1));
+                subtract_2.setBackground(getResources().getDrawable(R.drawable.point_1));
+                subtract_3.setBackground(getResources().getDrawable(R.drawable.point_1));
+                subtract_4.setBackground(getResources().getDrawable(R.drawable.point_1));
+                subtract_5.setBackground(getResources().getDrawable(R.drawable.point_1));
             }
         });
         editText_other_point.addTextChangedListener(new TextWatcher() {
@@ -227,6 +368,11 @@ public class DistributeIntegralActivity extends AppCompatActivity {
                 add_reason_1.setBackground(getResources().getDrawable(R.drawable.point_2));
                 add_reason_2.setBackground(getResources().getDrawable(R.drawable.point_1));
                 add_reason_3.setBackground(getResources().getDrawable(R.drawable.point_1));
+                subtract_reason = null;
+                subtract_reason_1.setTextColor(0xFF7E64FD);
+                subtract_reason_2.setTextColor(0xFF7E64FD);
+                subtract_reason_1.setBackground(getResources().getDrawable(R.drawable.point_1));
+                subtract_reason_2.setBackground(getResources().getDrawable(R.drawable.point_1));
             }
         });
         add_reason_2.setOnClickListener(new View.OnClickListener() {
@@ -239,6 +385,11 @@ public class DistributeIntegralActivity extends AppCompatActivity {
                 add_reason_1.setBackground(getResources().getDrawable(R.drawable.point_1));
                 add_reason_2.setBackground(getResources().getDrawable(R.drawable.point_2));
                 add_reason_3.setBackground(getResources().getDrawable(R.drawable.point_1));
+                subtract_reason = null;
+                subtract_reason_1.setTextColor(0xFF7E64FD);
+                subtract_reason_2.setTextColor(0xFF7E64FD);
+                subtract_reason_1.setBackground(getResources().getDrawable(R.drawable.point_1));
+                subtract_reason_2.setBackground(getResources().getDrawable(R.drawable.point_1));
             }
         });
         add_reason_3.setOnClickListener(new View.OnClickListener() {
@@ -251,6 +402,11 @@ public class DistributeIntegralActivity extends AppCompatActivity {
                 add_reason_1.setBackground(getResources().getDrawable(R.drawable.point_1));
                 add_reason_2.setBackground(getResources().getDrawable(R.drawable.point_1));
                 add_reason_3.setBackground(getResources().getDrawable(R.drawable.point_2));
+                subtract_reason = null;
+                subtract_reason_1.setTextColor(0xFF7E64FD);
+                subtract_reason_2.setTextColor(0xFF7E64FD);
+                subtract_reason_1.setBackground(getResources().getDrawable(R.drawable.point_1));
+                subtract_reason_2.setBackground(getResources().getDrawable(R.drawable.point_1));
             }
         });
         editText_add_other_reason.setOnClickListener(new View.OnClickListener() {
@@ -263,6 +419,11 @@ public class DistributeIntegralActivity extends AppCompatActivity {
                 add_reason_1.setBackground(getResources().getDrawable(R.drawable.point_1));
                 add_reason_2.setBackground(getResources().getDrawable(R.drawable.point_1));
                 add_reason_3.setBackground(getResources().getDrawable(R.drawable.point_1));
+                subtract_reason = null;
+                subtract_reason_1.setTextColor(0xFF7E64FD);
+                subtract_reason_2.setTextColor(0xFF7E64FD);
+                subtract_reason_1.setBackground(getResources().getDrawable(R.drawable.point_1));
+                subtract_reason_2.setBackground(getResources().getDrawable(R.drawable.point_1));
             }
         });
         editText_add_other_reason.addTextChangedListener(new TextWatcher() {
@@ -297,6 +458,17 @@ public class DistributeIntegralActivity extends AppCompatActivity {
                 subtract_3.setBackground(getResources().getDrawable(R.drawable.point_1));
                 subtract_4.setBackground(getResources().getDrawable(R.drawable.point_1));
                 subtract_5.setBackground(getResources().getDrawable(R.drawable.point_1));
+                add = 0;
+                add_1.setTextColor(0xFF7E64FD);
+                add_2.setTextColor(0xFF7E64FD);
+                add_3.setTextColor(0xFF7E64FD);
+                add_4.setTextColor(0xFF7E64FD);
+                add_5.setTextColor(0xFF7E64FD);
+                add_1.setBackground(getResources().getDrawable(R.drawable.point_1));
+                add_2.setBackground(getResources().getDrawable(R.drawable.point_1));
+                add_3.setBackground(getResources().getDrawable(R.drawable.point_1));
+                add_4.setBackground(getResources().getDrawable(R.drawable.point_1));
+                add_5.setBackground(getResources().getDrawable(R.drawable.point_1));
             }
         });
         subtract_2.setOnClickListener(new View.OnClickListener() {
@@ -313,6 +485,17 @@ public class DistributeIntegralActivity extends AppCompatActivity {
                 subtract_3.setBackground(getResources().getDrawable(R.drawable.point_1));
                 subtract_4.setBackground(getResources().getDrawable(R.drawable.point_1));
                 subtract_5.setBackground(getResources().getDrawable(R.drawable.point_1));
+                add = 0;
+                add_1.setTextColor(0xFF7E64FD);
+                add_2.setTextColor(0xFF7E64FD);
+                add_3.setTextColor(0xFF7E64FD);
+                add_4.setTextColor(0xFF7E64FD);
+                add_5.setTextColor(0xFF7E64FD);
+                add_1.setBackground(getResources().getDrawable(R.drawable.point_1));
+                add_2.setBackground(getResources().getDrawable(R.drawable.point_1));
+                add_3.setBackground(getResources().getDrawable(R.drawable.point_1));
+                add_4.setBackground(getResources().getDrawable(R.drawable.point_1));
+                add_5.setBackground(getResources().getDrawable(R.drawable.point_1));
             }
         });
         subtract_3.setOnClickListener(new View.OnClickListener() {
@@ -329,6 +512,17 @@ public class DistributeIntegralActivity extends AppCompatActivity {
                 subtract_3.setBackground(getResources().getDrawable(R.drawable.point_2));
                 subtract_4.setBackground(getResources().getDrawable(R.drawable.point_1));
                 subtract_5.setBackground(getResources().getDrawable(R.drawable.point_1));
+                add = 0;
+                add_1.setTextColor(0xFF7E64FD);
+                add_2.setTextColor(0xFF7E64FD);
+                add_3.setTextColor(0xFF7E64FD);
+                add_4.setTextColor(0xFF7E64FD);
+                add_5.setTextColor(0xFF7E64FD);
+                add_1.setBackground(getResources().getDrawable(R.drawable.point_1));
+                add_2.setBackground(getResources().getDrawable(R.drawable.point_1));
+                add_3.setBackground(getResources().getDrawable(R.drawable.point_1));
+                add_4.setBackground(getResources().getDrawable(R.drawable.point_1));
+                add_5.setBackground(getResources().getDrawable(R.drawable.point_1));
             }
         });
         subtract_4.setOnClickListener(new View.OnClickListener() {
@@ -345,6 +539,17 @@ public class DistributeIntegralActivity extends AppCompatActivity {
                 subtract_3.setBackground(getResources().getDrawable(R.drawable.point_1));
                 subtract_4.setBackground(getResources().getDrawable(R.drawable.point_2));
                 subtract_5.setBackground(getResources().getDrawable(R.drawable.point_1));
+                add = 0;
+                add_1.setTextColor(0xFF7E64FD);
+                add_2.setTextColor(0xFF7E64FD);
+                add_3.setTextColor(0xFF7E64FD);
+                add_4.setTextColor(0xFF7E64FD);
+                add_5.setTextColor(0xFF7E64FD);
+                add_1.setBackground(getResources().getDrawable(R.drawable.point_1));
+                add_2.setBackground(getResources().getDrawable(R.drawable.point_1));
+                add_3.setBackground(getResources().getDrawable(R.drawable.point_1));
+                add_4.setBackground(getResources().getDrawable(R.drawable.point_1));
+                add_5.setBackground(getResources().getDrawable(R.drawable.point_1));
             }
         });
         subtract_5.setOnClickListener(new View.OnClickListener() {
@@ -361,6 +566,17 @@ public class DistributeIntegralActivity extends AppCompatActivity {
                 subtract_3.setBackground(getResources().getDrawable(R.drawable.point_1));
                 subtract_4.setBackground(getResources().getDrawable(R.drawable.point_1));
                 subtract_5.setBackground(getResources().getDrawable(R.drawable.point_2));
+                add = 0;
+                add_1.setTextColor(0xFF7E64FD);
+                add_2.setTextColor(0xFF7E64FD);
+                add_3.setTextColor(0xFF7E64FD);
+                add_4.setTextColor(0xFF7E64FD);
+                add_5.setTextColor(0xFF7E64FD);
+                add_1.setBackground(getResources().getDrawable(R.drawable.point_1));
+                add_2.setBackground(getResources().getDrawable(R.drawable.point_1));
+                add_3.setBackground(getResources().getDrawable(R.drawable.point_1));
+                add_4.setBackground(getResources().getDrawable(R.drawable.point_1));
+                add_5.setBackground(getResources().getDrawable(R.drawable.point_1));
             }
         });
         editText_subtract_other_point.setOnClickListener(new View.OnClickListener() {
@@ -378,6 +594,17 @@ public class DistributeIntegralActivity extends AppCompatActivity {
                 subtract_3.setBackground(getResources().getDrawable(R.drawable.point_1));
                 subtract_4.setBackground(getResources().getDrawable(R.drawable.point_1));
                 subtract_5.setBackground(getResources().getDrawable(R.drawable.point_1));
+                add = 0;
+                add_1.setTextColor(0xFF7E64FD);
+                add_2.setTextColor(0xFF7E64FD);
+                add_3.setTextColor(0xFF7E64FD);
+                add_4.setTextColor(0xFF7E64FD);
+                add_5.setTextColor(0xFF7E64FD);
+                add_1.setBackground(getResources().getDrawable(R.drawable.point_1));
+                add_2.setBackground(getResources().getDrawable(R.drawable.point_1));
+                add_3.setBackground(getResources().getDrawable(R.drawable.point_1));
+                add_4.setBackground(getResources().getDrawable(R.drawable.point_1));
+                add_5.setBackground(getResources().getDrawable(R.drawable.point_1));
             }
         });
         editText_subtract_other_point.addTextChangedListener(new TextWatcher() {
@@ -406,6 +633,13 @@ public class DistributeIntegralActivity extends AppCompatActivity {
                 subtract_reason_2.setTextColor(0xFF7E64FD);
                 subtract_reason_1.setBackground(getResources().getDrawable(R.drawable.point_2));
                 subtract_reason_2.setBackground(getResources().getDrawable(R.drawable.point_1));
+                add_reason = null;
+                add_reason_1.setTextColor(0xFF7E64FD);
+                add_reason_2.setTextColor(0xFF7E64FD);
+                add_reason_3.setTextColor(0xFF7E64FD);
+                add_reason_1.setBackground(getResources().getDrawable(R.drawable.point_1));
+                add_reason_2.setBackground(getResources().getDrawable(R.drawable.point_1));
+                add_reason_3.setBackground(getResources().getDrawable(R.drawable.point_1));
             }
         });
         subtract_reason_2.setOnClickListener(new View.OnClickListener() {
@@ -416,6 +650,13 @@ public class DistributeIntegralActivity extends AppCompatActivity {
                 subtract_reason_2.setTextColor(0xFFFFFFFF);
                 subtract_reason_1.setBackground(getResources().getDrawable(R.drawable.point_1));
                 subtract_reason_2.setBackground(getResources().getDrawable(R.drawable.point_2));
+                add_reason = null;
+                add_reason_1.setTextColor(0xFF7E64FD);
+                add_reason_2.setTextColor(0xFF7E64FD);
+                add_reason_3.setTextColor(0xFF7E64FD);
+                add_reason_1.setBackground(getResources().getDrawable(R.drawable.point_1));
+                add_reason_2.setBackground(getResources().getDrawable(R.drawable.point_1));
+                add_reason_3.setBackground(getResources().getDrawable(R.drawable.point_1));
             }
         });
         editText_subtract_other_reason.setOnClickListener(new View.OnClickListener() {
@@ -426,6 +667,13 @@ public class DistributeIntegralActivity extends AppCompatActivity {
                 subtract_reason_2.setTextColor(0xFF7E64FD);
                 subtract_reason_1.setBackground(getResources().getDrawable(R.drawable.point_1));
                 subtract_reason_2.setBackground(getResources().getDrawable(R.drawable.point_1));
+                add_reason = null;
+                add_reason_1.setTextColor(0xFF7E64FD);
+                add_reason_2.setTextColor(0xFF7E64FD);
+                add_reason_3.setTextColor(0xFF7E64FD);
+                add_reason_1.setBackground(getResources().getDrawable(R.drawable.point_1));
+                add_reason_2.setBackground(getResources().getDrawable(R.drawable.point_1));
+                add_reason_3.setBackground(getResources().getDrawable(R.drawable.point_1));
             }
         });
         editText_subtract_other_reason.addTextChangedListener(new TextWatcher() {
@@ -455,7 +703,7 @@ public class DistributeIntegralActivity extends AppCompatActivity {
                         public void run() {
                             try {
                                 String json = "{\n" +
-                                        "\t\"studentId\": \"" + editText.getText().toString() + "\",\n" +
+                                        "\t\"studentId\": \"" + studentId + "\",\n" +
                                         "\t\"score\": \"" + add + "\",\n" +
                                         "\t\"message\": \"" + add_reason + "\"\n" +
                                         "}";
