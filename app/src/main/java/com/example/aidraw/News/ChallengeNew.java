@@ -1,7 +1,5 @@
 package com.example.aidraw.News;
 
-import java.net.URL;
-
 public class ChallengeNew {
 
     public String head_url, work_url;

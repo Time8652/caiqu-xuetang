@@ -1,7 +1,5 @@
 package com.example.aidraw.News;
 
-import com.example.aidraw.IntegralActivity;
-
 import java.net.URL;
 
 public class IntegralNew {

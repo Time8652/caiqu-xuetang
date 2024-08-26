@@ -1,18 +1,11 @@
 package com.example.aidraw;
 
-
-import static com.google.android.material.internal.ContextUtils.getActivity;
-
-import static java.security.AccessController.getContext;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,7 +15,6 @@ import com.example.aidraw.News.ChallengeNew;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.net.URL;
 import java.util.ArrayList;
 
 import okhttp3.OkHttpClient;

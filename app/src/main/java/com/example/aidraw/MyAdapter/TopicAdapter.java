@@ -1,8 +1,6 @@
 package com.example.aidraw.MyAdapter;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,22 +15,10 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.aidraw.HomeworkActivity;
-import com.example.aidraw.LoginActivity;
-import com.example.aidraw.ManageFragment;
 import com.example.aidraw.News.TopicNew;
 import com.example.aidraw.R;
 
-import org.json.JSONObject;
-
 import java.util.ArrayList;
-
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
 
 public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.MyViewHolder> {
 
@@ -87,7 +73,7 @@ public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.MyViewHolder
             public void onClick(View v) {
                 holder.editText.setText("");
                 holder.constraintLayout.setVisibility(View.GONE);
-                String text = holder.editText.getText().toString();
+                Toast.makeText(v.getContext(), "发表成功", Toast.LENGTH_SHORT).show();
             }
         });
     }

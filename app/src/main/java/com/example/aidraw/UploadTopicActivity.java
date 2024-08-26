@@ -19,7 +19,6 @@ import com.example.aidraw.News.TopicNew;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.net.URL;
 import java.util.ArrayList;
 
 import okhttp3.OkHttpClient;
@@ -34,7 +33,7 @@ public class UploadTopicActivity extends AppCompatActivity {
     private View View_completed, View_incomplete;
     private RecyclerView recyclerView;
     private ArrayList<TopicNew> topicNewArrayList;
-    private URL[] head_url, work_url;
+    private String[] head_url, work_url;
     private String[] name, time, text;
     private int[] star;
     private boolean isGood = true, isFirst = true;
@@ -108,19 +107,19 @@ public class UploadTopicActivity extends AppCompatActivity {
                     JSONObject jsonObject = new JSONObject(responseData);
                     JSONObject dataObject = jsonObject.getJSONObject("data");
                     JSONArray jsonArray = dataObject.getJSONArray("list");
-                    head_url = new URL[jsonArray.length()];
+                    head_url = new String[jsonArray.length()];
                     name = new String[jsonArray.length()];
                     time = new String[jsonArray.length()];
                     text = new String[jsonArray.length()];
-                    work_url = new URL[jsonArray.length()];
+                    work_url = new String[jsonArray.length()];
                     star = new int[jsonArray.length()];
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject2 = jsonArray.getJSONObject(i);
-                        head_url[i] = new URL(jsonObject2.get("headerUrl").toString());
+                        head_url[i] = jsonObject2.getString("headerUrl");
                         name[i] = jsonObject2.getString("author");
                         time[i] = jsonObject2.getString("createTime");
                         text[i] = jsonObject2.getString("title") + " " + jsonObject2.getString("text");
-                        work_url[i] = new URL(jsonObject2.get("imageUrl").toString());
+                        work_url[i] = jsonObject2.getString("imageUrl");
                         star[i] = jsonObject2.getInt("starsNum");
                     }
                     if (isFirst) {

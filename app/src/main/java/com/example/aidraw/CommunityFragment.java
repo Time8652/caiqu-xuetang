@@ -22,7 +22,6 @@ import android.os.Bundle;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -242,7 +241,7 @@ public class CommunityFragment extends Fragment {
                                             getActivity().runOnUiThread(new Runnable() {
                                                 @Override
                                                 public void run() {
-                                                    Toast.makeText(getActivity(), "网络连接失败", Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(getActivity(), "参与度获取失败", Toast.LENGTH_SHORT).show();
                                                 }
                                             });
                                         }
@@ -508,32 +507,63 @@ public class CommunityFragment extends Fragment {
                                         "\t\"type\": \"" + "1" + "\"\n" +
                                         "}";
                             }
+                            RequestBody jsonBody = RequestBody.create(MediaType.parse("application/json"), json);
                             OkHttpClient client = new OkHttpClient();//创建http客户端
                             MultipartBody.Builder requestBody = new MultipartBody.Builder().setType(MultipartBody.FORM);//通过表单上传文件
-                            RequestBody fileBody = RequestBody.create(MediaType.parse("image/*"), file);//上传的文件以及类型
-                            requestBody.addFormDataPart("file", file.getName(), fileBody).addFormDataPart("discussPostDTO", json);
-                            Request request = new Request.Builder()
-                                    .url("http://" + LoginActivity.getUrl() + ":8080/common/community-discuss")
-                                    .post(requestBody.build())
-                                    .build();//创造http请求
-                            Response response = client.newCall(request).execute();//执行发送的指令
-                            String responseData = response.body().string();//获取后端返回过来的json格式的结果
-                            JSONObject jsonObject = new JSONObject(responseData);
-                            int code = jsonObject.getInt("code");
-                            if (code == 0) {
-                                getActivity().runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        Toast.makeText(getActivity(), "发表成功", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
+                            if (file != null) {
+                                RequestBody fileBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);//上传的文件以及类型
+                                requestBody.addFormDataPart("file", file.getName(), fileBody)
+                                        .addFormDataPart("communityWorksDTO", "communityWorksDTO.json", jsonBody);
+                                Request request = new Request.Builder()
+                                        .url("http://" + LoginActivity.getUrl() + ":8080/common/community-discuss")
+                                        .post(requestBody.build())
+                                        .header("Authorization", key)
+                                        .build();//创造http请求
+                                Response response = client.newCall(request).execute();//执行发送的指令
+                                String responseData = response.body().string();//获取后端返回过来的json格式的结果
+                                JSONObject jsonObject = new JSONObject(responseData);
+                                int code = jsonObject.getInt("code");
+                                if (code == 0) {
+                                    getActivity().runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Toast.makeText(getContext(), "发表成功", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                } else {
+                                    getActivity().runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Toast.makeText(getContext(), "发表失败", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                }
                             } else {
-                                getActivity().runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        Toast.makeText(getActivity(), "发表失败", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
+                                requestBody.addFormDataPart("communityWorksDTO", "communityWorksDTO.json", jsonBody);
+                                Request request = new Request.Builder()
+                                        .url("http://" + LoginActivity.getUrl() + ":8080/common/community-discuss")
+                                        .post(requestBody.build())
+                                        .header("Authorization", key)
+                                        .build();//创造http请求
+                                Response response = client.newCall(request).execute();//执行发送的指令
+                                String responseData = response.body().string();//获取后端返回过来的json格式的结果
+                                JSONObject jsonObject = new JSONObject(responseData);
+                                int code = jsonObject.getInt("code");
+                                if (code == 0) {
+                                    getActivity().runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Toast.makeText(getContext(), "发表成功", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                } else {
+                                    getActivity().runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Toast.makeText(getContext(), "发表失败", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                }
                             }
                         } catch (Exception e) {
                             e.printStackTrace();

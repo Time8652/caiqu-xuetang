@@ -115,7 +115,7 @@ public class HomeworkActivity extends AppCompatActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Toast.makeText(HomeworkActivity.this, "网络连接失败", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(HomeworkActivity.this, "草稿箱为空", Toast.LENGTH_SHORT).show();
                             }
                         });
                     }

@@ -1,7 +1,5 @@
 package com.example.aidraw.News;
 
-import java.net.URL;
-
 public class StudentNew {
 
     public String url;
