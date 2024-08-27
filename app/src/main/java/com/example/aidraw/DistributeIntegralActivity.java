@@ -86,6 +86,7 @@ public class DistributeIntegralActivity extends AppCompatActivity implements Sea
             public void onClick(View v) {
                 editText.setSelection(editText.length());
                 gone.setVisibility(View.VISIBLE);
+                editText.setTextColor(0xFF333333);
             }
         });
         editText.addTextChangedListener(new TextWatcher() {
@@ -103,6 +104,7 @@ public class DistributeIntegralActivity extends AppCompatActivity implements Sea
             @Override
             public void afterTextChanged(Editable s) {
                 if (!editText.getText().toString().equals("")) {
+                    editText.setTextColor(0xFF333333);
                     searchNewArrayList = new ArrayList<>();
                     gone.setVisibility(View.VISIBLE);
                     recyclerView.setVisibility(View.VISIBLE);
@@ -309,6 +311,7 @@ public class DistributeIntegralActivity extends AppCompatActivity implements Sea
         editText_other_point.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                editText_other_point.setTextColor(0xFF333333);
                 editText_other_point.setText("+");
                 editText_other_point.setSelection(editText_other_point.length());
                 add_1.setTextColor(0xFF7E64FD);
@@ -406,6 +409,7 @@ public class DistributeIntegralActivity extends AppCompatActivity implements Sea
         editText_add_other_reason.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                editText_add_other_reason.setTextColor(0xFF333333);
                 editText_add_other_reason.setText("");
                 add_reason_1.setTextColor(0xFF7E64FD);
                 add_reason_2.setTextColor(0xFF7E64FD);
@@ -576,6 +580,7 @@ public class DistributeIntegralActivity extends AppCompatActivity implements Sea
         editText_subtract_other_point.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                editText_subtract_other_point.setTextColor(0xFF333333);
                 editText_subtract_other_point.setText("-");
                 editText_subtract_other_point.setSelection(editText_subtract_other_point.length());
                 subtract_1.setTextColor(0xFF7E64FD);
@@ -656,6 +661,7 @@ public class DistributeIntegralActivity extends AppCompatActivity implements Sea
         editText_subtract_other_reason.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                editText_subtract_other_reason.setTextColor(0xFF333333);
                 editText_subtract_other_reason.setText("");
                 subtract_reason_1.setTextColor(0xFF7E64FD);
                 subtract_reason_2.setTextColor(0xFF7E64FD);

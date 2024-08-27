@@ -21,10 +21,10 @@ public class WebActivity extends AppCompatActivity {
         webView = findViewById(R.id.netWeb);
         switch (InteractionFragment.getSelection()) {
             case "选人":
-                url = "";
+                url = "http://172.20.10.10:8081/#/precontent?title=3D%E6%A8%A1%E5%9E%8B%E5%B1%95%E7%A4%BA";
                 break;
             case "投票":
-                url = "";
+                url = "https://www.baidu.com";
                 break;
             case "分组":
                 url = "";
