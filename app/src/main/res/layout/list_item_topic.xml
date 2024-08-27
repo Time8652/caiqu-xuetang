@@ -67,9 +67,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         app:layout_constraintTop_toBottomOf="@+id/imageView_1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintEnd_toStartOf="@+id/linearLayout_2"
+        app:layout_constraintStart_toStartOf="@+id/imageView"
         android:orientation="horizontal">
 
         <ImageView
@@ -93,7 +91,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toEndOf="@id/linearLayout_1"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintEnd_toStartOf="@+id/linearLayout_3"
         app:layout_constraintTop_toTopOf="@id/linearLayout_1"
         app:layout_constraintBottom_toBottomOf="@+id/linearLayout_1"
@@ -119,8 +116,7 @@
         android:id="@+id/linearLayout_3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@id/linearLayout_2"
-        app:layout_constraintHorizontal_bias="0.5"
+        android:layout_marginRight="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/linearLayout_1"
         app:layout_constraintBottom_toBottomOf="@+id/linearLayout_1"

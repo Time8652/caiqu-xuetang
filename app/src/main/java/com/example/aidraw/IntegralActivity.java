@@ -1,6 +1,7 @@
 package com.example.aidraw;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
@@ -93,6 +94,7 @@ public class IntegralActivity extends AppCompatActivity {
             }
         }).start();
         IntegralAdapter integralAdapter = new IntegralAdapter(this, integralNewArrayList);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(integralAdapter);
         integralAdapter.notifyDataSetChanged();
     }

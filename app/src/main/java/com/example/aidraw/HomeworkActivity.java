@@ -249,18 +249,23 @@ public class HomeworkActivity extends AppCompatActivity {
                                     runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
-                                            Toast.makeText(HomeworkActivity.this, "发布成功", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(HomeworkActivity.this, "保存成功", Toast.LENGTH_SHORT).show();
                                             SharedPreferences sharedPreferences = getSharedPreferences("Record",MODE_PRIVATE);
                                             @SuppressLint("CommitPrefEdits") SharedPreferences.Editor edit = sharedPreferences.edit();
                                             edit.putBoolean("Homework", false);
                                             edit.apply();
+                                            title.setText("");
+                                            content.setText("");
+                                            homework_image.setText("暂无图片");
+                                            deadline_day.setText("");
+                                            deadline_time.setText("");
                                         }
                                     });
                                 } else {
                                     runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
-                                            Toast.makeText(HomeworkActivity.this, "发布失败", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(HomeworkActivity.this, "保存失败", Toast.LENGTH_SHORT).show();
                                         }
                                     });
                                 }
@@ -284,6 +289,11 @@ public class HomeworkActivity extends AppCompatActivity {
                                             @SuppressLint("CommitPrefEdits") SharedPreferences.Editor edit = sharedPreferences.edit();
                                             edit.putBoolean("Homework", false);
                                             edit.apply();
+                                            title.setText("");
+                                            content.setText("");
+                                            homework_image.setText("暂无图片");
+                                            deadline_day.setText("");
+                                            deadline_time.setText("");
                                         }
                                     });
                                 } else {
@@ -347,6 +357,11 @@ public class HomeworkActivity extends AppCompatActivity {
                                             @SuppressLint("CommitPrefEdits") SharedPreferences.Editor edit = sharedPreferences.edit();
                                             edit.putBoolean("Homework", false);
                                             edit.apply();
+                                            title.setText("");
+                                            content.setText("");
+                                            homework_image.setText("暂无图片");
+                                            deadline_day.setText("");
+                                            deadline_time.setText("");
                                         }
                                     });
                                 } else {
@@ -377,6 +392,11 @@ public class HomeworkActivity extends AppCompatActivity {
                                             @SuppressLint("CommitPrefEdits") SharedPreferences.Editor edit = sharedPreferences.edit();
                                             edit.putBoolean("Homework", false);
                                             edit.apply();
+                                            title.setText("");
+                                            content.setText("");
+                                            homework_image.setText("暂无图片");
+                                            deadline_day.setText("");
+                                            deadline_time.setText("");
                                         }
                                     });
                                 } else {

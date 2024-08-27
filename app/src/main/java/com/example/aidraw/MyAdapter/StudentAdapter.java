@@ -37,7 +37,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.MyViewHo
     public void onBindViewHolder(@NonNull StudentAdapter.MyViewHolder holder, int position) {
         StudentNew studentNew = studentNewArrayList.get(position);
         holder.tv_name.setText(studentNew.name);
-        holder.student_id.setText(studentNew.id);
+        holder.student_id.setText("2022001030" + studentNew.id);
         Glide.with(context).load(studentNew.url).into(holder.imageView_head);
         if (studentNew.gender.equals("男")) {
             holder.gender.setImageResource(R.drawable.class_boy);

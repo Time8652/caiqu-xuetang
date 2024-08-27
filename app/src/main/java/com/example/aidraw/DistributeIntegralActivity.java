@@ -29,7 +29,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class DistributeIntegralActivity extends AppCompatActivity {
+public class DistributeIntegralActivity extends AppCompatActivity implements SearchAdapter.OnItemClickListener {
 
     private String key, add_reason = null, subtract_reason = null, studentId;
     private int add = 0, subtract = 0;
@@ -99,9 +99,11 @@ public class DistributeIntegralActivity extends AppCompatActivity {
 
             }
 
+            @SuppressLint("NotifyDataSetChanged")
             @Override
             public void afterTextChanged(Editable s) {
                 if (!editText.getText().toString().equals("")) {
+                    searchNewArrayList = new ArrayList<>();
                     gone.setVisibility(View.VISIBLE);
                     recyclerView.setVisibility(View.VISIBLE);
                     new Thread(new Runnable() {
@@ -110,42 +112,42 @@ public class DistributeIntegralActivity extends AppCompatActivity {
                             try {
                                 OkHttpClient client = new OkHttpClient();//创建http客户端
                                 Request request = new Request.Builder()
-                                        .url("http://" + LoginActivity.getUrl() + ":8080/teacher/student-score")
+                                        .url("http://" + LoginActivity.getUrl() + ":8080/teacher/student-score-info?name=" + editText.getText().toString() + "&classId=" + ManageFragment.getClassId())
                                         .header("Authorization", key)
                                         .get()
                                         .build();//创造http请求
                                 Response response = client.newCall(request).execute();//执行发送的指令
                                 String responseData = response.body().string();//获取后端返回过来的json格式的结果
                                 JSONObject jsonObject = new JSONObject(responseData);
-                                JSONObject dataObject = jsonObject.getJSONObject("data");
-                                JSONArray jsonArray = dataObject.getJSONArray("list");
-                                url = new String[jsonArray.length()];
-                                name = new String[jsonArray.length()];
-                                gender = new String[jsonArray.length()];
-                                number = new String[jsonArray.length()];
-                                student_id = new String[jsonArray.length()];
-                                for (int i = 0; i < jsonArray.length(); i++) {
-                                    JSONObject jsonObject2 = jsonArray.getJSONObject(i);
-                                    url[i] = jsonObject2.getString("headerUrl");
-                                    name[i] = jsonObject2.getString("name");
-                                    gender[i] = jsonObject2.getString("gender");
-                                    number[i] = jsonObject2.getString("number");
-                                    student_id[i] = jsonObject2.getString("id");
-                                    Log.d("TAG", "run: "+ name[i]);
-                                }
-                                for (int i = 0; i < jsonArray.length(); i++) {
-                                    SearchNew searchNew = new SearchNew(url[i], name[i], gender[i], number[i]);
-                                    searchNewArrayList.add(searchNew);
-                                }
-                                runOnUiThread(new Runnable() {
-                                    @SuppressLint("NotifyDataSetChanged")
-                                    public void run() {
-                                        SearchAdapter searchAdapter = new SearchAdapter(DistributeIntegralActivity.this, searchNewArrayList);
-                                        recyclerView.setLayoutManager(new LinearLayoutManager(DistributeIntegralActivity.this));
-                                        recyclerView.setAdapter(searchAdapter);
-                                        searchAdapter.notifyDataSetChanged();
+                                JSONArray jsonArray = jsonObject.getJSONArray("data");
+                                if (jsonArray != null) {
+                                    url = new String[jsonArray.length()];
+                                    name = new String[jsonArray.length()];
+                                    gender = new String[jsonArray.length()];
+                                    number = new String[jsonArray.length()];
+                                    student_id = new String[jsonArray.length()];
+                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                        JSONObject jsonObject2 = jsonArray.getJSONObject(i);
+                                        url[i] = jsonObject2.getString("headerUrl");
+                                        name[i] = jsonObject2.getString("name");
+                                        gender[i] = jsonObject2.getString("gender");
+                                        number[i] = String.valueOf(jsonObject2.getInt("num"));
+                                        student_id[i] = jsonObject2.getString("id");
                                     }
-                                });
+                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                        SearchNew searchNew = new SearchNew(url[i], name[i], gender[i], number[i]);
+                                        searchNewArrayList.add(searchNew);
+                                    }
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            SearchAdapter searchAdapter = new SearchAdapter(DistributeIntegralActivity.this, searchNewArrayList, DistributeIntegralActivity.this);
+                                            recyclerView.setLayoutManager(new LinearLayoutManager(DistributeIntegralActivity.this));
+                                            recyclerView.setAdapter(searchAdapter);
+                                            searchAdapter.notifyDataSetChanged();
+                                        }
+                                    });
+                                }
                             } catch (Exception e) {
                                 e.printStackTrace();
                                 runOnUiThread(new Runnable() {
@@ -161,19 +163,11 @@ public class DistributeIntegralActivity extends AppCompatActivity {
                 }
             }
         });
-        recyclerView.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onClick(View v) {
-                recyclerView.setVisibility(View.GONE);
-                studentId = student_id[1];
-                editText.setText(name[1] + " " + number[1]);
-            }
-        });
         gone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 editText.setText("");
+                editText.setSelection(editText.length());
                 gone.setVisibility(View.GONE);
             }
         });
@@ -447,7 +441,7 @@ public class DistributeIntegralActivity extends AppCompatActivity {
         subtract_1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                subtract = -1;
+                subtract = 1;
                 subtract_1.setTextColor(0xFFFFFFFF);
                 subtract_2.setTextColor(0xFF7E64FD);
                 subtract_3.setTextColor(0xFF7E64FD);
@@ -474,7 +468,7 @@ public class DistributeIntegralActivity extends AppCompatActivity {
         subtract_2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                subtract = -2;
+                subtract = 2;
                 subtract_1.setTextColor(0xFF7E64FD);
                 subtract_2.setTextColor(0xFFFFFFFF);
                 subtract_3.setTextColor(0xFF7E64FD);
@@ -501,7 +495,7 @@ public class DistributeIntegralActivity extends AppCompatActivity {
         subtract_3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                subtract = -3;
+                subtract = 3;
                 subtract_1.setTextColor(0xFF7E64FD);
                 subtract_2.setTextColor(0xFF7E64FD);
                 subtract_3.setTextColor(0xFFFFFFFF);
@@ -528,7 +522,7 @@ public class DistributeIntegralActivity extends AppCompatActivity {
         subtract_4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                subtract = -4;
+                subtract = 4;
                 subtract_1.setTextColor(0xFF7E64FD);
                 subtract_2.setTextColor(0xFF7E64FD);
                 subtract_3.setTextColor(0xFF7E64FD);
@@ -555,7 +549,7 @@ public class DistributeIntegralActivity extends AppCompatActivity {
         subtract_5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                subtract = -5;
+                subtract = 5;
                 subtract_1.setTextColor(0xFF7E64FD);
                 subtract_2.setTextColor(0xFF7E64FD);
                 subtract_3.setTextColor(0xFF7E64FD);
@@ -621,7 +615,7 @@ public class DistributeIntegralActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 if (editText_subtract_other_point.getText().toString().substring(0).equals("-") && editText_subtract_other_point.getText().length() > 1) {
-                    subtract = -Integer.parseInt(editText_subtract_other_point.getText().toString().substring(1, editText.length()));
+                    subtract = Integer.parseInt(editText_subtract_other_point.getText().toString().substring(1, editText.length()));
                 }
             }
         });
@@ -749,7 +743,7 @@ public class DistributeIntegralActivity extends AppCompatActivity {
                         public void run() {
                             try {
                                 String json = "{\n" +
-                                        "\t\"studentId\": \"" + Long.parseLong(editText.getText().toString()) + "\",\n" +
+                                        "\t\"studentId\": \"" + studentId + "\",\n" +
                                         "\t\"score\": \"" + subtract + "\",\n" +
                                         "\t\"message\": \"" + subtract_reason + "\"\n" +
                                         "}";
@@ -757,6 +751,7 @@ public class DistributeIntegralActivity extends AppCompatActivity {
                                 Request request = new Request.Builder()
                                         .url("http://" + LoginActivity.getUrl() + ":8080/teacher/student-scores-dec")
                                         .put(RequestBody.create(MediaType.parse("application/json"), json))
+                                        .header("Authorization", key)
                                         .build();//创造http请求
                                 Response response = client.newCall(request).execute();//执行发送的指令
                                 String responseData = response.body().string();//获取后端返回过来的json格式的结果
@@ -793,5 +788,13 @@ public class DistributeIntegralActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @SuppressLint("SetTextI18n")
+    @Override
+    public void OnItemClick(View itemView, int position) {
+        editText.setText(name[position]);
+        studentId = student_id[position];
+        recyclerView.setVisibility(View.GONE);
     }
 }

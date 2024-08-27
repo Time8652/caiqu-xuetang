@@ -41,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
         initView();
         initData();
         SharedPreferences sharedPreferences = getSharedPreferences("Record",MODE_PRIVATE);
-        identity = sharedPreferences.getString("Identity", "");
+        identity = sharedPreferences.getString("Identity", "teacher");
         String number = et1.getText().toString();
         String password = et2.getText().toString();
         boolean checkbox3 = cb3.isChecked();

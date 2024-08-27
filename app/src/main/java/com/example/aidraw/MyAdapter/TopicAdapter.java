@@ -94,8 +94,8 @@ public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.MyViewHolder
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             imageView_head = itemView.findViewById(R.id.imageView);
-            tv_name = itemView.findViewById(R.id.tv_name);
-            tv_time = itemView.findViewById(R.id.tv_time);
+            tv_name = itemView.findViewById(R.id.name);
+            tv_time = itemView.findViewById(R.id.time);
             tv_text = itemView.findViewById(R.id.textView);
             imageView_work = itemView.findViewById(R.id.imageView_1);
             linearLayout_1 = itemView.findViewById(R.id.linearLayout_1);

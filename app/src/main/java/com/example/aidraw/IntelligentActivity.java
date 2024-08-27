@@ -53,6 +53,7 @@ public class IntelligentActivity extends AppCompatActivity {
     private TextView send, intelligent_image;
     private File file = null;
     private Uri uri = null;
+    private boolean isFirst = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +80,15 @@ public class IntelligentActivity extends AppCompatActivity {
                     Intent intent = new Intent("android.intent.action.GET_CONTENT");
                     intent.setType("image/*");
                     startActivityForResult(intent, REQUEST_CODE_PHOTO);
+                }
+            }
+        });
+        editText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (isFirst) {
+                    editText.setText("");
+                    isFirst = !isFirst;
                 }
             }
         });

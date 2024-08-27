@@ -30,12 +30,14 @@ public class WorkActivity extends AppCompatActivity {
     private ArrayList<WorkNew> workNewArrayList;
     private String[] work_title, work_like, work_time, work_final_time;
     private RecyclerView recyclerView;
+    private String classId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_work);
         key = LoginActivity.getKey();
+        classId = ManageFragment.getClassId();
         recyclerView = findViewById(R.id.recyclerView);
         new Thread(new Runnable() {
             @Override

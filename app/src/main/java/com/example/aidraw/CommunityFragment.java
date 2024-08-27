@@ -22,6 +22,7 @@ import android.os.Bundle;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -147,6 +148,7 @@ public class CommunityFragment extends Fragment {
                     String responseData = response.body().string();//获取后端返回过来的json格式的结果
                     JSONObject jsonObject = new JSONObject(responseData);
                     JSONObject dataObject = jsonObject.getJSONObject("data");
+                    Log.d( " data",dataObject.toString());
                     JSONArray jsonArray = dataObject.getJSONArray("list");
                     challenge_id = new String[3];
                     challenge_title = new String[3];
@@ -195,7 +197,7 @@ public class CommunityFragment extends Fragment {
                     JSONArray jsonArray = jsonObject.getJSONArray("data");
                     topic_title = new String[3];
                     for (int i = 0; i < 3; i++) {
-                        topic_title[i] = jsonArray.getString(i);
+                        topic_title[i] = jsonArray.getString(i).substring(1, jsonArray.getString(i).length());
                     }
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
@@ -344,7 +346,7 @@ public class CommunityFragment extends Fragment {
         return challengeText;
     }
     public static String getTopicTitle() {
-        return topicTitle;
+        return topicTitle.substring(1, topicTitle.toString().length());
     }
     public static int getTopicParticipation() {
         return topicParticipation;
@@ -497,14 +499,14 @@ public class CommunityFragment extends Fragment {
                                         "\t\"text\": \"" + topic.getText().toString() + "\",\n" +
                                         "\t\"classId\": \"" + ManageFragment.getClassId() + "\",\n" +
                                         "\t\"title\": \"" + ed_topic_title.getText().toString() + "\",\n" +
-                                        "\t\"type\": \"" + "0" + "\"\n" +
+                                        "\t\"type\": \"" + "1" + "\"\n" +
                                         "}";
                             } else {
                                 json = "{\n" +
                                         "\t\"text\": \"" + topic.getText().toString() + "\",\n" +
                                         "\t\"classId\": \"" + ManageFragment.getClassId() + "\",\n" +
                                         "\t\"title\": \"" + ed_topic_title.getText().toString() + "\",\n" +
-                                        "\t\"type\": \"" + "1" + "\"\n" +
+                                        "\t\"type\": \"" + "0" + "\"\n" +
                                         "}";
                             }
                             RequestBody jsonBody = RequestBody.create(MediaType.parse("application/json"), json);
@@ -513,7 +515,7 @@ public class CommunityFragment extends Fragment {
                             if (file != null) {
                                 RequestBody fileBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);//上传的文件以及类型
                                 requestBody.addFormDataPart("file", file.getName(), fileBody)
-                                        .addFormDataPart("communityWorksDTO", "communityWorksDTO.json", jsonBody);
+                                        .addFormDataPart("discussPostDTO", "discussPostDTO.json", jsonBody);
                                 Request request = new Request.Builder()
                                         .url("http://" + LoginActivity.getUrl() + ":8080/common/community-discuss")
                                         .post(requestBody.build())
@@ -539,7 +541,7 @@ public class CommunityFragment extends Fragment {
                                     });
                                 }
                             } else {
-                                requestBody.addFormDataPart("communityWorksDTO", "communityWorksDTO.json", jsonBody);
+                                requestBody.addFormDataPart("discussPostDTO", "discussPostDTO.json", jsonBody);
                                 Request request = new Request.Builder()
                                         .url("http://" + LoginActivity.getUrl() + ":8080/common/community-discuss")
                                         .post(requestBody.build())

@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -48,29 +49,30 @@ public class UploadTopicActivity extends AppCompatActivity {
         View_completed = findViewById(R.id.View_completed);
         View_completed.setBackgroundColor(0xFF7E64FD);
         textView_incomplete = findViewById(R.id.textView_incomplete);
-        textView_incomplete.setTextColor(0xFF99999);
+        textView_incomplete.setTextColor(0xFF999999);
         View_incomplete = findViewById(R.id.View_incomplete);
-        View_incomplete.setBackgroundColor(0xFF999999);
+        View_incomplete.setVisibility(View.GONE);
         completed = findViewById(R.id.completed);
         incomplete = findViewById(R.id.incomplete);
         topic_head = findViewById(R.id.topic_head);
         topic_title = findViewById(R.id.topic_title);
         topic_participation = findViewById(R.id.textView);
-        topic_worker = findViewById(R.id.textView2);
+        topic_worker = findViewById(R.id.textView22);
         topic_title.setText(CommunityFragment.getTopicTitle());
-        topic_participation.setText(String.valueOf(CommunityFragment.getTopicParticipation()));
+        topic_participation.setText("精选话题" + String.valueOf(CommunityFragment.getTopicParticipation()) + "个");
         recyclerView = findViewById(R.id.recyclerView);
         topicNewArrayList = new ArrayList<>();
-        initGood("1");
+        initGood(1);
         completed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!isGood) {
+                    View_completed.setVisibility(View.VISIBLE);
                     textView_completed.setTextColor(0xFF7E64FD);
                     View_completed.setBackgroundColor(0xFF7E64FD);
-                    textView_incomplete.setTextColor(0xFF99999);
-                    View_incomplete.setBackgroundColor(0xFF999999);
-                    initGood("1");
+                    textView_incomplete.setTextColor(0xFF999999);
+                    View_incomplete.setVisibility(View.GONE);
+                    initGood(1);
                     isGood = !isGood;
                 }
             }
@@ -79,18 +81,20 @@ public class UploadTopicActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (isGood) {
+                    View_incomplete.setVisibility(View.VISIBLE);
                     textView_completed.setTextColor(0xFF999999);
-                    View_completed.setBackgroundColor(0xFF999999);
+                    View_completed.setVisibility(View.GONE);
                     textView_incomplete.setTextColor(0xFF7E64FD);
                     View_incomplete.setBackgroundColor(0xFF7E64FD);
-                    initGood("0");
+                    initGood(0);
                     isGood = !isGood;
                 }
             }
         });
     }
 
-    private void initGood(String isGood) {
+    private void initGood(int isGoodI) {
+        int finalI = isGoodI;
         new Thread(new Runnable() {
             @SuppressLint("SetTextI18n")
             @Override
@@ -98,7 +102,7 @@ public class UploadTopicActivity extends AppCompatActivity {
                 try {
                     OkHttpClient client = new OkHttpClient();//创建http客户端
                     Request request = new Request.Builder()
-                            .url("http://" + LoginActivity.getUrl() + ":8080/common/community-discuss?title=" + CommunityFragment.getTopicTitle() + "&isGood=" + isGood)
+                            .url("http://" + LoginActivity.getUrl() + ":8080/common/community-discuss?title=" + CommunityFragment.getTopicTitle() + "&isGood=" + finalI)
                             .header("Authorization", LoginActivity.getKey())
                             .get()
                             .build();//创造http请求
@@ -119,12 +123,17 @@ public class UploadTopicActivity extends AppCompatActivity {
                         name[i] = jsonObject2.getString("author");
                         time[i] = jsonObject2.getString("createTime");
                         text[i] = jsonObject2.getString("title") + " " + jsonObject2.getString("text");
-                        work_url[i] = jsonObject2.getString("imageUrl");
+                        work_url[i] = jsonObject2.getString("imgUrl");
                         star[i] = jsonObject2.getInt("starsNum");
                     }
                     if (isFirst) {
-                        Glide.with(UploadTopicActivity.this).load(work_url[0]).into(topic_head);
-                        topic_worker.setText("话题发布者：" + name[0]);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Glide.with(UploadTopicActivity.this).load(work_url[0]).into(topic_head);
+                                topic_worker.setText("话题发布者：" + name[0]);
+                            }
+                        });
                         isFirst = !isFirst;
                     }
                     for (int i = 0; i < jsonArray.length(); i++){

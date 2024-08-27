@@ -38,6 +38,7 @@ public class IntegralAdapter extends RecyclerView.Adapter<IntegralAdapter.MyView
         IntegralNew integralNew = integralNewArrayList.get(position);
         holder.rank.setText(integralNew.rank);
         holder.name.setText(integralNew.name);
+        holder.score.setText(integralNew.score + "积分");
         Glide.with(context).load(integralNew.url).into(holder.head);
         switch (integralNew.rank) {
             case "1":

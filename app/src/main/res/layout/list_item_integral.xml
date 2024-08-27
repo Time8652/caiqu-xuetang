@@ -63,13 +63,13 @@
                 android:id="@+id/integral_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
+                android:layout_marginRight="90dp"
                 android:gravity="center"
                 android:text="300积分"
                 android:textColor="#FF7E64FD"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/textView_1"
+                app:layout_constraintEnd_toStartOf="@+id/iv_2"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
