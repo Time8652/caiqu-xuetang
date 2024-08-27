@@ -15,10 +15,10 @@ public class MainActivityStudent extends AppCompatActivity implements View.OnCli
 
     private String key;
     private FragmentManager fragmentManager;
-    private ClassFragment classFragment;
-    private ResourceFragment resourceFragment;
-    private CommunityFragment communityFragment;
-    private PersonalFragment personalFragment;
+    private ClassNewFragment classNewFragment;
+    private ResourceNewFragment resourceNewFragment;
+    private CommunityNewFragment communityNewFragment;
+    private PersonalNewFragment personalNewFragment;
     private LinearLayout classLinearLayout, resourceLinearLayout, communityLinearLayout, personalLinearLayout;
     private ImageView classImageView, resourceImageView, communityImageView, personalImageView;
     private TextView classTextView, resourceTextView, communityTextView, personalTextView;
@@ -75,47 +75,47 @@ public class MainActivityStudent extends AppCompatActivity implements View.OnCli
             case 0:
                 classImageView.setImageResource(R.drawable.navbar_class_purple);//修改布局中的图片
                 classTextView.setTextColor(Color.parseColor("#FF7E64FD"));//修改字体颜色
-                if (classFragment == null) {
+                if (classNewFragment == null) {
                     // 如果classFragment为空，则创建一个并添加到界面上
-                    classFragment = new ClassFragment(key);
-                    transaction.add(R.id.fragment, classFragment);
+                    classNewFragment = new ClassNewFragment();
+                    transaction.add(R.id.fragment, classNewFragment);
 
                 } else {
                     // 如果classFragment不为空，则直接将它显示出来
-                    transaction.show(classFragment);//显示的动作
+                    transaction.show(classNewFragment);//显示的动作
                 }
                 break;
             case 1:
-                resourceImageView.setImageResource(R.drawable.navbar_class_purple);
+                resourceImageView.setImageResource(R.drawable.navbar_material_purple);
                 resourceTextView.setTextColor(Color.parseColor("#FF7E64FD"));
-                if (resourceFragment == null) {
-                    resourceFragment = new ResourceFragment(key);
-                    transaction.add(R.id.fragment, resourceFragment);
+                if (resourceNewFragment == null) {
+                    resourceNewFragment = new ResourceNewFragment();
+                    transaction.add(R.id.fragment, resourceNewFragment);
 
                 } else {
-                    transaction.show(resourceFragment);
+                    transaction.show(resourceNewFragment);
                 }
                 break;
             case 2:
                 communityImageView.setImageResource(R.drawable.navbar_community_purple);
                 communityTextView.setTextColor(Color.parseColor("#FF7E64FD"));
-                if (communityFragment == null) {
-                    communityFragment = new CommunityFragment(key);
-                    transaction.add(R.id.fragment, communityFragment);
+                if (communityNewFragment == null) {
+                    communityNewFragment = new CommunityNewFragment();
+                    transaction.add(R.id.fragment, communityNewFragment);
 
                 } else {
-                    transaction.show(communityFragment);
+                    transaction.show(communityNewFragment);
                 }
                 break;
             case 3:
                 personalImageView.setImageResource(R.drawable.navbar_mine_purple);
                 personalTextView.setTextColor(Color.parseColor("#FF7E64FD"));
-                if (personalFragment == null) {
-                    personalFragment = new PersonalFragment(key);
-                    transaction.add(R.id.fragment, personalFragment);
+                if (personalNewFragment == null) {
+                    personalNewFragment = new PersonalNewFragment();
+                    transaction.add(R.id.fragment, personalNewFragment);
 
                 } else {
-                    transaction.show(personalFragment);
+                    transaction.show(personalNewFragment);
                 }
                 break;
         }
@@ -125,7 +125,7 @@ public class MainActivityStudent extends AppCompatActivity implements View.OnCli
     private void clearSelection() {
         classImageView.setImageResource(R.drawable.navbar_class_grey);
         classTextView.setTextColor(Color.parseColor("#FFC7C7C7"));
-        resourceImageView.setImageResource(R.drawable.navbar_class_grey);
+        resourceImageView.setImageResource(R.drawable.navbar_material_grey);
         resourceTextView.setTextColor(Color.parseColor("#FFC7C7C7"));
         communityImageView.setImageResource(R.drawable.navbar_community_grey);
         communityTextView.setTextColor(Color.parseColor("#FFC7C7C7"));
@@ -134,17 +134,17 @@ public class MainActivityStudent extends AppCompatActivity implements View.OnCli
     }
 
     private void hideFragments(FragmentTransaction transaction) {
-        if (classFragment != null) {
-            transaction.hide(classFragment);
+        if (classNewFragment != null) {
+            transaction.hide(classNewFragment);
         }
-        if (resourceFragment != null) {
-            transaction.hide(resourceFragment);
+        if (resourceNewFragment != null) {
+            transaction.hide(resourceNewFragment);
         }
-        if (communityFragment != null) {
-            transaction.hide(communityFragment);
+        if (communityNewFragment != null) {
+            transaction.hide(communityNewFragment);
         }
-        if (personalFragment != null) {
-            transaction.hide(personalFragment);
+        if (personalNewFragment != null) {
+            transaction.hide(personalNewFragment);
         }
     }
 }

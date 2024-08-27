@@ -91,6 +91,7 @@ public class IntelligentActivity extends AppCompatActivity {
                 intelligentAdapter.notifyItemInserted(intelligentNewArrayList.size() - 1);
                 recyclerView.scrollToPosition(intelligentNewArrayList.size() - 1); // Scroll to the new item
                 editText.setText("");
+                intelligent_image.setText("");
                 uri = null;
                 new Thread(new Runnable() {
                     @Override

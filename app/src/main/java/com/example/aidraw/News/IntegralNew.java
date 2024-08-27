@@ -1,13 +1,11 @@
 package com.example.aidraw.News;
 
-import java.net.URL;
-
 public class IntegralNew {
 
-    public URL url;
+    public String url;
     public String rank, name, score;
 
-    public IntegralNew(URL url, String rank, String name, String score) {
+    public IntegralNew(String url, String rank, String name, String score) {
         this.url = url;
         this.rank = rank;
         this.name = name;

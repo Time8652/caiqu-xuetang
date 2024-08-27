@@ -18,6 +18,15 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".CommunityNewFragment"
+            android:exported="false" />
+        <activity
+            android:name=".ResourceNewFragment"
+            android:exported="false" />
+        <activity
+            android:name=".ClassNewFragment"
+            android:exported="false" />
+        <activity
             android:name=".WebActivity"
             android:exported="false" />
         <activity

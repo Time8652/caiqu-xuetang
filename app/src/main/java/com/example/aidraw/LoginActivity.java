@@ -26,7 +26,7 @@ import okhttp3.Response;
 public class LoginActivity extends AppCompatActivity {
 
     private static final int REQUEST_CODE = 1;
-    private static final String url = "192.168.43.195";
+    private static final String url = "172.20.10.9";
     private static String key = null;
     private static String identity, now_number;
     private int code;
@@ -85,7 +85,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void initData() {
-        code = -1;
         SharedPreferences sharedPreferences = getSharedPreferences("Record",MODE_PRIVATE);
         boolean checkbox1 = sharedPreferences.getBoolean("Checkbox1", false);
         boolean checkbox2 = sharedPreferences.getBoolean("Checkbox2", false);
@@ -187,7 +186,6 @@ public class LoginActivity extends AppCompatActivity {
                 } else {
                     startActivity(new Intent(this, MainActivityStudent.class));
                 }
-                finish();
             } else if (code == 1) {
                 android.app.AlertDialog dialog;
                 android.app.AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this)

@@ -29,7 +29,7 @@ public class IntegralActivity extends AppCompatActivity {
     private TextView distribute_integral;
     private RecyclerView recyclerView;
     private ArrayList<IntegralNew> integralNewArrayList;
-    private URL[] url;
+    private String[] url;
     private String[] rank, name, score;
 
     @Override
@@ -66,16 +66,16 @@ public class IntegralActivity extends AppCompatActivity {
                     JSONObject jsonObject = new JSONObject(responseData);
                     JSONObject dataObject = jsonObject.getJSONObject("data");
                     JSONArray jsonArray = dataObject.getJSONArray("list");
-                    url = new URL[jsonArray.length()];
+                    url = new String[jsonArray.length()];
                     rank = new String[jsonArray.length()];
                     name = new String[jsonArray.length()];
                     score = new String[jsonArray.length()];
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject2 = jsonArray.getJSONObject(i);
-                        url[i] = (URL) jsonObject2.get("headerUrl");
-                        rank[i] = (String) jsonObject2.get("rank");
-                        name[i] = (String) jsonObject2.get("name");
-                        score[i] = (String) jsonObject2.get("score");
+                        url[i] = jsonObject2.getString("headerUrl");
+                        rank[i] = jsonObject2.getString("rank");
+                        name[i] = jsonObject2.getString("name");
+                        score[i] = jsonObject2.getString("score");
                     }
                     for (int i = 0; i < jsonArray.length(); i++){
                         IntegralNew integralNew = new IntegralNew(url[i], rank[i], name[i], score[i]);

@@ -106,6 +106,13 @@ public class PersonalFragment extends Fragment {
                         JSONObject dataObject = jsonObject.getJSONObject("data");
                         url = dataObject.getString("headerUrl");
                         name_text = dataObject.getString("name");
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Glide.with(PersonalFragment.this).load(url).into(head);
+                                name.setText(name_text);
+                            }
+                        });
                     } catch (Exception e) {
                         e.printStackTrace();
                         getActivity().runOnUiThread(new Runnable() {
@@ -117,14 +124,12 @@ public class PersonalFragment extends Fragment {
                     }
                 }
             }).start();
-            Glide.with(PersonalFragment.this).load(url).into(head);
-            name.setText(name_text);
         } else {
             identity.setText("学生");
-//            imageView_6.setImageResource(R.drawable.);
-//            imageView_7.setImageResource(R.drawable.);
-//            imageView_8.setImageResource(R.drawable.);
-//            imageView_9.setImageResource(R.drawable.);
+            imageView_6.setImageResource(R.drawable.mine_information);
+            imageView_7.setImageResource(R.drawable.mine_report);
+            imageView_8.setImageResource(R.drawable.mine_points);
+            imageView_9.setImageResource(R.drawable.mine_collect);
             textView_6.setText("个人信息");
             textView_7.setText("学习报告");
             textView_8.setText("我的积分");
@@ -145,6 +150,13 @@ public class PersonalFragment extends Fragment {
                         JSONObject dataObject = jsonObject.getJSONObject("data");
                         url = dataObject.getString("headerUrl");
                         name_text = dataObject.getString("name");
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Glide.with(PersonalFragment.this).load(url).into(head);
+                                name.setText(name_text);
+                            }
+                        });
                     } catch (Exception e) {
                         e.printStackTrace();
                         getActivity().runOnUiThread(new Runnable() {
@@ -157,7 +169,6 @@ public class PersonalFragment extends Fragment {
                 }
             }).start();
         }
-        Log.d("TAG", "run: " + name_text);
         concise.setText("简介：一名普普通通的小学美术老师~");
         saying.setText("美术是揭示真理的谎言。");
         celebrity.setText("——毕加索");

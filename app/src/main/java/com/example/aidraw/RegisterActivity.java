@@ -58,7 +58,7 @@ public class RegisterActivity extends AppCompatActivity {
                                             "}";
                                     OkHttpClient client = new OkHttpClient();//创建http客户端
                                     Request request = new Request.Builder()
-                                            .url("http://" + LoginActivity.getUrl() + ":8989/teacher/password")
+                                            .url("http://" + LoginActivity.getUrl() + ":8080/teacher/password")
                                             .put(RequestBody.create(MediaType.parse("application/json"), json))
                                             .build();//创造http请求
                                     Response response = client.newCall(request).execute();//执行发送的指令
@@ -88,7 +88,7 @@ public class RegisterActivity extends AppCompatActivity {
                                             "}";
                                     OkHttpClient client = new OkHttpClient();//创建http客户端
                                     Request request = new Request.Builder()
-                                            .url("http://" + LoginActivity.getUrl() + ":8989/student/password")
+                                            .url("http://" + LoginActivity.getUrl() + ":8080/student/password")
                                             .put(RequestBody.create(MediaType.parse("application/json"), json))
                                             .build();//创造http请求
                                     Response response = client.newCall(request).execute();//执行发送的指令
@@ -111,7 +111,7 @@ public class RegisterActivity extends AppCompatActivity {
                         Register(number, password1, true);
                     }
                 } else {
-                    Toast.makeText(RegisterActivity.this,"注册失败",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this,"修改失败",Toast.LENGTH_SHORT).show();
                 }
             }
         });

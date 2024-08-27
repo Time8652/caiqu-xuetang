@@ -31,7 +31,7 @@ public class ChooseActivity extends AppCompatActivity {
         gender = sharedPreferences.getString("Gender", "");
         if (!identity.equals("") && !gender.equals("")) {
             startActivity(new Intent(ChooseActivity.this, LoginActivity.class));
-            finish();
+//            finish();
         }
         constraintLayout.setOnClickListener(new View.OnClickListener() {
             @Override

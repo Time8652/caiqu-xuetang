@@ -10,11 +10,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import com.bumptech.glide.Glide;
 
 import java.net.URL;
 
@@ -31,7 +28,6 @@ public class ClassFragment extends Fragment {
     private View View_completed, View_incomplete;
     private ConstraintLayout homework_1, homework_2, homework_3, homework_4, homework_5, homework_6, constraintLayout_1,
             constraintLayout_2, constraintLayout_3, constraintLayout_4, constraintLayout_5;
-    private ImageView imageView_1, imageView_2, imageView_3, imageView_4, imageView_5;
 
     ClassFragment(String key) {
         this.key = key;
@@ -80,11 +76,6 @@ public class ClassFragment extends Fragment {
         textView30 = view.findViewById(R.id.textView30);
         textView33 = view.findViewById(R.id.textView33);
         homework_more = view.findViewById(R.id.homework_more);
-        imageView_1 = view.findViewById(R.id.imageView_1);
-        imageView_2 = view.findViewById(R.id.imageView_2);
-        imageView_3 = view.findViewById(R.id.imageView_3);
-        imageView_4 = view.findViewById(R.id.imageView_4);
-        imageView_5 = view.findViewById(R.id.imageView_5);
         textView_1 = view.findViewById(R.id.textView_1);
         textView_2 = view.findViewById(R.id.textView_2);
         textView_3 = view.findViewById(R.id.textView_3);
@@ -135,11 +126,6 @@ public class ClassFragment extends Fragment {
         textView20.setText("A+");
         textView30.setText("剩余15小时30分钟");
         textView33.setText("剩余48小时50分钟");
-        Glide.with(ClassFragment.this).load(url1).into(imageView_1);
-        Glide.with(ClassFragment.this).load(url2).into(imageView_2);
-        Glide.with(ClassFragment.this).load(url3).into(imageView_3);
-        Glide.with(ClassFragment.this).load(url4).into(imageView_4);
-        Glide.with(ClassFragment.this).load(url5).into(imageView_5);
         textView_1.setText("罗小昔");
         textView_2.setText("曾小卒");
         textView_3.setText("罗小昔");
