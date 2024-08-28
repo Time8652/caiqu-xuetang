@@ -463,16 +463,28 @@
                     android:id="@+id/topic_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
                     android:gravity="start"
+                    android:background="#00FFFFFF"
                     android:maxLines="1"
+                    android:layout_marginTop="10dp"
                     android:textColor="#FF7E64FD"
                     android:textSize="12sp"
                     android:text="#创建新话题"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toTopOf="@+id/topic"/>
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <View
+                    android:id="@+id/view22"
+                    android:layout_width="0dp"
+                    android:layout_height="2dp"
+                    android:background="#E8E3FF"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/topic_title"/>
 
                 <EditText
                     android:id="@+id/topic"
@@ -482,6 +494,8 @@
                     android:layout_marginRight="15dp"
                     android:gravity="top"
                     android:minLines="4"
+                    android:layout_marginTop="10dp"
+                    android:background="#00FFFFFF"
                     android:scrollbars="vertical"
                     android:textColor="#FF666666"
                     android:textSize="12sp"
@@ -489,7 +503,7 @@
                     app:layout_constraintBottom_toTopOf="@+id/constraintLayout13"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/topic_title" />
+                    app:layout_constraintTop_toBottomOf="@+id/view22" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/constraintLayout13"

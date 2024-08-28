@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -55,6 +56,7 @@ public class UploadChallengeActivity extends AppCompatActivity {
                         String responseData = response.body().string();//获取后端返回过来的json格式的结果
                         JSONObject jsonObject = new JSONObject(responseData);
                         JSONObject dataObject = jsonObject.getJSONObject("data");
+                        Log.d("data",dataObject.toString());
                         JSONArray jsonArray = dataObject.getJSONArray("list");
                         head_url = new String[jsonArray.length()];
                         name = new String[jsonArray.length()];

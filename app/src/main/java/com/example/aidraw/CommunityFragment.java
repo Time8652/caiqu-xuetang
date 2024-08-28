@@ -202,9 +202,9 @@ public class CommunityFragment extends Fragment {
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            topic_1.setText(topic_title[0]);
-                            topic_2.setText(topic_title[1]);
-                            topic_3.setText(topic_title[2]);
+                            topic_1.setText("#"+topic_title[0]);
+                            topic_2.setText("#"+topic_title[1]);
+                            topic_3.setText("#"+topic_title[2]);
                             topic_Participation = new int[3];
                             // ui 更新完启动后一个线程，确保后续请求执行时，topic_title已经初始化
                             for (int i = 0; i < 3; i++) {
