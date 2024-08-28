@@ -346,7 +346,7 @@ public class CommunityFragment extends Fragment {
         return challengeText;
     }
     public static String getTopicTitle() {
-        return topicTitle.substring(1, topicTitle.toString().length());
+        return topicTitle;
     }
     public static int getTopicParticipation() {
         return topicParticipation;

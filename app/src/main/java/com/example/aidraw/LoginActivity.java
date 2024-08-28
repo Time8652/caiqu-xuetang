@@ -1,5 +1,6 @@
 package com.example.aidraw;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -28,11 +29,12 @@ public class LoginActivity extends AppCompatActivity {
     private static final int REQUEST_CODE = 1;
     private static final String url = "172.20.10.9";
     private static String key = null;
-    private static String identity, now_number;
+    private static String identity = "teacher", now_number;
     private int code;
     private Button bt;
     private EditText et1, et2;
     private CheckBox cb1, cb2, cb3;
+    private boolean isFirst = true;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -79,9 +81,9 @@ public class LoginActivity extends AppCompatActivity {
         bt = findViewById(R.id.btn_login);
         et1 = findViewById(R.id.et_number);
         et2 = findViewById(R.id.et_password);
-        cb1 = findViewById(R.id.checkBox2);
-        cb2 = findViewById(R.id.checkBox3);
-        cb3 = findViewById(R.id.checkBox4);
+        cb1 = findViewById(R.id.checkBox1);
+        cb2 = findViewById(R.id.checkBox2);
+        cb3 = findViewById(R.id.checkBox3);
     }
 
     private void initData() {
@@ -182,9 +184,25 @@ public class LoginActivity extends AppCompatActivity {
             }
             if (code == 0) {
                 if (identity.equals("teacher")) {
-                    startActivity(new Intent(this, MainActivityTeacher.class));
+                    SharedPreferences sharedPreferences = getSharedPreferences("Record",MODE_PRIVATE);
+//                    isFirst = sharedPreferences.getBoolean("isFirst", true);
+                    if (isFirst) {
+                        @SuppressLint("CommitPrefEdits") SharedPreferences.Editor edit = sharedPreferences.edit();
+                        edit.putBoolean("isFirst", false).apply();
+                        startActivity(new Intent(this, GuideActivityZero.class));
+                    } else {
+                        startActivity(new Intent(this, MainActivityTeacher.class));
+                    }
                 } else {
-                    startActivity(new Intent(this, MainActivityStudent.class));
+                    SharedPreferences sharedPreferences = getSharedPreferences("Record",MODE_PRIVATE);
+//                    isFirst = sharedPreferences.getBoolean("isFirst", true);
+                    if (isFirst) {
+                        @SuppressLint("CommitPrefEdits") SharedPreferences.Editor edit = sharedPreferences.edit();
+                        edit.putBoolean("isFirst", false).apply();
+                        startActivity(new Intent(this, GuideActivityZero.class));
+                    } else {
+                        startActivity(new Intent(this, MainActivityStudent.class));
+                    }
                 }
             } else if (code == 1) {
                 android.app.AlertDialog dialog;
