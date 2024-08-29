@@ -138,6 +138,7 @@
                     android:text="请输入作业具体要求与内容"
                     android:minLines="1"
                     android:gravity="top"
+                    android:background="#00FFFFFF"
                     android:layout_marginTop="5dp"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"

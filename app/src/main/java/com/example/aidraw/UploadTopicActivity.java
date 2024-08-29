@@ -36,7 +36,7 @@ public class UploadTopicActivity extends AppCompatActivity {
     private ArrayList<TopicNew> topicNewArrayList;
     private String[] head_url, work_url;
     private String[] name, time, text;
-    private int[] star;
+    private int[] star, check;
     private boolean isGood = true, isFirst = true;
 
     @SuppressLint("NotifyDataSetChanged")
@@ -95,6 +95,7 @@ public class UploadTopicActivity extends AppCompatActivity {
 
     private void initGood(int isGoodI) {
         int finalI = isGoodI;
+        topicNewArrayList = new ArrayList<>();
         new Thread(new Runnable() {
             @SuppressLint("SetTextI18n")
             @Override
@@ -117,6 +118,7 @@ public class UploadTopicActivity extends AppCompatActivity {
                     text = new String[jsonArray.length()];
                     work_url = new String[jsonArray.length()];
                     star = new int[jsonArray.length()];
+                    check = new int[jsonArray.length()];
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject2 = jsonArray.getJSONObject(i);
                         head_url[i] = jsonObject2.getString("headerUrl");
@@ -125,6 +127,7 @@ public class UploadTopicActivity extends AppCompatActivity {
                         text[i] = jsonObject2.getString("title") + " " + jsonObject2.getString("text");
                         work_url[i] = jsonObject2.getString("imgUrl");
                         star[i] = jsonObject2.getInt("starsNum");
+                        check[i] = finalI;
                     }
                     if (isFirst) {
                         runOnUiThread(new Runnable() {
@@ -137,7 +140,7 @@ public class UploadTopicActivity extends AppCompatActivity {
                         isFirst = !isFirst;
                     }
                     for (int i = 0; i < jsonArray.length(); i++){
-                        TopicNew topicNew = new TopicNew(head_url[i], name[i], time[i], text[i], work_url[i], star[i]);
+                        TopicNew topicNew = new TopicNew(head_url[i], name[i], time[i], text[i], work_url[i], star[i], check[i]);
                         topicNewArrayList.add(topicNew);
                     }
                     runOnUiThread(new Runnable() {

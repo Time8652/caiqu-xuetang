@@ -128,6 +128,7 @@ public class HomeworkActivity extends AppCompatActivity {
         title.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                title.setTextColor(0xFF333333);
                 if (flag) {
                     title.setSelection(title.length());
                 } else {
@@ -138,6 +139,7 @@ public class HomeworkActivity extends AppCompatActivity {
         content.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                content.setTextColor(0xFF333333);
                 if (flag) {
                     content.setSelection(content.length());
                 } else {

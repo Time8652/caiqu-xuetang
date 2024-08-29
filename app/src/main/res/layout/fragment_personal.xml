@@ -10,7 +10,7 @@
     <View
         android:id="@+id/view"
         android:layout_width="match_parent"
-        android:layout_height="175dp"
+        android:layout_height="180dp"
         android:background="@drawable/mine_top"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -90,8 +90,8 @@
 
                 <ImageView
                     android:id="@+id/imageView_2"
-                    android:layout_width="14.5dp"
-                    android:layout_height="13dp"
+                    android:layout_width="17dp"
+                    android:layout_height="16dp"
                     android:src="@drawable/mine_clock_in"
                     android:scaleType="fitXY"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -152,7 +152,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:maxWidth="300dp"
-                    android:textColor="#FF000000"
+                    android:textColor="#FF333333"
                     android:textSize="14sp"
                     app:layout_constraintStart_toStartOf="@+id/imageView"
                     app:layout_constraintTop_toBottomOf="@+id/imageView" />
@@ -163,7 +163,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="15dp"
                     android:layout_marginBottom="10dp"
-                    android:textColor="#FF000000"
+                    android:textColor="#FF333333"
                     android:textSize="14sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"

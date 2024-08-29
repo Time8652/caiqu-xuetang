@@ -54,8 +54,7 @@ public class CommunityFragment extends Fragment {
 
     private String key;
     private final int WRITE_EXTERNAL_STORAGE_REQUEST_CODE = 1, REQUEST_CODE_PHOTO = 0;
-    private ImageView resources_more, resources_1, resources_2, resources_3, resources_more_and_more,
-            online_challenge_more, topic_discussion_more, imageView_1, imageView_2, display_work_more;
+    private ImageView resources_more, resources_1, online_challenge_more, topic_discussion_more, imageView_1, imageView_2, display_work_more;
     private CardView constraintLayout_1, constraintLayout_2, constraintLayout_3;
     private ConstraintLayout constraintLayout_topic_1, constraintLayout_topic_2, constraintLayout_topic_3;
     private TextView online_challenge_title_1, online_challenge_title_2, online_challenge_title_3, online_challenge_1,
@@ -95,9 +94,6 @@ public class CommunityFragment extends Fragment {
     private void initView(View view) {
         resources_more = view.findViewById(R.id.resources_more);
         resources_1 = view.findViewById(R.id.resources_1);
-        resources_2 = view.findViewById(R.id.resources_2);
-        resources_3 = view.findViewById(R.id.resources_3);
-        resources_more_and_more = view.findViewById(R.id.resources_more_and_more);
         online_challenge_more = view.findViewById(R.id.online_challenge_more);
         topic_discussion_more = view.findViewById(R.id.topic_discussion_more);
         imageView_1 = view.findViewById(R.id.imageView_1);
@@ -367,27 +363,6 @@ public class CommunityFragment extends Fragment {
                 startActivity(new Intent(getActivity(), UploadResourceActivity.class));
             }
         });
-        resources_2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //跳转至资源详细页
-                startActivity(new Intent(getActivity(), UploadResourceActivity.class));
-            }
-        });
-        resources_3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //跳转至资源详细页
-                startActivity(new Intent(getActivity(), UploadResourceActivity.class));
-            }
-        });
-        resources_more_and_more.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //跳转至资源详细页
-                startActivity(new Intent(getActivity(), UploadResourceActivity.class));
-            }
-        });
         online_challenge_more.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -555,7 +530,11 @@ public class CommunityFragment extends Fragment {
                                     getActivity().runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
+                                            topic.setText("");
+                                            ed_topic_title.setText("#");
+                                            topic_image.setText("暂无图片");
                                             Toast.makeText(getContext(), "发表成功", Toast.LENGTH_SHORT).show();
+                                            initData();
                                         }
                                     });
                                 } else {

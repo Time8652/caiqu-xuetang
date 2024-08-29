@@ -13,11 +13,11 @@
 
         <ImageView
             android:id="@+id/imageView13"
-            android:layout_width="300dp"
+            android:layout_width="340dp"
             android:layout_height="300dp"
             android:layout_gravity="center"
             android:src="@drawable/guide_4"
-            android:layout_marginTop="150dp"
+            android:layout_marginTop="180dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -29,10 +29,10 @@
             android:text="智慧互动，乐教促学"
             android:textColor="#333333"
             android:textSize="22sp"
-            android:layout_marginTop="30dp"
+            android:layout_marginBottom ="340dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView13" />
+            app:layout_constraintBottom_toBottomOf="parent" />
 
         <TextView
             android:id="@+id/textView37"
@@ -41,26 +41,35 @@
             android:text="智能、即时、分析"
             android:textColor="#999999"
             android:textSize="16sp"
-            android:layout_marginTop="15dp"
+            android:layout_marginBottom="302dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView35" />
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
         <TextView
             android:id="@+id/start"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="230dp"
+            android:background="@drawable/point_2"
+            android:paddingLeft="42dp"
+            android:paddingTop="9dp"
+            android:paddingRight="42dp"
+            android:paddingBottom="9dp"
+            android:text="立即体验"
             android:textColor="#FFFFFF"
             android:textSize="16sp"
-            android:text="立即体验"
-            android:paddingLeft="42dp"
-            android:paddingRight="42dp"
-            android:paddingTop="9dp"
-            android:paddingBottom="9dp"
-            android:background="@drawable/point_2"
-            android:layout_marginTop="40dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView37"/>
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="250dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

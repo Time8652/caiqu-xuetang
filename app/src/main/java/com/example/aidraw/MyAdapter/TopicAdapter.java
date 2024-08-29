@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.aidraw.News.TopicNew;
 import com.example.aidraw.R;
+import com.example.aidraw.UploadTopicActivity;
 
 import java.util.ArrayList;
 
@@ -76,6 +77,17 @@ public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.MyViewHolder
                 Toast.makeText(v.getContext(), "发表成功", Toast.LENGTH_SHORT).show();
             }
         });
+        if (topicNew.check == 1) {
+            holder.check.setVisibility(View.GONE);
+        } else if (topicNew.check == 0) {
+            holder.check.setVisibility(View.VISIBLE);
+            holder.check.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(view.getContext(), "精选成功", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 
     @Override
@@ -86,7 +98,7 @@ public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.MyViewHolder
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
         ImageView imageView_head, imageView_work, topic_thumb;
-        TextView tv_name, tv_time, tv_text, topic_star, send;
+        TextView tv_name, tv_time, tv_text, topic_star, send, check;
         LinearLayout linearLayout_1, linearLayout_2, linearLayout_3;
         EditText editText;
         ConstraintLayout constraintLayout;
@@ -106,6 +118,7 @@ public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.MyViewHolder
             editText = itemView.findViewById(R.id.editText);
             send = itemView.findViewById(R.id.send);
             constraintLayout = itemView.findViewById(R.id.constraintLayout);
+            check = itemView.findViewById(R.id.textView_check);
         }
     }
 }

@@ -18,12 +18,12 @@
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="28dp"
         android:gravity="center"
         android:letterSpacing="0.8"
         android:text="学生作品"
         android:textColor="#FFFFFFFF"
-        android:textSize="30sp"
+        android:textSize="27sp"
         android:textStyle="bold"
         app:layout_constraintTop_toTopOf="parent" />
 

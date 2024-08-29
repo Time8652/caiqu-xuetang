@@ -27,7 +27,7 @@ import okhttp3.Response;
 public class LoginActivity extends AppCompatActivity {
 
     private static final int REQUEST_CODE = 1;
-    private static final String url = "172.20.10.9";
+    private static final String url = "192.168.18.168";
     private static String key = null;
     private static String identity = "teacher", now_number;
     private int code;
@@ -43,7 +43,7 @@ public class LoginActivity extends AppCompatActivity {
         initView();
         initData();
         SharedPreferences sharedPreferences = getSharedPreferences("Record",MODE_PRIVATE);
-        identity = sharedPreferences.getString("Identity", "teacher");
+//        identity = sharedPreferences.getString("Identity", "teacher");
         String number = et1.getText().toString();
         String password = et2.getText().toString();
         boolean checkbox3 = cb3.isChecked();
@@ -53,6 +53,7 @@ public class LoginActivity extends AppCompatActivity {
         bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                startActivity(new Intent(LoginActivity.this, MainActivityStudent.class));
                 String number = et1.getText().toString();
                 String password = et2.getText().toString();
                 boolean checkbox3 = cb3.isChecked();

@@ -13,11 +13,11 @@
 
         <ImageView
             android:id="@+id/imageView13"
-            android:layout_width="300dp"
+            android:layout_width="360dp"
             android:layout_height="300dp"
             android:layout_gravity="center"
             android:src="@drawable/guide_3"
-            android:layout_marginTop="150dp"
+            android:layout_marginTop="180dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -26,33 +26,34 @@
             android:id="@+id/textView35"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="340dp"
             android:text="童心绘梦，社区共融"
             android:textColor="#333333"
             android:textSize="22sp"
-            android:layout_marginTop="30dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView13" />
+            app:layout_constraintBottom_toBottomOf="parent" />
 
         <TextView
             android:id="@+id/textView37"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="302dp"
             android:text="挑战、尝试、创作"
             android:textColor="#999999"
             android:textSize="16sp"
-            android:layout_marginTop="15dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView35" />
+            app:layout_constraintBottom_toBottomOf="parent" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_marginBottom="250dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView37">
+            app:layout_constraintStart_toStartOf="parent">
 
             <View
                 android:id="@+id/view1"
@@ -60,11 +61,11 @@
                 android:layout_height="8dp"
                 android:layout_margin="5dp"
                 android:background="@drawable/point_2"
-                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/view2"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <View
                 android:id="@+id/view2"
@@ -72,11 +73,11 @@
                 android:layout_height="8dp"
                 android:layout_margin="5dp"
                 android:background="@drawable/point_2"
-                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/view3"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/view1" />
+                app:layout_constraintStart_toEndOf="@+id/view1"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <View
                 android:id="@+id/view3"
@@ -84,11 +85,11 @@
                 android:layout_height="8dp"
                 android:layout_margin="5dp"
                 android:background="@drawable/point_2"
-                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/view4"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/view2" />
+                app:layout_constraintStart_toEndOf="@+id/view2"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <View
                 android:id="@+id/view4"
@@ -96,11 +97,11 @@
                 android:layout_height="8dp"
                 android:layout_margin="5dp"
                 android:background="@drawable/point_2"
-                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/view1"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/view3" />
+                app:layout_constraintStart_toEndOf="@+id/view3"
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

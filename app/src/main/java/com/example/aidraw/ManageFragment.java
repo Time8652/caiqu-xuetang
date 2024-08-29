@@ -89,7 +89,7 @@ public class ManageFragment extends Fragment {
     @SuppressLint({"SetTextI18n", "NotifyDataSetChanged"})
     private void initData() {
         class_more.setImageResource(R.drawable.expand_more_white);
-        notice.setText("暂无通知");
+        notice.setText("您本周四上午3-4节的课程已移至下周一下午8-9节");
         listView.setVisibility(View.GONE);
         new Thread(new Runnable() {
             @Override
