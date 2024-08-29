@@ -27,7 +27,11 @@ public class ViewpagerActivity extends AppCompatActivity implements GuideFragmen
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ViewpagerActivity.this, MainActivityTeacher.class));
+                if (LoginActivity.getIdentity().equals("teacher")) {
+                    startActivity(new Intent(ViewpagerActivity.this, MainActivityTeacher.class));
+                } else {
+                    startActivity(new Intent(ViewpagerActivity.this, MainActivityStudent.class));
+                }
                 finish();
             }
         });

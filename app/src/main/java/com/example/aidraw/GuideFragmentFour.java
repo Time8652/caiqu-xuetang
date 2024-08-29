@@ -69,7 +69,11 @@ public class GuideFragmentFour extends Fragment {
         start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getContext(), MainActivityTeacher.class));
+                if (LoginActivity.getIdentity().equals("teacher")) {
+                    startActivity(new Intent(getContext(), MainActivityTeacher.class));
+                } else {
+                    startActivity(new Intent(getContext(), MainActivityStudent.class));
+                }
                 exitViewPagerActivity();
             }
         });

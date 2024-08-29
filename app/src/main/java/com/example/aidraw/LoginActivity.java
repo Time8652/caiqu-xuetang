@@ -42,8 +42,6 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         initView();
         initData();
-        SharedPreferences sharedPreferences = getSharedPreferences("Record",MODE_PRIVATE);
-//        identity = sharedPreferences.getString("Identity", "teacher");
         String number = et1.getText().toString();
         String password = et2.getText().toString();
         boolean checkbox3 = cb3.isChecked();
@@ -53,7 +51,6 @@ public class LoginActivity extends AppCompatActivity {
         bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                startActivity(new Intent(LoginActivity.this, MainActivityStudent.class));
                 String number = et1.getText().toString();
                 String password = et2.getText().toString();
                 boolean checkbox3 = cb3.isChecked();
@@ -184,8 +181,8 @@ public class LoginActivity extends AppCompatActivity {
                 }).start();
             }
             if (code == 0) {
+                SharedPreferences sharedPreferences = getSharedPreferences("Record",MODE_PRIVATE);
                 if (identity.equals("teacher")) {
-                    SharedPreferences sharedPreferences = getSharedPreferences("Record",MODE_PRIVATE);
 //                    isFirst = sharedPreferences.getBoolean("isFirst", true);
                     if (isFirst) {
                         @SuppressLint("CommitPrefEdits") SharedPreferences.Editor edit = sharedPreferences.edit();
@@ -195,7 +192,6 @@ public class LoginActivity extends AppCompatActivity {
                         startActivity(new Intent(this, MainActivityTeacher.class));
                     }
                 } else {
-                    SharedPreferences sharedPreferences = getSharedPreferences("Record",MODE_PRIVATE);
 //                    isFirst = sharedPreferences.getBoolean("isFirst", true);
                     if (isFirst) {
                         @SuppressLint("CommitPrefEdits") SharedPreferences.Editor edit = sharedPreferences.edit();
