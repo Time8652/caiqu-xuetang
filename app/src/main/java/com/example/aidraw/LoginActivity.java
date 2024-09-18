@@ -30,7 +30,7 @@ public class LoginActivity extends AppCompatActivity {
     private static final String url = "192.168.18.168";
     private static String key = null;
     private static String identity = "teacher", now_number;
-    private int code;
+    private int code = -1;
     private Button bt;
     private EditText et1, et2;
     private CheckBox cb1, cb2, cb3;
