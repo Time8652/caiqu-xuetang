@@ -1,7 +1,7 @@
 3.移动端设计说明
 3.1.程序描述
 本系统的移动端为Android端。目标用户为小学生、学生家长、教师。
-
+<img width="415" height="394" alt="image" src="https://github.com/user-attachments/assets/ba4170f4-7fb4-40b6-92d4-61f2e70fdf15" />
 图 3移动端功能图
 1)模块一：登录
 验证成功则进入主页，否则提示验证失败。
