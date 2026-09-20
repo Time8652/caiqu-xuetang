@@ -1,3 +1,5 @@
+▶ [点击观看完整演示视频]（https://github.com/Time8652/caiqu-xuetang/releases/tag/video/caiqu-xuetang.mp4）
+
 3.移动端设计说明
 
 3.1.程序描述
